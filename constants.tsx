@@ -63,63 +63,51 @@ export const PROJECTS: Project[] = [
   {
     id: 'spelling-bee-redesign',
     title: 'Patiently',
-    description: 'AI turns clinical conversations into clear summaries and next steps for families.',
+    description: 'AI-powered health infrastructure — founding designer, 2025.',
     category: ProjectCategory.UX_DESIGN,
     color: COLORS.yellow,
     icon: 'Brain',
     coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600',
     difficulty: 'Medium',
-    skills: ['Interaction Design', 'Usability Testing'],
-    content: `
-      ## The Challenge
-      How can we maintain engagement in repetitive cognitive tasks without causing mental fatigue?
-    `
+    skills: ['Health Structuring', 'Decision Architecture', 'AI UX'],
+    content: ``
   },
   {
-    id: 'wordle-analytics',
-    title: 'Word Wisdom',
-    description: 'A data-driven deep dive into social sharing mechanics and viral loop design.',
-    category: ProjectCategory.RESEARCH,
+    id: 'superworld',
+    title: 'Superworld',
+    description: 'An AR real estate platform — buy, personalize, and monetize virtual land mapped to real-world locations.',
+    category: ProjectCategory.PRODUCT_STRATEGY,
+    color: COLORS.blue,
+    icon: 'Layers',
+    coverImage: '/cover-superworld.jpg',
+    difficulty: 'Hard',
+    skills: ['Cross-platform Design', 'Agile / Scrum', 'MVP Launch'],
+    content: ``
+  },
+  {
+    id: 'uniwell',
+    title: 'Uniwell',
+    description: 'A mobile app improving the treatment process for college students in the USA.',
+    category: ProjectCategory.UX_DESIGN,
     color: COLORS.green,
     icon: 'Target',
-    coverImage: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600',
-    difficulty: 'Hard',
-    skills: ['Data Analysis', 'Psychology'],
-    content: `
-      ## The Research
-      We investigated why 5x6 grid emojis became the universal language of early 2022.
-    `
+    coverImage: '/cover-uniwell.jpg',
+    difficulty: 'Medium',
+    skills: ['PMF Validation', 'UX Strategy', 'Mobile Design'],
+    content: ``
   },
   {
-    id: 'connections-system',
-    title: 'Semantic Sort',
-    description: 'Building an AI-assisted taxonomy system for enterprise knowledge management.',
-    category: ProjectCategory.PRODUCT_STRATEGY,
+    id: '2d-moon',
+    title: '2D Moon',
+    description: 'A unique platform to display NFT owners\' collection and assets, and to socialize with other owners with similar interests.',
+    category: ProjectCategory.UX_DESIGN,
     color: COLORS.purple,
-    icon: 'Puzzle',
-    coverImage: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=600',
-    difficulty: 'Expert',
-    skills: ['Information Architecture', 'AI Strategy'],
-    content: `
-      ## Problem Statement
-      Enterprise data is often siloed and lacks meaningful connections between departments.
-    `
-  },
-  {
-    id: 'tiles-craft',
-    title: 'Pattern Play',
-    description: 'Crafting a modular design system for rapid multi-platform product deployment.',
-    category: ProjectCategory.CRAFT,
-    color: COLORS.red,
     icon: 'Shapes',
-    coverImage: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=600',
-    difficulty: 'Easy',
-    skills: ['Design Systems', 'React'],
-    content: `
-      ## Objective
-      Standardize UI across 4 distinct web applications while maintaining unique brand identities.
-    `
-  }
+    coverImage: '/cover-2dmoon.jpg',
+    difficulty: 'Hard',
+    skills: ['Innovative Design', 'Data-driven Design', 'End-to-end Ownership'],
+    content: ``
+  },
 ];
 
 export const getIcon = (name: string, size = 24) => {

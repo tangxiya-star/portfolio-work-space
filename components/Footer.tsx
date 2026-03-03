@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <BeanCharacter size={40} />
         <span className="font-serif font-bold text-xl text-[#121212]">Tang Hub</span>
       </a>
-      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+      <div className="text-[12px] font-bold text-gray-400 uppercase tracking-[0.3em]">
         © 2024 Holly Tang • Made with Curiosity & Strategy
       </div>
     </footer>

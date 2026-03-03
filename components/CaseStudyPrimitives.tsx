@@ -11,7 +11,7 @@ export const SectionWrapper: React.FC<SectionWrapperProps> = ({ id, kicker, titl
   return (
     <section id={id} className="py-12 border-t border-gray-200 scroll-mt-28">
       <div className="mb-5">
-        <p className="font-sans text-[10px] font-black uppercase tracking-[0.24em] text-gray-400">{kicker}</p>
+        <p className="font-sans text-[12px] font-black uppercase tracking-[0.24em] text-gray-400">{kicker}</p>
         <h2 className="mt-2 font-serif text-4xl md:text-5xl font-bold text-[#121212]">{title}</h2>
       </div>
       {children}
@@ -42,7 +42,7 @@ const ratioClassMap: Record<MediaPlaceholderProps['ratio'], string> = {
 export const MediaPlaceholder: React.FC<MediaPlaceholderProps> = ({ label, ratio }) => (
   <div className={`w-full ${ratioClassMap[ratio]} bg-white border-[3px] border-[#121212]/10 rounded-2xl p-6 flex items-center justify-center`}>
     <div className="text-center">
-      <p className="font-sans text-[10px] font-black uppercase tracking-[0.24em] text-gray-400">Image / Media</p>
+      <p className="font-sans text-[12px] font-black uppercase tracking-[0.24em] text-gray-400">Image / Media</p>
       <p className="mt-2 font-serif text-2xl text-[#121212]">{label}</p>
     </div>
   </div>

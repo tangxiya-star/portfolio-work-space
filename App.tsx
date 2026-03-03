@@ -2,16 +2,34 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import GameTile from './components/GameTile';
-import CuratorAI from './components/CuratorAI';
 import ContactSection from './components/ContactSection';
 import ProjectModal from './components/ProjectModal';
 import BeanCharacter from './components/BeanCharacter';
 import Footer from './components/Footer';
 import PatientlyCaseStudyPage from './components/PatientlyCaseStudyPage';
+
 import { PROJECTS } from './constants';
 import { Project } from './types';
 
 // ── About Panel Overlay ──────────────────────────────────────────────────────
+const pillars = [
+  {
+    index: '01', label: 'Innovate', title: 'I Innovate with Strategy',
+    body: 'I naturally uncover fundamental patterns and hidden opportunities others might miss. Through my strategic lens, every challenge becomes a canvas for innovation — I anticipate outcomes, play out scenarios, and craft data-driven decisions that push boundaries.',
+    traits: ['Strategic Mind', 'Visionary Lens', 'Analytical Depth', 'Boundless Innovation'],
+  },
+  {
+    index: '02', label: 'Influence', title: 'I Influence Through Action',
+    body: 'Innovation isn\'t just about ideas — it\'s about making them happen. I transform abstract concepts into tangible experiences, move projects from "what if" to "what\'s next" with decisive energy, and turn strategic insights into solutions that inspire action.',
+    traits: ['Catalytic Energy', 'Creative Execution', 'Purposeful Impact', 'Transformative Drive'],
+  },
+  {
+    index: '03', label: 'Maximize', title: 'I Maximize Impact',
+    body: 'I rally unique strengths into a shared vision. I craft dynamic spaces where creativity thrives and turn collaboration into transformation — building momentum that turns bold ideas into real-world impact.',
+    traits: ['Collective Synergy', 'Strategic Flow', 'Creative Alignment', 'Transformational Momentum'],
+  },
+];
+
 const AboutPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -26,70 +44,244 @@ const AboutPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <>
+      <style>{`
+        @keyframes about-fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
+      {/* Full-screen overlay */}
       <div
-        className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-[2px]"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
-        className="fixed top-0 right-0 bottom-0 z-[80] w-full max-w-2xl bg-[#FAF9F6] overflow-y-auto shadow-2xl"
-        style={{ animation: 'panel-slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both' }}
-        role="dialog"
-        aria-modal="true"
-        aria-label="About Holly Tang"
+        className="fixed inset-0 z-[80] bg-[#FAF9F6] overflow-y-auto"
+        style={{ animation: 'about-fade-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both' }}
+        role="dialog" aria-modal="true" aria-label="About Holly Tang"
       >
+        {/* Reuse the main Header — sits at top, same as homepage */}
+        <Header onAboutClick={onClose} onWorkClick={onClose} onLogoClick={onClose} />
+
+        {/* Close button — floating top-right, above header */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-10 w-9 h-9 flex items-center justify-center bg-black/5 hover:bg-black/10 transition-colors duration-150"
-          aria-label="Close about panel"
-          style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace', fontSize: '14px' }}
-        >
-          ✕
-        </button>
+          className="fixed top-3 right-6 z-[90] w-8 h-8 flex items-center justify-center bg-black/6 hover:bg-black/12 transition-colors duration-150 font-mono text-[13px]"
+          aria-label="Close About"
+        >✕</button>
 
-        <div className="px-10 py-14 md:py-16">
-          <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#999] mb-8">About</div>
+        {/* Content — pt-14 to clear the fixed header */}
+        <div className="max-w-6xl mx-auto px-6 md:px-8 pt-14 pb-16 space-y-24">
 
-          <div className="mb-10">
-            <div className="aspect-[4/3] overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800"
-                alt="Holly at work"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-              />
+          {/* ── Hero: photo left + headline right ── */}
+          <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-start">
+            <div className="md:w-2/5 w-full shrink-0">
+              <div className="w-full overflow-hidden rounded-[12px]" style={{ aspectRatio: '4/5' }}>
+                <img
+                  src="/about-hero.jpg"
+                  alt="Holly Tang"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="h-[3px] bg-[#FFC83D] w-1/3" />
             </div>
-            <div className="h-[3px] bg-[#FFC83D] w-1/4" />
+            <div className="md:w-3/5">
+              <p className="font-sans text-[11px] uppercase tracking-[0.28em] text-[#767676] mb-4">Holly Tang · Product Designer</p>
+              <h2 className="font-serif text-[32px] md:text-[42px] font-bold text-[#111111] leading-tight mb-6">
+                I create.<br />I influence.<br />I maximize.
+              </h2>
+              <p className="text-[15px] font-sans text-[#666666] leading-[1.7] max-w-[48ch] mb-8">
+                What sets me apart is my ability to blend deep strategic thinking with decisive execution. I naturally uncover hidden patterns others miss, then transform those insights into tangible innovations that inspire teams to action.
+              </p>
+              <div className="border-t border-[#E8E8E8] pt-6 space-y-4">
+                {[
+                  { label: 'Role', value: 'Founding Product Designer' },
+                  { label: 'Location', value: 'San Francisco, CA' },
+                  { label: 'Focus', value: 'Health AI · Design Systems · Strategy' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex gap-6">
+                    <span className="font-sans text-[11px] uppercase tracking-[0.18em] text-[#767676] w-20 shrink-0">{label}</span>
+                    <span className="font-sans text-[15px] text-[#111111]">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#111111] leading-tight mb-8">
-            Design is the ultimate puzzle.
-          </h2>
+          {/* ── Three pillars ── */}
+          <div>
+            <div className="border-t border-black/15 pt-3 mb-12">
+              <span className="font-sans text-[11px] uppercase tracking-[0.28em] text-[#767676]">Philosophy</span>
+            </div>
+            <div className="space-y-0">
+              {pillars.map((p) => (
+                <div key={p.index} className="border-t border-[#E8E8E8] py-10 grid grid-cols-1 md:grid-cols-[120px_1fr_1fr] gap-8 md:gap-12 items-start">
+                  {/* Index + label */}
+                  <div className="flex md:flex-col items-center md:items-start gap-3">
+                    <span className="font-mono text-[11px] text-[#CCCCCC]">{p.index}</span>
+                    <span className="font-sans text-[11px] uppercase tracking-[0.22em] font-semibold border border-[#FFC83D] px-2 py-0.5 text-[#111111]">{p.label}</span>
+                  </div>
+                  {/* Title */}
+                  <h3 className="font-sans text-[32px] font-semibold text-[#111111] leading-tight">{p.title}</h3>
+                  {/* Body */}
+                  <p className="text-[15px] font-sans text-[#666666] leading-[1.7]">{p.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <p className="text-[15px] text-[#555] leading-[1.7] font-sans mb-10">
-            I believe great products aren't just seen — they are played. By treating interactions as moves in a game, I build experiences that are intuitive, rewarding, and deeply impactful.
-          </p>
+          {/* ── Design as life ── */}
+          <div>
+            <div className="border-t border-black/15 pt-3 mb-12">
+              <span className="font-sans text-[11px] uppercase tracking-[0.28em] text-[#767676]">Background</span>
+            </div>
+            <div className="flex flex-col md:flex-row gap-12 md:gap-20 mb-12">
+              <div className="md:w-1/2">
+                <h3 className="font-sans text-[32px] md:text-[42px] font-semibold text-[#111111] leading-tight mb-6">Design as a life perspective.</h3>
+              </div>
+              <div className="md:w-1/2">
+                <p className="text-[15px] font-sans text-[#666666] leading-[1.7]">
+                  Design permeates every aspect of my life. Long before I formally became a UX designer, I was already identifying problems in daily life and crafting innovative solutions. Understanding user needs, identifying core problems, and solving them with forward-thinking approaches.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-[#E8E8E8]">
+              {[
+                { index: '01', title: 'In Bloom', desc: 'A modular crib system that grows with children from 0–12 years.', img: '/about-project-bloom.jpg' },
+                { index: '02', title: 'Spark Time', desc: 'A collaboration with Autodesk reimagining phone charging as focused time management.', img: '/about-project-spark.jpg' },
+                { index: '03', title: 'Sense Shield', desc: 'A forward-thinking concept for home-based breast health monitoring.', img: '/about-project-sense.jpg' },
+              ].map((item) => (
+                <div key={item.index} className="border-r border-b border-[#E8E8E8] flex flex-col">
+                  <div className="overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-6">
+                    <span className="font-mono text-[11px] text-[#CCCCCC] block mb-2">{item.index}</span>
+                    <p className="font-sans text-[17px] font-semibold text-[#111111] mb-2">{item.title}</p>
+                    <p className="text-[15px] font-sans text-[#666666] leading-[1.7]">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <ul className="space-y-6 border-l-2 border-[#111111] pl-5 mb-12">
-            <li>
-              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#999] mb-0.5">Discipline</div>
-              <div className="font-sans text-[13px] font-semibold text-[#111111] uppercase tracking-[0.1em]">Strategic Thinking</div>
-            </li>
-            <li>
-              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#999] mb-0.5">Approach</div>
-              <div className="font-sans text-[13px] font-semibold text-[#111111] uppercase tracking-[0.1em]">User-Centric Logic</div>
-            </li>
-            <li>
-              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#999] mb-0.5">Method</div>
-              <div className="font-sans text-[13px] font-semibold text-[#111111] uppercase tracking-[0.1em]">Iterative Prototyping</div>
-            </li>
-          </ul>
+          {/* ── Global heart ── */}
+          <div>
+            <div className="border-t border-black/15 pt-3 mb-12">
+              <span className="font-sans text-[11px] uppercase tracking-[0.28em] text-[#767676]">Perspective</span>
+            </div>
+            {/* Text block — no image */}
+            <div className="flex flex-col md:flex-row gap-12 md:gap-20 mb-12">
+              <div className="md:w-1/2">
+                <h3 className="font-sans text-[32px] md:text-[42px] font-semibold text-[#111111] leading-tight mb-0">A global heart.</h3>
+              </div>
+              <div className="md:w-1/2">
+                <p className="text-[15px] font-sans text-[#666666] leading-[1.7] mb-6">
+                  Growing up between different worlds has shaped who I am. My curiosity drives me beyond just visiting new places — it's about understanding the hearts and minds of people across cultures. Each interaction adds a new dimension to how I see the world.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['Beijing', 'San Francisco', 'Seoul', 'Kosovo', 'Zagreb', 'Berlin'].map((place) => (
+                    <span key={place} className="font-sans text-[11px] uppercase tracking-[0.18em] text-[#767676] border border-[#E8E8E8] px-3 py-1.5 rounded-full">{place}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* 4-photo grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[
+                { src: '/about-global-1.jpg', alt: 'Travel photo 1' },
+                { src: '/about-global-2.jpg', alt: 'Travel photo 2' },
+                { src: '/about-global-3.jpg', alt: 'Travel photo 3' },
+                { src: '/about-global-4.jpg', alt: 'Travel photo 4' },
+              ].map((photo) => (
+                <div key={photo.src} className="overflow-hidden rounded-[12px] bg-[#F0EDE8]" style={{ aspectRatio: '3/4' }}>
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <button
-            onClick={onClose}
-            className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
-          >
-            ← Back to work
-          </button>
+          {/* ── Fun / Side Projects ── */}
+          <div>
+            <div className="border-t border-black/15 pt-3 mb-3">
+              <span className="font-sans text-[11px] uppercase tracking-[0.28em] text-[#767676]">Fun</span>
+            </div>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
+              <h3 className="font-sans text-[32px] md:text-[42px] font-semibold text-[#111111] leading-tight">
+                I build what I'm curious about.
+              </h3>
+              <p className="text-[13px] font-sans text-[#767676] max-w-[36ch] leading-[1.6] md:text-right shrink-0">
+                When something doesn't exist yet — or exists badly — I go make it.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  id: '01', title: 'UniWell', subtitle: 'Campus health navigator for college students.',
+                  type: 'Hackathon', event: "WiCHacks '24", img: '/fun-uniwell.jpg',
+                  link: 'https://devpost.com/software/uniwell',
+                },
+                {
+                  id: '02', title: 'Brain in Unity', subtitle: 'MRI → 3D brain reconstruction → interactive exploration in Unity.',
+                  type: 'Capstone', event: 'Grad Thesis', img: '/fun-brain.jpg', link: null,
+                },
+                {
+                  id: '03', title: 'CES × Even Realities', subtitle: "The best AR interaction design I've touched. Went to CES to find out why.",
+                  type: 'Industry', event: 'CES 2025', img: '/fun-ces.jpg', link: null,
+                },
+              ].map((item) => {
+                const typePill: Record<string, string> = {
+                  'Hackathon': 'border-[#FFC83D] text-[#111111]',
+                  'Capstone':  'border-[#111111] text-[#111111]',
+                  'Industry':  'border-[#767676] text-[#767676]',
+                };
+                return (
+                  <div key={item.id} className="group flex flex-col">
+                    <div className="overflow-hidden bg-[#F0EDE8] mb-4" style={{ aspectRatio: '4/3' }}>
+                      <img
+                        src={item.img} alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                        onError={(e) => {
+                          const el = e.currentTarget as HTMLImageElement;
+                          el.parentElement!.style.background = '#F0EDE8';
+                          el.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`font-sans text-[10px] uppercase tracking-[0.2em] font-semibold border px-2 py-0.5 ${typePill[item.type] ?? 'border-[#CCCCCC] text-[#767676]'}`}>
+                        {item.type}
+                      </span>
+                      <span className="font-mono text-[10px] text-[#CCCCCC] uppercase tracking-[0.16em]">{item.event}</span>
+                    </div>
+                    <p className="font-sans text-[17px] font-semibold text-[#111111] leading-snug mb-1">{item.title}</p>
+                    <p className="font-sans text-[13px] text-[#666666] leading-[1.6]">{item.subtitle}</p>
+                    {item.link && (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer"
+                        className="mt-3 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em] text-[#767676] hover:text-[#111111] transition-colors duration-150">
+                        View →
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── Back ── */}
+          <div className="border-t border-[#E8E8E8] pt-10">
+            <button
+              onClick={onClose}
+              className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#767676] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#CCCCCC] hover:decoration-[#111111]"
+            >
+              ← Back to work
+            </button>
+          </div>
+
         </div>
       </div>
     </>
@@ -125,6 +317,20 @@ const App: React.FC = () => {
       window.open('/case-studies/patiently', '_blank', 'noopener,noreferrer');
       return;
     }
+    if (project.id === 'superworld') {
+      window.open('https://hollytanguxlab.framer.website/superworld', '_blank', 'noopener,noreferrer');
+      return;
+    }
+    if (project.id === 'uniwell') {
+      window.open('https://hollytanguxlab.framer.website/uniwell', '_blank', 'noopener,noreferrer');
+      return;
+    }
+    if (project.id === '2d-moon') {
+      // Case study link — update URL when ready
+      window.open('https://hollytanguxlab.framer.website/2d-moon', '_blank', 'noopener,noreferrer');
+      return;
+    }
+    if (project.id === 'coming-soon') return;
     setSelectedProject(project);
   };
 
@@ -132,8 +338,7 @@ const App: React.FC = () => {
     return (
       <>
         <PatientlyCaseStudyPage />
-        <CuratorAI />
-      </>
+        </>
     );
   }
 
@@ -149,19 +354,19 @@ const App: React.FC = () => {
 
           {/* Top rule + kicker — same weight as Selected Work rule */}
           <div className="border-t border-black/15 pt-3 mb-12 flex items-center gap-3 flex-wrap">
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#999]">
+            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">
               Holly Tang
             </span>
-            <span className="font-mono text-[10px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#BBBBBB]">
+            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
+            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
               San Francisco
             </span>
-            <span className="font-mono text-[10px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#BBBBBB]">
+            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
+            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
               Product Design
             </span>
-            <span className="font-mono text-[10px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#BBBBBB]">
+            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
+            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
               2025
             </span>
           </div>
@@ -173,16 +378,16 @@ const App: React.FC = () => {
             <div className="md:w-3/5 flex flex-col justify-center">
 
               <h1
-                className="font-serif font-bold text-[#111111] leading-[0.9] tracking-[-0.02em] mb-8"
+                className="font-serif font-bold text-[#111111] leading-none tracking-[-0.02em] mb-8"
                 style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}
               >
-                Structure
+                I think in systems.
                 <br />
-                is the product.
+                I build with intent.
               </h1>
 
               <p className="text-[16px] font-sans text-[#555] leading-[1.65] max-w-[420px] mb-12">
-                Founding Product Designer at the intersection of AI infrastructure, healthcare, and systems thinking.
+                From ambiguity to structured systems — I design AI-native products that ship.
               </p>
 
               <div className="flex flex-wrap items-center gap-6">
@@ -191,13 +396,13 @@ const App: React.FC = () => {
                     const el = document.getElementById('work');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="border border-[#111111] px-8 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 active:scale-95"
+                  className="border border-[#111111] px-8 py-3 font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 active:scale-95"
                 >
                   View Work ↓
                 </button>
                 <button
                   onClick={() => setAboutOpen(true)}
-                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
+                  className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#767676] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
                 >
                   About →
                 </button>
@@ -208,16 +413,16 @@ const App: React.FC = () => {
             <div className="md:w-2/5 w-full">
               <div className="aspect-[4/5] overflow-hidden bg-[#F0EDE8]">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800"
+                  src="/hero-portrait.jpg"
                   alt="Holly Tang"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-cover"
                 />
               </div>
               {/* Mustard accent bar */}
               <div className="h-[3px] bg-[#FFC83D] w-full" />
               {/* Caption */}
               <p className="font-serif italic text-[13px] text-[#AAAAAA] mt-2 leading-snug">
-                Holly Tang — Product Systems Designer
+                Holly Tang — Strategic Product Designer
               </p>
             </div>
 
@@ -248,7 +453,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="text-center mt-8">
-            <div className="text-[11px] font-black uppercase tracking-[0.5em] text-gray-300">
+            <div className="text-[12px] font-black uppercase tracking-[0.5em] text-gray-300">
               CONSUMING CHALLENGES
             </div>
           </div>
@@ -259,7 +464,7 @@ const App: React.FC = () => {
       {/* ── Selected Work header — same container as grid cells ───────── */}
       <div id="work" className="max-w-6xl mx-auto px-6 md:px-8 pt-24 pb-10">
         <div className="border-t border-black/15 pt-3 mb-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#999]">Selected Work</span>
+          <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">Selected Work</span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h2 className="font-serif text-5xl md:text-6xl font-bold text-[#111111]">Selected Work</h2>
@@ -292,7 +497,6 @@ const App: React.FC = () => {
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
       />
-      <CuratorAI />
 
       {aboutOpen && <AboutPanel onClose={() => setAboutOpen(false)} />}
     </div>

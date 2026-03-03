@@ -25,7 +25,7 @@ export const generateCuratorResponse = async (history: { role: 'user' | 'model',
   try {
     // Using ai.models.generateContent with model name and contents mapping to the expected structure
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash',
       contents: history.map(h => ({
         role: h.role,
         parts: [{ text: h.text }]

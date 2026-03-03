@@ -18,6 +18,12 @@ const KB_CONFIG = [
 ];
 
 const PATIENTLY_KEYWORDS = ['Health Structuring', 'Decision Architecture', 'AI UX'];
+const KEYWORD_MAP: Record<string, string[]> = {
+  'Patiently':   ['Health Structuring', 'Decision Architecture', 'AI UX'],
+  'Superworld':  ['Cross-platform Design', 'Agile / Scrum', 'MVP Launch'],
+  'Uniwell':     ['PMF Validation', 'UX Strategy', 'Mobile Design'],
+  '2D Moon':     ['Innovative Design', 'Data-driven Design', 'End-to-end Ownership'],
+};
 
 // ── Patiently frame images — served from /public/ ──────────────────────────
 // Frame order: 0 → 1 → 2 → 3 → 0 (loops continuously)
@@ -30,11 +36,10 @@ const buildPatientlyFrames = (_placeholderSrc: string): string[] => [
 
 const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
   const isPatientlyCard = project.title === 'Patiently';
-  const leadTag = isPatientlyCard ? PATIENTLY_KEYWORDS[0] : project.category;
-  const yearLabel = isPatientlyCard ? '2025' : '2024';
-  const description = isPatientlyCard
-    ? 'AI-powered health infrastructure — founding designer, 2025'
-    : project.description;
+  const cardKeywords = KEYWORD_MAP[project.title] ?? [];
+  const leadTag = cardKeywords.length > 0 ? cardKeywords[0] : project.category;
+  const yearLabel = isPatientlyCard ? '2026' : project.title === '2D Moon' ? '2023' : '2024';
+  const description = project.description;
   const kb = KB_CONFIG[index % KB_CONFIG.length];
 
   // ── Crossfade animation state — Patiently card only ───────────────────────
@@ -174,8 +179,8 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
           >
             {project.title}
           </h3>
-          {/* Year + Shipped — right-aligned */}
-          <div className="shrink-0 text-right pt-1">
+          {/* Year + Status — right-aligned */}
+          <div className="shrink-0 text-right pt-1 flex flex-col items-end gap-1.5">
             <p
               className="text-[#AAAAAA]"
               style={{
@@ -187,23 +192,17 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
             >
               {yearLabel}
             </p>
-            <div className="flex items-center justify-end gap-1 mt-0.5">
-              <span
-                className="h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ backgroundColor: project.color }}
-              />
-              <span
-                className="text-[#AAAAAA]"
-                style={{
-                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                  fontSize: '9px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.14em',
-                }}
-              >
-                Shipped
-              </span>
-            </div>
+            <span
+              className="bg-[#111111] text-white px-2 py-0.5"
+              style={{
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontSize: '9px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.14em',
+              }}
+            >
+              {(project.title === 'Uniwell' || project.title === '2D Moon') ? 'Case Study' : 'Shipped'}
+            </span>
           </div>
         </div>
 
@@ -216,12 +215,12 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
         </p>
 
         {/* Patiently keyword chips — below description */}
-        {isPatientlyCard && (
+        {cardKeywords.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
-            {PATIENTLY_KEYWORDS.map(kw => (
+            {cardKeywords.map(kw => (
               <span
                 key={kw}
-                className="border border-[#DDDDDD] text-[#999] px-2 py-0.5"
+                className="border border-[#DDDDDD] text-[#767676] px-2 py-0.5"
                 style={{
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                   fontSize: '8px',

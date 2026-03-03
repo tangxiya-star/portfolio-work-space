@@ -14,7 +14,7 @@ const ContactSection: React.FC = () => {
 
         {/* Top rule — same weight as Hero and Selected Work */}
         <div className="border-t border-black/15 pt-3 mb-12">
-          <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#999]">
+          <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">
             Get in touch
           </span>
         </div>
@@ -25,7 +25,7 @@ const ContactSection: React.FC = () => {
         </h2>
 
         {/* Supporting body */}
-        <p className="font-sans text-[15px] text-[#666] leading-[1.65] max-w-md mb-12">
+        <p className="font-sans text-[16px] text-[#666] leading-[1.65] max-w-md mb-12">
           Open to founding roles and AI system collaborations.
         </p>
 
@@ -34,7 +34,7 @@ const ContactSection: React.FC = () => {
           {/* Primary — outlined */}
           <a
             href={`mailto:${CONTACT_LINKS.email}`}
-            className="inline-flex items-center gap-2 border border-[#111111] px-8 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 group"
+            className="inline-flex items-center gap-2 border border-[#111111] px-8 py-3 font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 group"
           >
             Send Email
             <ArrowUpRight size={11} strokeWidth={2} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -45,7 +45,7 @@ const ContactSection: React.FC = () => {
             href={CONTACT_LINKS.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
+            className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#767676] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
           >
             LinkedIn →
           </a>

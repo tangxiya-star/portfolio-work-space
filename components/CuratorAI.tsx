@@ -88,7 +88,7 @@ const CuratorAI: React.FC = () => {
               <div className="flex justify-start">
                 <div className="bg-gray-50 border border-gray-100 p-4 rounded-none flex items-center space-x-2">
                   <div className="w-5 h-5 border-2 border-gray-200 border-t-gray-900 rounded-full animate-spin" />
-                  <span className="text-[10px] uppercase font-black text-gray-400 tracking-widest">Pondering...</span>
+                  <span className="text-[12px] uppercase font-black text-gray-400 tracking-widest">Pondering...</span>
                 </div>
               </div>
             )}
