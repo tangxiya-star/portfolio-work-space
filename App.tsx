@@ -7,6 +7,8 @@ import ProjectModal from './components/ProjectModal';
 import BeanCharacter from './components/BeanCharacter';
 import Footer from './components/Footer';
 import PatientlyCaseStudyPage from './components/PatientlyCaseStudyPage';
+import AboutStandalonePage from './components/AboutStandalonePage';
+import ResumeStandalonePage from './components/ResumeStandalonePage';
 
 import { PROJECTS } from './constants';
 import { Project } from './types';
@@ -291,8 +293,9 @@ const AboutPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 // ── App ──────────────────────────────────────────────────────────────────────
 const App: React.FC = () => {
   const isPatientlyCaseStudyRoute = window.location.pathname === '/case-studies/patiently';
+  const isAboutRoute = window.location.pathname === '/about';
+  const isResumeRoute = window.location.pathname === '/resume';
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [aboutOpen, setAboutOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(localStorage.getItem('user-profile-photo'));
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -309,12 +312,9 @@ const App: React.FC = () => {
     }
   };
 
-  const pelletCount = 12;
-  const pellets = useMemo(() => Array.from({ length: pelletCount }), []);
-
   const handleProjectOpen = (project: Project) => {
     if (project.id === 'spelling-bee-redesign') {
-      window.open('/case-studies/patiently', '_blank', 'noopener,noreferrer');
+      window.location.href = '/case-studies/patiently';
       return;
     }
     if (project.id === 'superworld') {
@@ -335,147 +335,42 @@ const App: React.FC = () => {
   };
 
   if (isPatientlyCaseStudyRoute) {
-    return (
-      <>
-        <PatientlyCaseStudyPage />
-        </>
-    );
+    return <PatientlyCaseStudyPage />;
+  }
+
+  if (isAboutRoute) {
+    return <AboutStandalonePage />;
+  }
+
+  if (isResumeRoute) {
+    return <ResumeStandalonePage />;
   }
 
   return (
     <div className="min-h-screen pb-24 selection:bg-[#F7DA21] selection:text-black overflow-x-hidden">
-      <Header onAboutClick={() => setAboutOpen(true)} />
+      <Header />
 
       {/* ── Main content — same container + padding as Selected Work header ── */}
       <main className="max-w-6xl mx-auto px-6 md:px-8 relative mt-14">
 
         {/* ── Hero ──────────────────────────────────────────────────────── */}
-        <section className="mb-20 pt-12">
-
-          {/* Top rule + kicker — same weight as Selected Work rule */}
-          <div className="border-t border-black/15 pt-3 mb-12 flex items-center gap-3 flex-wrap">
-            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">
-              Holly Tang
-            </span>
-            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
-              San Francisco
-            </span>
-            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
-              Product Design
-            </span>
-            <span className="font-mono text-[12px] text-[#DDDDDD]">·</span>
-            <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#BBBBBB]">
-              2025
-            </span>
-          </div>
-
-          {/* Two-column layout */}
-          <div className="flex flex-col md:flex-row items-start gap-12 md:gap-20">
-
-            {/* LEFT: Headline + body + CTAs */}
-            <div className="md:w-3/5 flex flex-col justify-center">
-
-              <h1
-                className="font-serif font-bold text-[#111111] leading-none tracking-[-0.02em] mb-8"
-                style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}
-              >
-                I think in systems.
-                <br />
-                I build with intent.
-              </h1>
-
-              <p className="text-[16px] font-sans text-[#555] leading-[1.65] max-w-[420px] mb-12">
-                From ambiguity to structured systems — I design AI-native products that ship.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-6">
-                <button
-                  onClick={() => {
-                    const el = document.getElementById('work');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="border border-[#111111] px-8 py-3 font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 active:scale-95"
-                >
-                  View Work ↓
-                </button>
-                <button
-                  onClick={() => setAboutOpen(true)}
-                  className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#767676] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
-                >
-                  About →
-                </button>
-              </div>
-            </div>
-
-            {/* RIGHT: Portrait — no overlay, subtle caption */}
-            <div className="md:w-2/5 w-full">
-              <div className="aspect-[4/5] overflow-hidden bg-[#F0EDE8]">
-                <img
-                  src="/hero-portrait.jpg"
-                  alt="Holly Tang"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Mustard accent bar */}
-              <div className="h-[3px] bg-[#FFC83D] w-full" />
-              {/* Caption */}
-              <p className="font-serif italic text-[13px] text-[#AAAAAA] mt-2 leading-snug">
-                Holly Tang — Strategic Product Designer
-              </p>
-            </div>
-
+        <section className="pt-12 pb-10">
+          <div className="pt-8">
+            <h1 className="font-serif font-bold text-[#111111] leading-tight tracking-[-0.02em] mb-4"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              I'm Holly — a product designer<br />who builds with systems thinking.
+            </h1>
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#AAAAAA]">
+              Founding Product Designer · San Francisco · AI-Native Products
+            </p>
           </div>
         </section>
 
-        {/* ── Eating animation ──────────────────────────────────────────── */}
-        <section className="relative mb-28 py-24 overflow-hidden bg-white/40 rounded-2xl border border-black/8">
-          <div className="max-w-4xl mx-auto relative px-12 flex items-center justify-between h-32">
-            <div className="absolute inset-0 flex items-center justify-between px-20">
-              {pellets.map((_, i) => (
-                <div
-                  key={i}
-                  className="w-4 h-4 rounded-full bg-[#F7DA21] shadow-sm border border-black/10"
-                  style={{
-                    animation: `pellet-disappear 6s linear infinite`,
-                    animationDelay: `${(i / pelletCount) * 6}s`
-                  }}
-                />
-              ))}
-            </div>
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="h-full flex items-center animate-bean-eat">
-                <div className="animate-chomp">
-                  <BeanCharacter size={60} className="drop-shadow-xl" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-8">
-            <div className="text-[12px] font-black uppercase tracking-[0.5em] text-gray-300">
-              CONSUMING CHALLENGES
-            </div>
-          </div>
-        </section>
 
       </main>
 
-      {/* ── Selected Work header — same container as grid cells ───────── */}
-      <div id="work" className="max-w-6xl mx-auto px-6 md:px-8 pt-24 pb-10">
-        <div className="border-t border-black/15 pt-3 mb-3">
-          <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">Selected Work</span>
-        </div>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-[#111111]">Selected Work</h2>
-          <p className="max-w-sm text-[#666] font-sans text-[14px] leading-relaxed">
-            Strategic design across healthcare, fintech, and AI systems.
-          </p>
-        </div>
-      </div>
-
       {/* ── Selected Work grid — full-bleed, border-based ────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-black/8">
+      <div id="work" className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-black/8">
         {PROJECTS.map((project, i) => (
           <div key={project.id} className="border-r border-b border-black/8 px-6 md:px-8 pt-6">
             <GameTile
@@ -498,7 +393,6 @@ const App: React.FC = () => {
         onClose={() => setSelectedProject(null)}
       />
 
-      {aboutOpen && <AboutPanel onClose={() => setAboutOpen(false)} />}
     </div>
   );
 };

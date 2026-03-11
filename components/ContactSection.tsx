@@ -24,9 +24,12 @@ const ContactSection: React.FC = () => {
           Let's build something structured.
         </h2>
 
-        {/* Supporting body */}
-        <p className="font-sans text-[16px] text-[#666] leading-[1.65] max-w-md mb-12">
-          Open to founding roles and AI system collaborations.
+        {/* Email address — plain text, selectable/copyable */}
+        <p
+          className="font-sans text-[20px] md:text-[24px] text-[#111111] mb-10 select-all cursor-text"
+          style={{ letterSpacing: '-0.01em' }}
+        >
+          {CONTACT_LINKS.email}
         </p>
 
         {/* CTA row */}
