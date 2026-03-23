@@ -36,7 +36,7 @@ const funItems = [
 ];
 
 const typePill: Record<string, string> = {
-  'Hackathon': 'border-[#FFC83D] text-[#111111]',
+  'Hackathon': 'border-[#C9A96E] text-[#111111]',
   'Capstone':  'border-[#111111] text-[#111111]',
   'Industry':  'border-[#767676] text-[#767676]',
 };

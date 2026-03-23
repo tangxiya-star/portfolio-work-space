@@ -99,6 +99,20 @@
       will-change: transform;
     }
 
+    /* Winner shimmer animation */
+    @keyframes winner-shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .winner-pill {
+      background: linear-gradient(90deg, #C9A96E 0%, #FFE08A 25%, #FFF7D4 50%, #FFE08A 75%, #C9A96E 100%);
+      background-size: 200% 100%;
+      animation: winner-shimmer 3s ease-in-out infinite;
+      color: #111111;
+      border: none !important;
+      font-weight: 700;
+    }
+
     /* Postcard Stamp Style */
     .postcard-stamp {
       mask-image: url("data:image/svg+xml,%3Csvg width='80' height='100' viewBox='0 0 80 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10C0 4.47715 4.47715 0 10 0H70C75.5228 0 80 4.47715 80 10V90C80 95.5228 75.5228 100 70 100H10C4.47715 100 0 95.5228 0 90V10Z' fill='black'/%3E%3C/svg%3E");

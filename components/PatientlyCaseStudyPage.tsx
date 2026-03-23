@@ -151,7 +151,7 @@ const DecisionNavigator: React.FC = () => {
               className={[
                 'group relative flex-1 min-w-[160px] text-left px-5 py-4 cursor-pointer',
                 'transition-colors duration-150',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC83D] focus-visible:ring-inset',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A96E] focus-visible:ring-inset',
                 i < DECISION_NAV_ITEMS.length - 1 ? 'border-r border-[#E8E8E8]' : '',
                 isActive ? 'bg-[#FFFDF5]' : 'hover:bg-[#F7F6F3]',
               ].join(' ')}
@@ -160,7 +160,7 @@ const DecisionNavigator: React.FC = () => {
               {/* bottom accent bar — active indicator */}
               <span
                 className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-150"
-                style={{ background: isActive ? '#FFC83D' : 'transparent' }}
+                style={{ background: isActive ? '#C9A96E' : 'transparent' }}
               />
               <div className="flex items-center justify-between gap-3">
                 <div>
@@ -171,7 +171,7 @@ const DecisionNavigator: React.FC = () => {
                     {subtitle}
                   </p>
                 </div>
-                <span className={`font-mono text-[12px] shrink-0 transition-transform duration-150 group-hover:translate-x-[3px] ${isActive ? 'text-[#FFC83D]' : 'text-[#767676] group-hover:text-[#666666]'}`}>→</span>
+                <span className={`font-mono text-[12px] shrink-0 transition-transform duration-150 group-hover:translate-x-[3px] ${isActive ? 'text-[#C9A96E]' : 'text-[#767676] group-hover:text-[#666666]'}`}>→</span>
               </div>
             </button>
           );
@@ -331,7 +331,7 @@ const SectionHeading: React.FC<{ label: string; title: string }> = ({ label, tit
     <h2 className="font-sans text-[32px] md:text-[42px] font-semibold tracking-[-0.015em] leading-[1.05] text-[#111111]">{title}</h2>
     <div className="mt-4 relative h-1 flex items-center">
       <span className="h-px w-12 bg-[#111111] transition-all duration-200 ease-out group-hover:w-[72px] group-focus-within:w-[72px]" />
-      <span className="ml-2 h-1 w-1 bg-[#FFC83D] opacity-0 transition-all duration-200 ease-out group-hover:opacity-100 group-focus-within:opacity-100 group-hover:translate-x-0.5 group-focus-within:translate-x-0.5" />
+      <span className="ml-2 h-1 w-1 bg-[#C9A96E] opacity-0 transition-all duration-200 ease-out group-hover:opacity-100 group-focus-within:opacity-100 group-hover:translate-x-0.5 group-focus-within:translate-x-0.5" />
     </div>
   </div>
 );
@@ -538,7 +538,7 @@ const ReasoningTraceSnippet: React.FC = () => {
           pointer-events: none;
         }
         .trace-arrow {
-          color: #FFC83D;
+          color: #C9A96E;
           animation: traceArrowPulse 220ms ease-out forwards;
           animation-delay: var(--pulse-delay, 0ms);
         }
@@ -554,9 +554,9 @@ const ReasoningTraceSnippet: React.FC = () => {
           to { transform: translateX(105%); }
         }
         @keyframes traceArrowPulse {
-          0% { color: #FFC83D; }
-          45% { color: #FFD56A; }
-          100% { color: #FFC83D; }
+          0% { color: #C9A96E; }
+          45% { color: #D4BC8A; }
+          100% { color: #C9A96E; }
         }
         @media (prefers-reduced-motion: reduce) {
           .trace-line {
@@ -794,7 +794,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
           --muted: #666666;
           --label: #767676;
           --rule: #E8E8E8;
-          --accent: #FFC83D;
+          --accent: #C9A96E;
         }
         .ambient-blob {
           animation: ambientDrift 14s cubic-bezier(0.2, 0.8, 0.2, 1) infinite alternate;
@@ -869,7 +869,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                   <div className="h-px w-8 bg-[#E8E8E8]" />
                 </div>
 
-                <div className="mb-6 h-10 w-1 bg-[#FFC83D]" />
+                <div className="mb-6 h-10 w-1 bg-[#C9A96E]" />
                 <h1 className="font-serif text-[72px] md:text-[96px] leading-[0.90] text-[#111111]">Patiently</h1>
                 <p className="mt-6 font-sans text-[17px] leading-[1.6] text-[#666666] max-w-[48ch]">
                   Doctor conversations, turned into structured action.
@@ -1014,7 +1014,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                         { n: '02', label: 'Terminology Ambiguity', sub: 'A1C. eGFR. LDL-C. Opaque by default' },
                       ].map(({ n, label, sub }) => (
                         <div key={n} className="px-4 py-4" style={{ border: '1px solid #2A2A2A', background: '#1A1A1A' }}>
-                          <p className="font-mono text-[11px] mb-2" style={{ color: '#FFC83D' }}>{n}</p>
+                          <p className="font-mono text-[11px] mb-2" style={{ color: '#C9A96E' }}>{n}</p>
                           <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] mb-1" style={{ color: '#FFFFFF' }}>{label}</p>
                           <p className="font-sans text-[11px]" style={{ color: '#767676' }}>{sub}</p>
                         </div>
@@ -1030,8 +1030,8 @@ const PatientlyCaseStudyPage: React.FC = () => {
                       </svg>
 
                       {/* Center node */}
-                      <div className="px-8 py-3 z-10" style={{ border: '1px solid #FFC83D', background: '#1A1A1A' }}>
-                        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: '#FFC83D' }}>Care Conversation</p>
+                      <div className="px-8 py-3 z-10" style={{ border: '1px solid #C9A96E', background: '#1A1A1A' }}>
+                        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: '#C9A96E' }}>Care Conversation</p>
                       </div>
 
                       {/* Lines to bottom cards */}
@@ -1048,7 +1048,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                         { n: '04', label: 'Fragmented Coordination', sub: 'Same cycle repeated across every appointment' },
                       ].map(({ n, label, sub }) => (
                         <div key={n} className="px-4 py-4" style={{ border: '1px solid #2A2A2A', background: '#1A1A1A' }}>
-                          <p className="font-mono text-[11px] mb-2" style={{ color: '#FFC83D' }}>{n}</p>
+                          <p className="font-mono text-[11px] mb-2" style={{ color: '#C9A96E' }}>{n}</p>
                           <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] mb-1" style={{ color: '#FFFFFF' }}>{label}</p>
                           <p className="font-sans text-[11px]" style={{ color: '#767676' }}>{sub}</p>
                         </div>
@@ -1089,7 +1089,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                   <div className="px-6 py-6 bg-[#FAFAF8]">
                     <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-[#767676] mb-4">Patient-Side · Consumer</p>
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FFC83D] shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C9A96E] shrink-0" />
                       <span className="font-sans text-[15px] text-[#111111] font-semibold">Patiently</span>
                     </div>
                     <div className="space-y-2">
@@ -1109,7 +1109,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
             {/* Solution thesis */}
             <Reveal delay={60}>
               <div className="mt-10 relative rounded-[12px] border border-[#111111] bg-[#111111] p-8 overflow-hidden">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#FFC83D]" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#C9A96E]" />
                 <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-white/40 mb-4">Patiently's Answer</p>
                 <p className="font-sans text-[17px] font-semibold leading-[1.6] text-white max-w-[42ch]">
                   Capture the conversation. Structure the knowledge. Give patients something to return to.
@@ -1130,7 +1130,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                     <p className="font-sans text-[72px] md:text-[84px] leading-none text-[#111111]">
                       <CountUpMetric value={88} />
                       {/* Wordle-tile accent */}
-                      <span className="ml-3 inline-block w-4 h-4 bg-[#FFC83D] align-middle" style={{ marginBottom: '8px' }} />
+                      <span className="ml-3 inline-block w-4 h-4 bg-[#C9A96E] align-middle" style={{ marginBottom: '8px' }} />
                     </p>
                   </ParallaxWrap>
                   <p className="mt-1 font-sans text-[12px] tracking-[0.12em] text-[#767676] uppercase">Early Adopters · 2025</p>
@@ -1216,8 +1216,8 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                 </div>
                                 {/* Arrow on the divider line */}
                                 <div className="absolute top-1/2 -right-[10px] -translate-y-1/2 flex items-center gap-0 z-10">
-                                  <div className="h-px w-4 bg-[#FFC83D]" />
-                                  <div style={{ width: 0, height: 0, borderTop: '4px solid transparent', borderBottom: '4px solid transparent', borderLeft: '6px solid #FFC83D' }} />
+                                  <div className="h-px w-4 bg-[#C9A96E]" />
+                                  <div style={{ width: 0, height: 0, borderTop: '4px solid transparent', borderBottom: '4px solid transparent', borderLeft: '6px solid #C9A96E' }} />
                                 </div>
                               </div>
 
@@ -1250,8 +1250,8 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                 <DecisionBBeforeImage />
                               </div>
                               <div className="absolute top-1/2 -right-[10px] -translate-y-1/2 flex items-center z-10">
-                                <div className="h-px w-4 bg-[#FFC83D]" />
-                                <div style={{ width: 0, height: 0, borderTop: '4px solid transparent', borderBottom: '4px solid transparent', borderLeft: '6px solid #FFC83D' }} />
+                                <div className="h-px w-4 bg-[#C9A96E]" />
+                                <div style={{ width: 0, height: 0, borderTop: '4px solid transparent', borderBottom: '4px solid transparent', borderLeft: '6px solid #C9A96E' }} />
                               </div>
                             </div>
                             <div className="px-8 pt-6 pb-8 border-l border-[#E8E8E8]">
@@ -1289,7 +1289,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                   'Informed evaluation becomes the default state.',
                                 ].map(text => (
                                   <div key={text} className="flex items-start gap-2.5">
-                                    <span className="mt-[7px] w-1 h-1 rounded-full bg-[#FFC83D] shrink-0" />
+                                    <span className="mt-[7px] w-1 h-1 rounded-full bg-[#C9A96E] shrink-0" />
                                     <p className="font-sans text-[14px] text-[#666666] leading-[1.6]">{text}</p>
                                   </div>
                                 ))}
@@ -1303,7 +1303,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                       /* ── DECISION 02 ── */
                       <div className="w-full py-2">
 
-                        <div className="h-px w-full mb-10" style={{ background: 'linear-gradient(to right, #FFC83D 48px, #E8E8E8 48px)' }} />
+                        <div className="h-px w-full mb-10" style={{ background: 'linear-gradient(to right, #C9A96E 48px, #E8E8E8 48px)' }} />
 
                         {/* ── Conflict — two voices ── */}
                         <div className="mb-12 grid grid-cols-2 gap-10">
@@ -1326,13 +1326,13 @@ const PatientlyCaseStudyPage: React.FC = () => {
 
                         {/* What Shipped */}
                         <div className="flex items-start gap-4 mb-12">
-                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#FFC83D] shrink-0 mt-0.5">What Shipped</span>
+                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#C9A96E] shrink-0 mt-0.5">What Shipped</span>
                           <div className="w-px h-4 bg-[#E8E8E8] shrink-0 mt-0.5" />
                           <p className="font-sans text-[14px] text-[#444444] leading-[1.7]">3-tab version. The founder's position held — structural transparency won over speed.</p>
                         </div>
 
                         {/* Reflection — first-person, honest */}
-                        <div className="border-l-2 border-[#FFC83D] pl-6 mb-14">
+                        <div className="border-l-2 border-[#C9A96E] pl-6 mb-14">
                           <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-[#767676] mb-3">Reflection</p>
                           <p className="font-sans text-[15px] leading-[1.75] text-[#666666] max-w-[56ch]">
                             In hindsight, the 3-tab version improved transparency — users understood what they were confirming. But it also introduced cognitive load at the exact moment users were already processing dense medical information. The right answer was probably somewhere in between: fewer tabs, more inline context.
@@ -1368,7 +1368,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                           <div className="mx-auto w-full max-w-[320px] md:max-w-none md:w-[78%]">
                             <div className="flex items-baseline gap-3 mb-7">
                               <h5 className="font-sans text-[17px] font-semibold text-[#111111]">3-Tab Flow</h5>
-                              <span className="font-sans text-[11px] uppercase tracking-[0.14em]" style={{ color: '#FFC83D' }}>Shipped</span>
+                              <span className="font-sans text-[11px] uppercase tracking-[0.14em]" style={{ color: '#C9A96E' }}>Shipped</span>
                             </div>
                             <div className="flex flex-col gap-5">
                               {([
@@ -1377,7 +1377,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                 { label: 'Step 3', src: '/decision-02-3tab-step3.png' },
                               ] as const).map(({ label, src }) => (
                                 <div key={label}>
-                                  <div className="w-full overflow-hidden" style={{ borderRadius: '16px', boxShadow: '0 2px 16px 0 rgba(0,0,0,0.08)', border: '1px solid #FFC83D' }}>
+                                  <div className="w-full overflow-hidden" style={{ borderRadius: '16px', boxShadow: '0 2px 16px 0 rgba(0,0,0,0.08)', border: '1px solid #C9A96E' }}>
                                     <img src={src} alt={`3-tab flow ${label}`} className="w-full h-auto block" style={{ marginTop: '-11%' }} />
                                   </div>
                                   <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-[#CCCCCC] mt-2.5 ml-1">{label}</p>
@@ -1401,7 +1401,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                             </div>
                           )}
                           {/* Right — Solution + Why It Matters */}
-                          <div className="border-l-2 border-[#FFC83D] pl-6 lg:pl-8">
+                          <div className="border-l-2 border-[#C9A96E] pl-6 lg:pl-8">
                             <p className="font-sans text-[17px] font-medium leading-[1.75] text-[#111111] mb-6">{decision.decision}</p>
                             <div className="border-t border-[#F0F0F0] pt-4">
                               <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#CCCCCC] mb-2">Why It Matters</p>
@@ -1440,8 +1440,8 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                   {/* Arrow 1 */}
                                   <div className="flex items-center justify-center" style={{ paddingTop: '52px' }}>
                                     <div className="flex items-center">
-                                      <div className="h-px w-6 bg-[#FFC83D]" />
-                                      <div style={{ width: 0, height: 0, borderTop: '5px solid transparent', borderBottom: '5px solid transparent', borderLeft: '8px solid #FFC83D' }} />
+                                      <div className="h-px w-6 bg-[#C9A96E]" />
+                                      <div style={{ width: 0, height: 0, borderTop: '5px solid transparent', borderBottom: '5px solid transparent', borderLeft: '8px solid #C9A96E' }} />
                                     </div>
                                   </div>
                                   {/* Layer 2 — Sources screenshot */}
@@ -1453,7 +1453,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                     <div className="space-y-2 pt-1">
                                       {['Ranked sources list', 'Credibility signal per source', 'Publication date visible'].map(t => (
                                         <div key={t} className="flex items-start gap-2">
-                                          <span className="mt-[5px] w-1 h-1 rounded-full bg-[#FFC83D] shrink-0" />
+                                          <span className="mt-[5px] w-1 h-1 rounded-full bg-[#C9A96E] shrink-0" />
                                           <p className="font-sans text-[11px] text-[#999999] leading-snug">{t}</p>
                                         </div>
                                       ))}
@@ -1462,8 +1462,8 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                   {/* Arrow 2 */}
                                   <div className="flex items-center justify-center" style={{ paddingTop: '52px' }}>
                                     <div className="flex items-center">
-                                      <div className="h-px w-6 bg-[#FFC83D]" />
-                                      <div style={{ width: 0, height: 0, borderTop: '5px solid transparent', borderBottom: '5px solid transparent', borderLeft: '8px solid #FFC83D' }} />
+                                      <div className="h-px w-6 bg-[#C9A96E]" />
+                                      <div style={{ width: 0, height: 0, borderTop: '5px solid transparent', borderBottom: '5px solid transparent', borderLeft: '8px solid #C9A96E' }} />
                                     </div>
                                   </div>
                                   {/* Layer 3 — Article screenshot */}
@@ -1475,7 +1475,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                                     <div className="space-y-2 pt-1">
                                       {['Actual article page', 'Medically reviewed', 'Full source context'].map(t => (
                                         <div key={t} className="flex items-start gap-2">
-                                          <span className="mt-[5px] w-1 h-1 rounded-full bg-[#FFC83D] shrink-0" />
+                                          <span className="mt-[5px] w-1 h-1 rounded-full bg-[#C9A96E] shrink-0" />
                                           <p className="font-sans text-[11px] text-[#999999] leading-snug">{t}</p>
                                         </div>
                                       ))}
@@ -1532,7 +1532,7 @@ const PatientlyCaseStudyPage: React.FC = () => {
                   </div>
                   <div className="border-t border-[#EEEEEE]" />
                   {/* Pivot */}
-                  <div className="border-l-2 border-[#FFC83D] pl-5">
+                  <div className="border-l-2 border-[#C9A96E] pl-5">
                     <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-[#AAAAAA] mb-3">The pivot</p>
                     <p className="font-sans text-[15px] leading-[1.7] text-[#666666]">Record stays, but it's no longer the center. The product is shifting focus to For You — health management built from visit history.</p>
                   </div>

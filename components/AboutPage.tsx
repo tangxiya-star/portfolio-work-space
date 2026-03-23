@@ -149,7 +149,7 @@ const AboutPage: React.FC = () => {
                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
-                <div className="h-[3px] bg-[#FFC83D] w-1/3 mt-0" />
+                <div className="h-[3px] bg-[#C9A96E] w-1/3 mt-0" />
               </Reveal>
             </div>
           </div>
@@ -177,7 +177,7 @@ const AboutPage: React.FC = () => {
                   <div>
                     <span className="font-mono text-[11px] text-[#CCCCCC] block mb-3">{pillar.index}</span>
                     <span
-                      className="font-sans text-[11px] uppercase tracking-[0.22em] font-semibold px-3 py-1 border border-[#FFC83D] text-[#111111]"
+                      className="font-sans text-[11px] uppercase tracking-[0.22em] font-semibold px-3 py-1 border border-[#C9A96E] text-[#111111]"
                     >
                       {pillar.label}
                     </span>
