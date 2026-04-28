@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TaxPilot — Holly Tang</title>
+<meta name="description" content="A self-employed tax companion. Built solo in React Native, designed in code. Component-level case study by Holly Tang." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:wght@400&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ─────────────────────── HERO ─────────────────────── -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">Case Study · 2026</div>
+    <h1 class="serif-display">TaxPilot.</h1>
+    <p class="hero-sub">A self-employed tax companion. Built solo in React Native, designed in code.</p>
+
+    <div class="hero-tags">
+      <span class="tag">Concept</span>
+      <span class="tag">Solo</span>
+      <span class="tag">iOS Native</span>
+      <span class="tag">React Native</span>
+    </div>
+
+    <!-- Hero live demo: TransactionCard breathing into view -->
+    <div class="hero-demo">
+      <div class="hero-stage">
+        <div class="t-card hero-tcard" id="hero-tcard" tabindex="0">
+          <div class="t-row">
+            <div class="t-merchant">
+              <div class="t-icon">SC</div>
+              <div>
+                <div class="t-name">Stripe Connect</div>
+                <div class="t-meta">Mar 14 · Software</div>
+              </div>
+            </div>
+            <div class="t-amount">$<span class="mono">4,250.00</span></div>
+          </div>
+          <div class="t-evidence" data-revealed="false">
+            <div class="t-evidence-row">
+              <div class="t-evidence-dot ok"></div>
+              <div class="t-evidence-text"><strong>Deductible 100%</strong> · Business software</div>
+            </div>
+            <div class="t-evidence-row">
+              <div class="t-evidence-dot mid"></div>
+              <div class="t-evidence-text"><span class="mono">IRS Pub 535</span> · ordinary &amp; necessary</div>
+            </div>
+            <div class="t-evidence-row">
+              <div class="t-evidence-dot mid"></div>
+              <div class="t-evidence-text">High confidence · AI-classified</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-hint">↑ tap card</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num mono">6</span> commits, narratively</div>
+      <div class="hero-stat"><span class="hero-stat-num mono">8</span> components</div>
+      <div class="hero-stat"><span class="hero-stat-num mono">3</span> type roles</div>
+      <div class="hero-stat"><span class="hero-stat-num mono">0</span> third-party UI libs</div>
+    </div>
+  </div>
+</header>
+
+<!-- ─────────────────────── A. COMPONENT GALLERY ─────────────────────── -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-eyebrow">Components</div>
+    <h2 class="serif-display">Eight components. The whole app, on top of these.</h2>
+    <p class="lede">Every screen in TaxPilot is built from the same eight primitives. They live in <code>components/common/</code>. Every one of them runs below — actual HTML, actual states, on the actual design tokens.</p>
+
+    <div class="comp-grid">
+
+      <!-- Button -->
+      <div class="comp-card" data-comp="button">
+        <div class="comp-stage">
+          <div class="comp-stage-inner">
+            <button class="rn-btn primary" data-state="default">Connect bank</button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">Button</div>
+          <div class="comp-variants" role="tablist" aria-label="Button variant">
+            <button class="vb on" data-variant="primary">Primary</button>
+            <button class="vb" data-variant="secondary">Secondary</button>
+            <button class="vb" data-variant="outline">Outline</button>
+            <button class="vb" data-variant="ghost">Ghost</button>
+            <button class="vb" data-variant="destructive">Destructive</button>
+          </div>
+          <div class="comp-cap">5 variants · 3 sizes · loading + disabled states · layout-only style overrides allowed</div>
+        </div>
+      </div>
+
+      <!-- SegmentedControl -->
+      <div class="comp-card" data-comp="seg">
+        <div class="comp-stage">
+          <div class="rn-seg" id="seg-demo">
+            <button class="seg-opt on" data-seg="m">Month</button>
+            <button class="seg-opt" data-seg="q">Quarter</button>
+            <button class="seg-opt" data-seg="y">Year</button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">SegmentedControl</div>
+          <div class="comp-cap">iOS-native feel. Animated thumb. Used across Report and Calendar.</div>
+        </div>
+      </div>
+
+      <!-- Toggle -->
+      <div class="comp-card" data-comp="toggle">
+        <div class="comp-stage">
+          <div class="toggle-row">
+            <div class="toggle-label">Notify me about deductions</div>
+            <button class="rn-toggle on" id="toggle-demo" aria-pressed="true"><span class="toggle-thumb"></span></button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">Toggle</div>
+          <div class="comp-cap">Spring animation. Settings, notifications, account preferences.</div>
+        </div>
+      </div>
+
+      <!-- SmallButton -->
+      <div class="comp-card" data-comp="small">
+        <div class="comp-stage">
+          <div class="small-row">
+            <button class="rn-small">Edit</button>
+            <button class="rn-small ghost">Skip</button>
+            <button class="rn-small dest">Remove</button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">SmallButton</div>
+          <div class="comp-cap">Inline actions. Sized for tight rows — TransactionCard, settings list.</div>
+        </div>
+      </div>
+
+      <!-- SelectionCard -->
+      <div class="comp-card wide" data-comp="select">
+        <div class="comp-stage">
+          <div class="sel-grid">
+            <button class="rn-sel on">
+              <div class="sel-icon">💼</div>
+              <div class="sel-title">Self-employed</div>
+              <div class="sel-sub">1099, freelance, contractor</div>
+            </button>
+            <button class="rn-sel">
+              <div class="sel-icon">🏢</div>
+              <div class="sel-title">LLC</div>
+              <div class="sel-sub">Single-member or multi</div>
+            </button>
+            <button class="rn-sel">
+              <div class="sel-icon">📈</div>
+              <div class="sel-title">S-Corp</div>
+              <div class="sel-sub">Pass-through income</div>
+            </button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">SelectionCard</div>
+          <div class="comp-cap">Used everywhere onboarding asks a multiple-choice question. Tap to select, single-select by default.</div>
+        </div>
+      </div>
+
+      <!-- TransactionRow -->
+      <div class="comp-card wide" data-comp="row">
+        <div class="comp-stage">
+          <div class="t-list">
+            <div class="t-row simple">
+              <div class="t-merchant">
+                <div class="t-icon" style="background:#FBBF24">U</div>
+                <div>
+                  <div class="t-name">Uber</div>
+                  <div class="t-meta">Mar 14 · Travel</div>
+                </div>
+              </div>
+              <div class="t-right">
+                <div class="t-amount mono">−$24.80</div>
+                <div class="t-tag deduct">100% deductible</div>
+              </div>
+            </div>
+            <div class="t-row simple">
+              <div class="t-merchant">
+                <div class="t-icon" style="background:#A78BFA">F</div>
+                <div>
+                  <div class="t-name">Figma</div>
+                  <div class="t-meta">Mar 12 · Software</div>
+                </div>
+              </div>
+              <div class="t-right">
+                <div class="t-amount mono">−$15.00</div>
+                <div class="t-tag deduct">100% deductible</div>
+              </div>
+            </div>
+            <div class="t-row simple">
+              <div class="t-merchant">
+                <div class="t-icon" style="background:#F87171">W</div>
+                <div>
+                  <div class="t-name">Whole Foods</div>
+                  <div class="t-meta">Mar 10 · Meals</div>
+                </div>
+              </div>
+              <div class="t-right">
+                <div class="t-amount mono">−$62.40</div>
+                <div class="t-tag pending">Needs review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">TransactionRow</div>
+          <div class="comp-cap">The atom of the whole product. Same row appears on Home, Calendar, Savings, Report — different props, same component.</div>
+        </div>
+      </div>
+
+      <!-- SpinningLoader -->
+      <div class="comp-card" data-comp="loader">
+        <div class="comp-stage">
+          <div class="rn-loader"></div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">SpinningLoader</div>
+          <div class="comp-cap">One loader, used everywhere. CSS animation only — no reanimated.</div>
+        </div>
+      </div>
+
+      <!-- ReauthBanner -->
+      <div class="comp-card wide" data-comp="reauth">
+        <div class="comp-stage">
+          <div class="rn-reauth">
+            <div class="reauth-icon">⚠</div>
+            <div class="reauth-body">
+              <div class="reauth-title">Chase connection expired</div>
+              <div class="reauth-sub">Reconnect to keep your tax estimate current.</div>
+            </div>
+            <button class="reauth-cta">Reconnect</button>
+          </div>
+        </div>
+        <div class="comp-meta">
+          <div class="comp-name">ReauthBanner</div>
+          <div class="comp-cap">Persistent, non-blocking. The user keeps using the app. A modal would say "broken;" a banner says "recoverable."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── B. STATE MATRIX ─────────────────────── -->
+<section id="states">
+  <div class="wrap">
+    <div class="section-eyebrow">States</div>
+    <h2 class="serif-display">Five states. The happy path is one of them.</h2>
+    <p class="lede">Loading. Analyzing. Empty. Reauth. Paywall. Tap each — the screen swaps. The biggest design decision in the app, hidden in commit <code>5a4539f</code>: I split <em>loading</em> from <em>analyzing</em>. Same wait, two narrative beats. Perceived performance is a design problem, not an engineering one.</p>
+
+    <div class="state-shell">
+      <div class="state-tabs" role="tablist">
+        <button class="state-tab on" data-state="loading">Loading</button>
+        <button class="state-tab" data-state="analyzing">Analyzing</button>
+        <button class="state-tab" data-state="empty">Empty</button>
+        <button class="state-tab" data-state="reauth">Reauth</button>
+        <button class="state-tab" data-state="paywall">Paywall</button>
+      </div>
+
+      <div class="state-stage">
+        <div class="phone">
+          <div class="phone-screen" id="state-screen">
+
+            <!-- LOADING -->
+            <div class="state-screen on" data-screen="loading">
+              <div class="ss-loading-art">
+                <div class="rn-loader big"></div>
+              </div>
+              <div class="ss-title">Connecting to your bank</div>
+              <div class="ss-sub">This usually takes a moment.</div>
+            </div>
+
+            <!-- ANALYZING -->
+            <div class="state-screen" data-screen="analyzing">
+              <div class="ss-analyzing-art">
+                <div class="ana-row done"><span>✓</span> Pulled 412 transactions</div>
+                <div class="ana-row done"><span>✓</span> Categorized 387</div>
+                <div class="ana-row active"><span class="rn-loader tiny"></span> Identifying deductions…</div>
+                <div class="ana-row pending"><span>·</span> Calculating estimate</div>
+              </div>
+              <div class="ss-title">Analyzing your transactions</div>
+              <div class="ss-sub">Narrating what's happening with your data.</div>
+            </div>
+
+            <!-- EMPTY -->
+            <div class="state-screen" data-screen="empty">
+              <div class="ss-empty-art">+</div>
+              <div class="ss-title">No transactions yet</div>
+              <div class="ss-sub">Connect a bank to start tracking deductions automatically.</div>
+              <button class="rn-btn primary small">Connect a bank</button>
+            </div>
+
+            <!-- REAUTH -->
+            <div class="state-screen" data-screen="reauth">
+              <div class="ss-reauth-banner">
+                <div class="reauth-icon">⚠</div>
+                <div class="reauth-body">
+                  <div class="reauth-title small">Chase connection expired</div>
+                  <div class="reauth-sub small">Reconnect to keep estimates current.</div>
+                </div>
+              </div>
+              <div class="ss-faded">
+                <div class="t-row simple"><div class="t-merchant"><div class="t-icon" style="background:#FBBF24">U</div><div><div class="t-name">Uber</div><div class="t-meta">Mar 14</div></div></div><div class="t-amount mono">−$24.80</div></div>
+                <div class="t-row simple"><div class="t-merchant"><div class="t-icon" style="background:#A78BFA">F</div><div><div class="t-name">Figma</div><div class="t-meta">Mar 12</div></div></div><div class="t-amount mono">−$15.00</div></div>
+              </div>
+              <div class="ss-cap">App keeps working. Banner persists. No blocking modal.</div>
+            </div>
+
+            <!-- PAYWALL -->
+            <div class="state-screen" data-screen="paywall">
+              <div class="ss-paywall-art">
+                <div class="ss-paywall-num mono">$2,840</div>
+                <div class="ss-paywall-lbl">Estimated saved</div>
+              </div>
+              <div class="ss-title">Unlock full quarterly estimate</div>
+              <div class="ss-sub">Shown only after the user sees real value. Never a wall on first launch.</div>
+              <button class="rn-btn primary small">Continue · $9 / mo</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="state-caption" id="state-caption">
+          <div class="state-cap-name">Loading</div>
+          <div class="state-cap-text">Connection in progress. Reassure that work is happening — but only here. Hand off to <em>analyzing</em> the moment data starts arriving.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── C. MOTION ─────────────────────── -->
+<section id="motion">
+  <div class="wrap">
+    <div class="section-eyebrow">Motion</div>
+    <h2 class="serif-display">Three motion moments. All built on RN's built-in Animated.</h2>
+    <p class="lede">Constraints first: no <code>reanimated</code>, no third-party motion library. Everything below is JS-thread Animated with hand-tuned easing tokens from <code>constants/motion.ts</code>. Click to replay.</p>
+
+    <div class="motion-grid">
+
+      <div class="motion-card">
+        <div class="motion-stage">
+          <div class="m-discovery" id="m-discovery">
+            <div class="m-card m-c1">Case 1</div>
+            <div class="m-card m-c2">Case 2</div>
+            <div class="m-card m-c3">Case 3</div>
+          </div>
+          <button class="motion-replay" data-motion="m-discovery">↻ Replay</button>
+        </div>
+        <div class="motion-meta">
+          <div class="motion-name">Discovery → Transition</div>
+          <div class="motion-cap">Cards stagger out at 80ms intervals. Easing: <code>easeOutCubic</code>. Total 720ms.</div>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="motion-stage">
+          <div class="m-handoff" id="m-handoff">
+            <div class="m-handoff-frame">
+              <div class="m-handoff-loading">
+                <div class="rn-loader"></div>
+                <div class="m-handoff-text">Connecting</div>
+              </div>
+              <div class="m-handoff-analyzing">
+                <div class="ana-row done"><span>✓</span> Connected</div>
+                <div class="ana-row active"><span class="rn-loader tiny"></span> Analyzing 412 transactions</div>
+              </div>
+            </div>
+          </div>
+          <button class="motion-replay" data-motion="m-handoff">↻ Replay</button>
+        </div>
+        <div class="motion-meta">
+          <div class="motion-name">Loading → Analyzing handoff</div>
+          <div class="motion-cap">Crossfade at 280ms. The same wait, but now the user sees progress.</div>
+        </div>
+      </div>
+
+      <div class="motion-card">
+        <div class="motion-stage">
+          <div class="m-batch" id="m-batch">
+            <div class="m-batch-bar">
+              <div class="m-batch-text">Submit <span class="mono" id="m-batch-count">3</span> changes</div>
+              <button class="m-batch-cta">→</button>
+            </div>
+            <div class="m-batch-confirm">✓ Submitted</div>
+          </div>
+          <button class="motion-replay" data-motion="m-batch">↻ Replay</button>
+        </div>
+        <div class="motion-meta">
+          <div class="motion-name">Batch-submit confirm</div>
+          <div class="motion-cap">Bar shrinks, checkmark scales in with overshoot. 360ms total.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── D. TOKENS ─────────────────────── -->
+<section id="tokens">
+  <div class="wrap">
+    <div class="section-eyebrow">Tokens</div>
+    <h2 class="serif-display">The page you're reading is the design system.</h2>
+    <p class="lede">Every value below is pulled directly from <code>constants/theme.ts</code> in the TaxPilot repo. Same hex codes, same scale, same fonts. The case study is the system; the system is the case study.</p>
+
+    <h3>Brand palette</h3>
+    <div class="swatches">
+      <div class="swatch ink"><div class="swatch-name">Ink</div><div class="swatch-hex">#0D0D0D</div></div>
+      <div class="swatch news"><div class="swatch-name">Newsprint</div><div class="swatch-hex">#E3DFD5</div></div>
+      <div class="swatch em"><div class="swatch-name">Emerald</div><div class="swatch-hex">#22C55F</div></div>
+    </div>
+    <p class="cap">Three brand colors. The CLAUDE.md rule that locks them: "Green is #22C55F — the only green allowed anywhere in the app."</p>
+
+    <h3>Type scale (iOS HIG)</h3>
+    <div class="type-scale">
+      <div class="type-row"><div class="type-label mono">hero · 52</div><div class="type-sample" style="font-size: 52px; line-height: 1;">$24,180</div></div>
+      <div class="type-row"><div class="type-label mono">display · 34</div><div class="type-sample" style="font-size: 34px; line-height: 1.1;">Quarterly estimate</div></div>
+      <div class="type-row"><div class="type-label mono">title1 · 28</div><div class="type-sample" style="font-size: 28px; line-height: 1.15;">Recent transactions</div></div>
+      <div class="type-row"><div class="type-label mono">body · 17</div><div class="type-sample" style="font-size: 17px; font-family: 'Plus Jakarta Sans', sans-serif;">Connect your bank to start tracking deductions automatically.</div></div>
+      <div class="type-row"><div class="type-label mono">caption · 12</div><div class="type-sample" style="font-size: 12px; font-family: 'Plus Jakarta Sans', sans-serif;">Updated 2 minutes ago</div></div>
+    </div>
+
+    <h3>Three fonts. Three jobs.</h3>
+    <div class="fonts-grid">
+      <div class="font-card">
+        <div class="font-sample" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700;">Aa</div>
+        <div class="font-meta">
+          <div class="font-name">Space Grotesk</div>
+          <div class="font-role">Display, headlines</div>
+        </div>
+      </div>
+      <div class="font-card">
+        <div class="font-sample" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;">Aa</div>
+        <div class="font-meta">
+          <div class="font-name">Plus Jakarta Sans</div>
+          <div class="font-role">Body, UI labels</div>
+        </div>
+      </div>
+      <div class="font-card">
+        <div class="font-sample mono" style="font-weight: 700;">$0</div>
+        <div class="font-meta">
+          <div class="font-name">JetBrains Mono</div>
+          <div class="font-role">Every number in the app</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── E. TABULAR FIGURES ─────────────────────── -->
+<section id="figures">
+  <div class="wrap">
+    <div class="section-eyebrow">Detail</div>
+    <h2 class="serif-display">Money has its own typography.</h2>
+    <p class="lede">Same data, two fonts. Left scans like prose. Right reads like a ledger. In a tax product, that's the difference between trusting the app and double-checking it in a spreadsheet.</p>
+
+    <div class="tab-fig">
+      <div class="col">
+        <div class="col-label mono">Proportional sans</div>
+        <div class="nums prop">
+          $1,240.00<br />
+          $872.50<br />
+          $11,103.40<br />
+          $96.00<br />
+          $4,581.99
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label mono">JetBrains Mono · tabular figures</div>
+        <div class="nums mono">
+          $&nbsp;1,240.00<br />
+          $&nbsp;&nbsp;&nbsp;872.50<br />
+          $11,103.40<br />
+          $&nbsp;&nbsp;&nbsp;&nbsp;96.00<br />
+          $&nbsp;4,581.99
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── BOTTOM HALF DIVIDER ─────────────────────── -->
+<section class="divider">
+  <div class="wrap">
+    <div class="divider-eyebrow">— Now the story —</div>
+  </div>
+</section>
+
+<!-- ─────────────────────── STORY 1 — WIREFRAME ─────────────────────── -->
+<section id="story-wireframe">
+  <div class="wrap">
+    <div class="section-eyebrow">Decision 01</div>
+    <h2 class="serif-display">Founder's wireframe came in. I rebuilt three flows.</h2>
+    <p class="lede">The wireframes were directionally right. variant.com — picked over v0/Lovable because its output reads as designed, not generated — gave me a fast first pass. Then I shipped something different from both. Each divergence is a documented decision, not a whim.</p>
+
+    <!-- Divergence 1 -->
+    <div class="divergence">
+      <div class="div-title">[Page name]</div>
+      <div class="div-grid">
+        <div class="div-stage">
+          <div class="stage-label mono">Wireframe</div>
+          <div class="shot">drop wireframe<br />screenshot here</div>
+        </div>
+        <div class="div-stage">
+          <div class="stage-label mono">variant.com</div>
+          <div class="shot">drop variant<br />generation</div>
+        </div>
+        <div class="div-stage">
+          <div class="stage-label mono">Shipped</div>
+          <div class="shot">drop shipped<br />screenshot</div>
+        </div>
+        <div class="div-why">
+          <div class="why-label mono">Why I changed it</div>
+          [2–3 sentences. What was wrong with each prior stage. What design problem the shipped version solves. Which design-system token or RN constraint informed the choice.]
+        </div>
+      </div>
+    </div>
+
+    <div class="divergence">
+      <div class="div-title">[Flow name]</div>
+      <div class="div-grid">
+        <div class="div-stage"><div class="stage-label mono">Wireframe</div><div class="shot">…</div></div>
+        <div class="div-stage"><div class="stage-label mono">variant.com</div><div class="shot">…</div></div>
+        <div class="div-stage"><div class="stage-label mono">Shipped</div><div class="shot">…</div></div>
+        <div class="div-why">
+          <div class="why-label mono">Why I changed it</div>
+          [Rationale.]
+        </div>
+      </div>
+    </div>
+
+    <div class="divergence">
+      <div class="div-title">[Component name]</div>
+      <div class="div-grid">
+        <div class="div-stage"><div class="stage-label mono">Wireframe</div><div class="shot">…</div></div>
+        <div class="div-stage"><div class="stage-label mono">variant.com</div><div class="shot">…</div></div>
+        <div class="div-stage"><div class="stage-label mono">Shipped</div><div class="shot">…</div></div>
+        <div class="div-why">
+          <div class="why-label mono">Why I changed it</div>
+          [Rationale.]
+        </div>
+      </div>
+    </div>
+
+    <p class="note">Need from you: 3 concrete divergences (which page, what changed, why), and screenshots of variant.com generations before they're lost.</p>
+  </div>
+</section>
+
+<!-- ─────────────────────── STORY 2 — AI PIPELINE ─────────────────────── -->
+<section id="story-ai">
+  <div class="wrap">
+    <div class="section-eyebrow">Decision 02</div>
+    <h2 class="serif-display">Two AI tools. One human in the middle.</h2>
+    <p class="lede">Shipping ~10K lines solo, in six narratively distinct commits, took leverage. The skill isn't <em>I used AI</em>. It's knowing which AI for which stage — and where to override it.</p>
+
+    <div class="tool-compare">
+      <div class="tool-card">
+        <h4>variant.com</h4>
+        <div class="role mono">For generation</div>
+        <p>Picked over v0 / Lovable specifically because its output reads as <em>designed</em>, not <em>generated</em>. The mainstream AI UI tools produce instantly-recognizable patterns I'd have to spend cycles fighting; variant gave a scaffold I could build on. Tool selection itself is a design decision.</p>
+      </div>
+      <div class="tool-card">
+        <h4>Claude Code</h4>
+        <div class="role mono">For iteration &amp; system maintenance</div>
+        <p>Bound by <code>CLAUDE.md</code> rules and <code>.claude/memory/</code> persistent feedback. Each session inherits the design system as a hard constraint, so the AI extends the codebase without reintroducing the entropy variant started with.</p>
+      </div>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-row">
+        <div class="pipe-step tool">variant.com</div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step human">copy / paste</div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step human">RN translation</div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step human">design-system refactor</div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step tool">Claude Code (constrained)</div>
+      </div>
+    </div>
+
+    <p class="cap">AI for the parts that benefit from speed and breadth. Human for the parts that need judgment — translation across platforms, refactoring toward a system, writing the rules that lock the next AI session in.</p>
+
+    <h3>The rules the AI is bound by</h3>
+<pre><code><span class="token-comment"># CLAUDE.md — excerpt</span>
+
+<span class="token-comment">## Critical Rules</span>
+<span class="token-key">1.</span> No direct fetch in components — all API calls go through services/api.ts
+<span class="token-key">2.</span> No server data in Zustand — managed by React Query
+<span class="token-key">3.</span> No <span class="token-string">`any`</span> type — strict TypeScript everywhere
+<span class="token-key">4.</span> No business logic in components — extract to hooks/
+<span class="token-key">5.</span> Colors from theme only — never hardcode hex
+<span class="token-key">6.</span> Green is <span class="token-string">#22C55F</span> — the only green allowed anywhere</code></pre>
+  </div>
+</section>
+
+<!-- ─────────────────────── STORY 3 — TRUST ─────────────────────── -->
+<section id="story-trust">
+  <div class="wrap">
+    <div class="section-eyebrow">Decision 03</div>
+    <h2 class="serif-display">Tax apps live or die on trust. Here's how I designed for it.</h2>
+    <p class="lede">Trust isn't a copywriting problem. It's designed across the surface, in moments most users never consciously notice. Six small ones from TaxPilot.</p>
+
+    <div class="trust-list">
+      <div class="trust-item">
+        <div class="t-num mono">01</div>
+        <div class="t-title">Plaid gets the spotlight</div>
+        <div class="t-body">On the bank-connect screen, the Plaid logo is prominent. Borrowed authority — leveraged on purpose.</div>
+      </div>
+      <div class="trust-item">
+        <div class="t-num mono">02</div>
+        <div class="t-title">Reauth is a banner, not a wall</div>
+        <div class="t-body">A blocking modal says "the app is broken." A persistent banner says "this is recoverable, we're handling it."</div>
+      </div>
+      <div class="trust-item">
+        <div class="t-num mono">03</div>
+        <div class="t-title">Reconnect is a full flow</div>
+        <div class="t-body">Errors in finance apps are trust events. Treating them as dead-ends erodes confidence; designing recovery preserves it.</div>
+      </div>
+      <div class="trust-item">
+        <div class="t-num mono">04</div>
+        <div class="t-title">The paywall waits</div>
+        <div class="t-body">Appears only after the user sees their first analyzed transactions. Up front says "pay to find out;" after value says "this works — keep going."</div>
+      </div>
+      <div class="trust-item">
+        <div class="t-num mono">05</div>
+        <div class="t-title">Analyzing narrates itself</div>
+        <div class="t-body">A blank spinner with the user's bank data is, in a tax context, slightly uncomfortable. Narration is reassurance.</div>
+      </div>
+      <div class="trust-item">
+        <div class="t-num mono">06</div>
+        <div class="t-title">Numbers always align</div>
+        <div class="t-body">Misaligned columns subconsciously read as imprecise. Aligned columns read as audited.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── CLOSING — HINDSIGHT ─────────────────────── -->
+<section id="closing">
+  <div class="wrap">
+    <div class="section-eyebrow">Next</div>
+    <h2 class="serif-display">What I'd ship differently next time.</h2>
+    <p class="lede">No portfolio is honest without this part. Five things I'd reorder, redesign, or delete if I started again on Monday.</p>
+
+    <ol class="hindsight">
+      <li>
+        <span class="h-num mono">01</span>
+        <div class="h-body">[Build the design system <em>before</em> the first UI commit, not refactor into it at commit 4. The "design system enforcement" commit added 1,860 lines and removed 1,207 — most of that should never have been there.]</div>
+      </li>
+      <li>
+        <span class="h-num mono">02</span>
+        <div class="h-body">[Set up Storybook (or Expo's equivalent) on day one. The component playground above is exactly what I wished I'd had during build.]</div>
+      </li>
+      <li>
+        <span class="h-num mono">03</span>
+        <div class="h-body">[User-test the loading → analyzing split before assuming it works. I believe the perceived-performance argument, but I haven't measured it.]</div>
+      </li>
+      <li>
+        <span class="h-num mono">04</span>
+        <div class="h-body">[Treat the variant.com → RN translation as a script, not a manual chore. Repeated work is automation work.]</div>
+      </li>
+      <li>
+        <span class="h-num mono">05</span>
+        <div class="h-body">[Write CLAUDE.md before writing any code. Constraints retroactively applied are 10× more expensive than constraints set up front.]</div>
+      </li>
+    </ol>
+
+    <p class="note">These are starter drafts. Replace with your actual hindsight — the more specific and a little uncomfortable, the better.</p>
+  </div>
+</section>
+
+<!-- ─────────────────────── FOOTER ─────────────────────── -->
+<footer>
+  <div class="wrap">
+    <div class="footer-eyebrow">Get in touch</div>
+    <div class="closing-headline serif-display">Let's build something deliberate.</div>
+    <div class="footer-email">tangxiya9906@gmail.com</div>
+    <div class="footer-actions">
+      <a class="footer-cta" href="mailto:tangxiya9906@gmail.com">Send email</a>
+      <a class="footer-link" href="#top">↑ Back to top</a>
+    </div>
+    <div class="footer-colophon">
+      Set in Space Grotesk, Plus Jakarta Sans, JetBrains Mono. Display headings in Instrument Serif.<br />
+      Tokens drawn directly from <code>constants/theme.ts</code>. The page is a live display of the system it documents.
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

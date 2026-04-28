@@ -1,0 +1,342 @@
+<section class="module" id="module-2" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ── -->
+    <div class="module-header animate-in">
+      <span class="module-number">02</span>
+      <h1 class="module-title">Meet the Cast</h1>
+      <p class="module-subtitle">TaxPilot has 23 files in <code>app/</code> — but only 4 types of characters doing the real work. Learn the cast and any file makes sense.</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 1 — The 4 Archetypes
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">The 4 Archetypes</h2>
+      <p>Think of the codebase like a TV production crew. Some people are on camera, some run the memory department, some do research. Every file in TaxPilot belongs to one of these four roles.</p>
+
+      <div class="pattern-cards animate-in stagger-children">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">📱</div>
+          <h4>Screen</h4>
+          <p>What the user sees and touches. A Screen just arranges things on the page — it contains no logic of its own.</p>
+          <code class="pattern-example">app/(tabs)/index.tsx</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">🪝</div>
+          <h4>Hook</h4>
+          <p>Logic extracted from screens so it can be reused and tested independently. Hooks fetch, filter, and transform data.</p>
+          <code class="pattern-example">hooks/useTransactions.ts</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">🗄️</div>
+          <h4>Store</h4>
+          <p>Global memory that any screen can read without passing props. It survives navigation — your login stays yours.</p>
+          <code class="pattern-example">store/taxStore.ts</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">🌐</div>
+          <h4>Service</h4>
+          <p>Everything that talks to the outside world. All network requests flow through one place so they are easy to swap when the backend goes live.</p>
+          <code class="pattern-example">services/api.ts</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 2 — The Store — Global Memory
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">The Store — Global Memory</h2>
+      <p>Imagine a whiteboard that every screen in the app can read and write at any time. That is <span class="tooltip" data-tip="A tiny, fast state-management library for React. create() builds a shared store that any component can subscribe to.">Zustand</span>. The store holds exactly three categories of information — and nothing more.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code><span class="code-line"><span class="code-keyword">import</span> { <span class="code-function">create</span> } <span class="code-keyword">from</span> <span class="code-string">'zustand'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">interface</span> <span class="code-type">TaxStore</span> {</span>
+<span class="code-line">  <span class="code-property">userId</span>: <span class="code-type">string</span> | <span class="code-keyword">null</span></span>
+<span class="code-line">  <span class="code-property">accessToken</span>: <span class="code-type">string</span> | <span class="code-keyword">null</span></span>
+<span class="code-line">  <span class="code-property">pendingSubmitIds</span>: <span class="code-type">string</span>[]</span>
+<span class="code-line">  <span class="code-function">addPendingSubmit</span>: (id: <span class="code-type">string</span>) =&gt; <span class="code-type">void</span></span>
+<span class="code-line">  <span class="code-function">removePendingSubmit</span>: (id: <span class="code-type">string</span>) =&gt; <span class="code-type">void</span></span>
+<span class="code-line">  <span class="code-function">clearPendingSubmit</span>: () =&gt; <span class="code-type">void</span></span>
+<span class="code-line">  <span class="code-property">onboardingComplete</span>: <span class="code-type">boolean</span></span>
+<span class="code-line">  <span class="code-function">setOnboardingComplete</span>: (v: <span class="code-type">boolean</span>) =&gt; <span class="code-type">void</span></span>
+<span class="code-line">  <span class="code-function">setAuth</span>: (userId: <span class="code-type">string</span>, token: <span class="code-type">string</span>) =&gt; <span class="code-type">void</span></span>
+<span class="code-line">  <span class="code-function">clearAuth</span>: () =&gt; <span class="code-type">void</span></span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export const</span> <span class="code-function">useTaxStore</span> = <span class="code-function">create</span>&lt;<span class="code-type">TaxStore</span>&gt;((set) =&gt; ({</span>
+<span class="code-line">  <span class="code-property">userId</span>: <span class="code-keyword">null</span>,</span>
+<span class="code-line">  <span class="code-property">accessToken</span>: <span class="code-keyword">null</span>,</span>
+<span class="code-line">  <span class="code-property">pendingSubmitIds</span>: [],</span>
+<span class="code-line">  <span class="code-function">addPendingSubmit</span>: (id) =&gt;</span>
+<span class="code-line">    <span class="code-function">set</span>((state) =&gt; ({</span>
+<span class="code-line">      <span class="code-property">pendingSubmitIds</span>: state.pendingSubmitIds.<span class="code-function">includes</span>(id)</span>
+<span class="code-line">        ? state.pendingSubmitIds</span>
+<span class="code-line">        : [...state.pendingSubmitIds, id],</span>
+<span class="code-line">    })),</span>
+<span class="code-line">}))</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">PLAIN ENGLISH</span>
+          <div class="translation-lines">
+            <p class="tl"><strong>This is the app's shared memory.</strong> Any screen can read or change these values without passing them around manually.</p>
+            <p class="tl"><strong>userId</strong> = who is currently logged in. It starts as <code>null</code> (nobody) and gets set when the user signs in.</p>
+            <p class="tl"><strong>pendingSubmitIds</strong> = the list of expenses waiting for batch approval. When you tap "Submit All," this list is what gets sent.</p>
+            <p class="tl"><strong>addPendingSubmit</strong> is careful — it checks the list first and refuses to add a duplicate. No expense gets submitted twice.</p>
+            <p class="tl"><strong>create()</strong> sets everything up in one place so all 23 screens draw from the same single source of truth.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>The Rule:</strong> Only 3 things live in Zustand — auth state, batch submit queue, and onboarding progress. Transactions and tax data go through React Query, not the store.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 3 — Hooks — Logic with a Name
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">Hooks — Logic with a Name</h2>
+      <p>A <span class="tooltip" data-tip="A reusable function whose name starts with 'use'. Hooks let you share logic between screens without copying code.">hook</span> is a function that packages up a piece of logic and gives it a name. Instead of writing the same fetch-and-cache code in every screen, you write it once in a hook and call it anywhere.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code><span class="code-line"><span class="code-keyword">import</span> { <span class="code-function">useQuery</span> } <span class="code-keyword">from</span> <span class="code-string">'@tanstack/react-query'</span></span>
+<span class="code-line"><span class="code-keyword">import type</span> { <span class="code-type">Transaction</span> } <span class="code-keyword">from</span> <span class="code-string">'../types/transaction'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">import</span> { <span class="code-property">mockTransactions</span> } <span class="code-keyword">from</span> <span class="code-string">'../mocks/data'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export function</span> <span class="code-function">useTransactions</span>() {</span>
+<span class="code-line">  <span class="code-keyword">return</span> <span class="code-function">useQuery</span>({</span>
+<span class="code-line">    <span class="code-property">queryKey</span>: [<span class="code-string">'transactions'</span>, <span class="code-string">'home'</span>],</span>
+<span class="code-line">    <span class="code-function">queryFn</span>: <span class="code-keyword">async</span> () =&gt; {</span>
+<span class="code-line">      <span class="code-keyword">return</span> <span class="code-property">mockTransactions</span></span>
+<span class="code-line">    },</span>
+<span class="code-line">    <span class="code-property">staleTime</span>: <span class="code-number">30</span> * <span class="code-number">1000</span>,</span>
+<span class="code-line">  })</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">PLAIN ENGLISH</span>
+          <div class="translation-lines">
+            <p class="tl"><strong>useTransactions() asks React Query to fetch the transaction list.</strong> Any screen that calls this hook gets the same data — no duplicate requests.</p>
+            <p class="tl"><strong><span class="tooltip" data-tip="A unique label React Query uses to identify and store a result in its cache. Think of it as the file name for a piece of data.">queryKey</span>: ['transactions', 'home']</strong> is the address in the <span class="tooltip" data-tip="A temporary store of recently fetched data so the same request doesn't need to hit the server again.">cache</span>. If two screens use the same key, they share one copy of the data.</p>
+            <p class="tl"><strong>queryFn</strong> is what actually runs to get the data. Right now it returns mock data — when the backend is live, only this one line changes.</p>
+            <p class="tl"><strong><span class="tooltip" data-tip="How long (in milliseconds) cached data is considered fresh. During this window, React Query skips the network and returns the cached copy instantly.">staleTime</span>: 30 * 1000</strong> means if you asked in the last 30 seconds, use the cached answer — no network call needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 4 — Root Layout — Stage Manager
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">The Root Layout — The Stage Manager</h2>
+      <p>Every actor needs a stage. The root layout (<code>app/_layout.tsx</code>) wraps the entire app in two invisible providers that make everything else possible.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code><span class="code-line">  <span class="code-keyword">return</span> (</span>
+<span class="code-line">    &lt;<span class="code-tag">View</span> <span class="code-attr">style</span>=<span class="code-value">{{ flex: 1 }}</span> <span class="code-attr">onLayout</span>=<span class="code-value">{onLayoutRootView}</span>&gt;</span>
+<span class="code-line">      &lt;<span class="code-tag">QueryClientProvider</span> <span class="code-attr">client</span>=<span class="code-value">{queryClient}</span>&gt;</span>
+<span class="code-line">        &lt;<span class="code-tag">StatusBar</span> <span class="code-attr">style</span>=<span class="code-value">"dark"</span> /&gt;</span>
+<span class="code-line">        &lt;<span class="code-tag">Stack</span> <span class="code-attr">screenOptions</span>=<span class="code-value">{{ headerShown: false }}</span>&gt;</span>
+<span class="code-line">          &lt;<span class="code-tag">Stack.Screen</span> <span class="code-attr">name</span>=<span class="code-value">"(auth)"</span> /&gt;</span>
+<span class="code-line">          &lt;<span class="code-tag">Stack.Screen</span> <span class="code-attr">name</span>=<span class="code-value">"(tabs)"</span> /&gt;</span>
+<span class="code-line">          &lt;<span class="code-tag">Stack.Screen</span> <span class="code-attr">name</span>=<span class="code-value">"detail"</span> /&gt;</span>
+<span class="code-line">        &lt;/<span class="code-tag">Stack</span>&gt;</span>
+<span class="code-line">      &lt;/<span class="code-tag">QueryClientProvider</span>&gt;</span>
+<span class="code-line">    &lt;/<span class="code-tag">View</span>&gt;</span>
+<span class="code-line">  )</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">PLAIN ENGLISH</span>
+          <div class="translation-lines">
+            <p class="tl"><strong><span class="tooltip" data-tip="A React component that wraps child components and makes a shared resource (like the query cache) available to all of them — without passing it as a prop.">QueryClientProvider</span> wraps the whole app</strong> so every hook can use React Query's cache. Remove this and every <code>useQuery</code> call breaks instantly.</p>
+            <p class="tl"><strong>This is the <span class="tooltip" data-tip="A pattern where a wrapper component makes something available to all its children — like a power socket in every room.">provider pattern</span> in action.</strong> You configure the cache once at the top, and every screen below inherits it automatically.</p>
+            <p class="tl"><strong><span class="tooltip" data-tip="Expo Router's navigation system. Stack keeps a history of screens — going back = popping the stack. Each Stack.Screen name maps to a folder or file in app/.">Stack navigator</span> defines three zones:</strong> auth screens (welcome, onboarding), tab screens (home, calendar, savings), and the detail modal. All 23 screens live inside one of these three groups.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <span class="callout-icon">💡</span>
+        <div><strong>Mental model:</strong> QueryClientProvider is the building's electricity supply. Stack is the floor plan. Every room (screen) gets power automatically — but only because the supply is connected at the root.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 5 — Group Chat + Quiz
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">The Cast in Action — A Group Chat</h2>
+      <p>Watch the four archetypes talk to each other when the Home screen loads. Each message is a real handoff that happens inside the app in under a second.</p>
+
+      <!-- Group chat -->
+      <div class="chat-window animate-in" id="chat-module2">
+        <div class="chat-messages">
+
+          <!-- msg 0: screen -->
+          <div class="chat-message" data-msg="0" data-sender="screen" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">S</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">Home Screen</span>
+              <p>Hey useTransactions, I need the transaction list for the home screen.</p>
+            </div>
+          </div>
+
+          <!-- msg 1: hook -->
+          <div class="chat-message" data-msg="1" data-sender="hook" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-2)">H</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2)">useTransactions Hook</span>
+              <p>On it — let me check the React Query cache first.</p>
+            </div>
+          </div>
+
+          <!-- msg 2: hook -->
+          <div class="chat-message" data-msg="2" data-sender="hook" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-2)">H</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2)">useTransactions Hook</span>
+              <p>Cache miss — the data is not there yet. Calling the service...</p>
+            </div>
+          </div>
+
+          <!-- msg 3: service -->
+          <div class="chat-message" data-msg="3" data-sender="service" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-4)">SV</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-4)">services/api.ts</span>
+              <p>Got it. Returning mockTransactions (23 items).</p>
+            </div>
+          </div>
+
+          <!-- msg 4: hook -->
+          <div class="chat-message" data-msg="4" data-sender="hook" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-2)">H</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2)">useTransactions Hook</span>
+              <p>Here you go, Home Screen. Also caching this for 30 seconds.</p>
+            </div>
+          </div>
+
+          <!-- msg 5: screen -->
+          <div class="chat-message" data-msg="5" data-sender="screen" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">S</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">Home Screen</span>
+              <p>Perfect. Rendering the transaction list now.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="chat-typing" id="chat-module2-typing" style="display:none">
+          <div class="chat-avatar" id="chat-module2-typing-avatar" style="background: var(--color-actor-1)">S</div>
+          <div class="chat-typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+
+        <div class="chat-controls">
+          <button class="btn chat-next-btn">Next Message</button>
+          <button class="btn chat-all-btn">Show All</button>
+          <button class="btn chat-reset-btn">Restart</button>
+          <span class="chat-progress">0 / 6 messages</span>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <span class="callout-icon">🎯</span>
+        <div><strong>Notice the pattern:</strong> Screen never talks to Service directly. It always goes Screen → Hook → Service. This layering means you can change the service (mock → real API) without touching a single screen.</div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-container animate-in" id="quiz-module2">
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="The Zustand Store survives navigation — it persists across screen changes, making it the right home for anything that needs to stay put."
+             data-explanation-wrong="State inside a Screen component disappears when you navigate away. A Hook fetches on demand. A Service only talks to the outside world. Only the Store holds memory across navigation.">
+          <h3 class="quiz-question">You want a favorites list that persists when the user navigates away. Where does it live?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>In the Screen component as local state</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>In the Zustand Store — it survives navigation</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>In a Hook — it runs whenever the screen mounts</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>In the Service — it can cache the list there</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="All API calls must go through services/api.ts — calling fetch() directly inside a screen breaks the service layer rule and makes the code hard to maintain or swap."
+             data-explanation-wrong="fetch() does work in React Native — but that is not the issue. The rule is architectural: all network calls belong in services/api.ts so they can be found, tested, and swapped in one place.">
+          <h3 class="quiz-question">AI wrote code that calls <code>fetch()</code> directly inside a Screen component. What rule does this break?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>fetch() does not work in React Native</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>All API calls must go through services/api.ts</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>It works fine — no rule is broken</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The data will load too slowly without a hook</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="10 seconds is less than the 30-second staleTime — React Query considers the cached result still fresh and returns it instantly, no re-fetch needed."
+             data-explanation-wrong="staleTime means the cached data is considered fresh for 30 seconds. At 10 seconds, the data is still fresh — React Query skips the network entirely and returns the cached copy.">
+          <h3 class="quiz-question"><code>useTransactions()</code> has <code>staleTime: 30 * 1000</code>. A user opens the Home tab 10 seconds after their last visit. What happens?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>A new network request is made to refresh the data</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>React Query returns the cached result — no re-fetch needed</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The hook throws a stale data error</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The screen shows a loading spinner while re-fetching</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Try Again</button>
+      </div>
+    </div>
+
+  </div>
+</section>

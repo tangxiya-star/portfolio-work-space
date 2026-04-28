@@ -1,0 +1,246 @@
+<section class="module" id="module-1" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ── -->
+    <div class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">The $4,890 Hunt</h1>
+      <p class="module-subtitle">You tap "Connect Bank" and 30 seconds later the app shows $4,890 in savings — what happened in those 30 seconds?</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 1 — What is TaxPilot?
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">What is TaxPilot?</h2>
+      <p>TaxPilot acts like a metal detector on a beach — it sweeps every <span class="tooltip" data-tip="A purchase or payment recorded by your bank. TaxPilot reads these to find write-offs.">transaction</span> in your account and beeps when it finds a <span class="tooltip" data-tip="An expense the IRS lets you subtract from your taxable income — lowering your tax bill.">deductible</span>. It connects to your bank via <span class="tooltip" data-tip="A secure service that links your bank account to apps, so you never share your actual password.">Plaid</span>, analyzes automatically, then asks you to confirm the finds.</p>
+
+      <div class="step-cards animate-in">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Connect Your Bank</h4>
+            <p>Sign in once through Plaid's secure vault. TaxPilot never touches your credentials.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>AI Scans Transactions</h4>
+            <p>Every line item is matched against IRS deduction rules in seconds — no spreadsheets needed.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>You Confirm &amp; Save</h4>
+            <p>Review the flagged expenses, tap confirm, and the savings are locked in your report.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 2 — The 30-Second Journey
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">The 30-Second Journey</h2>
+      <p>From first tap to your savings report — here is every handoff between screens. Click <strong>Next Step</strong> to walk through the flow yourself.</p>
+
+      <div class="flow-animation" data-steps='[
+        {"highlight":"flow-actor-you","label":"Step 1 — User opens the TaxPilot app for the first time"},
+        {"highlight":"flow-actor-welcome","label":"Step 2 — Welcome screen loads with Apple and Google sign-in options"},
+        {"highlight":"flow-actor-you","label":"Step 3 — User taps Continue with Apple","packet":true,"from":"actor-you","to":"actor-welcome"},
+        {"highlight":"flow-actor-onboarding","label":"Step 4 — Router navigates to Onboarding Step 1 to collect tax profile"},
+        {"highlight":"flow-actor-bank","label":"Step 5 — After 3 onboarding steps, user connects bank account via Plaid"},
+        {"highlight":"flow-actor-discovery","label":"Step 6 — AI analyzes transactions and the Discovery screen shows results"}
+      ]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-you">
+            <div class="flow-actor-icon">👤</div>
+            <span>You</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-welcome">
+            <div class="flow-actor-icon">👋</div>
+            <span>Welcome</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-onboarding">
+            <div class="flow-actor-icon">📋</div>
+            <span>Onboarding</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-bank">
+            <div class="flow-actor-icon">🏦</div>
+            <span>Connect Bank</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-discovery">
+            <div class="flow-actor-icon">🔍</div>
+            <span>Discovery</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Click &ldquo;Next Step&rdquo; to begin</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Next Step</button>
+          <button class="btn flow-reset-btn">Restart</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <span class="callout-icon">💡</span>
+        <div><strong>Key insight:</strong> If a user never reaches Discovery, the journey stopped somewhere in this chain — most likely at Connect Bank if Plaid had a problem.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 3 — What the App Asks You (and Why)
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">What the App Asks You — and Why</h2>
+      <p>Onboarding isn't a survey — it's a tax-rule selector. Every answer you give maps to a specific IRS category that changes what counts as deductible.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code><span class="code-line"><span class="code-keyword">const</span> <span class="code-property">INCOME_OPTIONS</span> = [</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'1099'</span>,   <span class="code-property">label</span>: <span class="code-string">'Self-employed income (1099)'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'side'</span>,   <span class="code-property">label</span>: <span class="code-string">'Side income'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'W2'</span>,    <span class="code-property">label</span>: <span class="code-string">'W-2 Salary'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'K1'</span>,    <span class="code-property">label</span>: <span class="code-string">'K-1 Distribution'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'rental'</span>, <span class="code-property">label</span>: <span class="code-string">'Rental income'</span> },</span>
+<span class="code-line">]</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-property">ENTITY_OPTIONS</span> = [</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'LLC'</span>,         <span class="code-property">label</span>: <span class="code-string">'LLC (Single Member)'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'individual'</span>,  <span class="code-property">label</span>: <span class="code-string">'Individual (No Entity)'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'S-Corp'</span>,      <span class="code-property">label</span>: <span class="code-string">'S-Corp'</span> },</span>
+<span class="code-line">  { <span class="code-property">key</span>: <span class="code-string">'partnership'</span>, <span class="code-property">label</span>: <span class="code-string">'Multi-member LLC / Partnership'</span> },</span>
+<span class="code-line">]</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">PLAIN ENGLISH</span>
+          <div class="translation-lines">
+            <p class="tl"><strong>These short keys map to IRS tax category codes.</strong> The app stores <code>1099</code>, not the full label — so the backend knows exactly which rules apply.</p>
+            <p class="tl"><strong>1099 = paid without tax withheld.</strong> Freelancers and contractors get 1099 forms. They can deduct home offices, equipment, and software that W-2 employees cannot.</p>
+            <p class="tl"><strong>LLC vs S-Corp = different profit rules.</strong> An LLC owner's profits flow straight to personal taxes. An S-Corp can pay the owner a salary and split the rest — changing which deductions apply.</p>
+            <p class="tl"><strong>Your answers determine your deduction rulebook.</strong> Same coffee shop expense = deductible for a 1099 freelancer, not deductible for a W-2 employee — TaxPilot needs to know which you are.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <span class="callout-icon">💡</span>
+        <div><strong>Aha!</strong> The onboarding questions aren't random — they determine which IRS deduction rules apply to you. Change the answer, change the rules.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCREEN 4 — Discovery Report + Quiz
+    ═══════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading">Discovery — Your First Report</h2>
+      <p>After Plaid delivers the transaction history, the Discovery screen shows one of four possible states. Each tells a different story about the user's account.</p>
+
+      <div class="pattern-cards animate-in stagger-children">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">✅</div>
+          <h4>Case 1 — All Clear</h4>
+          <p>Every deductible expense was auto-confirmed. The user sees their total savings with no action required.</p>
+          <code class="pattern-example">status: confirmed</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">🔶</div>
+          <h4>Case 2 — Partial</h4>
+          <p>Some transactions confirmed automatically, others flagged for manual review. User taps through the ambiguous ones.</p>
+          <code class="pattern-example">status: mixed</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">❓</div>
+          <h4>Case 3 — All Pending</h4>
+          <p>Every transaction needs the user's confirmation. Common when expense categories are broad or overlap.</p>
+          <code class="pattern-example">status: pending</code>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon">🆕</div>
+          <h4>Case 4 — No History</h4>
+          <p>No prior transactions found in the connected account. Tracking starts from today — the slate is clean.</p>
+          <code class="pattern-example">status: no_history</code>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-container animate-in" id="quiz-module1">
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="Navigation stops at Connect Bank if Plaid fails — the user never reaches Onboarding completion and so Discovery never loads."
+             data-explanation-wrong="Think about the flow: the user must pass through Connect Bank before Discovery can appear. If that step breaks, everything after it is blocked.">
+          <h3 class="quiz-question">A user reports they never see the Discovery screen. Based on the journey you traced, where would you look first?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>Home screen — it might redirect them away</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>Connect Bank screen — navigation stops here if Plaid fails</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>Step 1 of the onboarding form</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The Report tab in the main navigation</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="LLC and S-Corp have different deductible expense rules under IRS code — the app needs your entity type to apply the correct rulebook."
+             data-explanation-wrong="The logo is the same for everyone. Entity type is used by the backend to select which IRS deduction rules apply — it is core to the tax calculation.">
+          <h3 class="quiz-question">TaxPilot asks for your entity type (LLC, S-Corp) during onboarding. Why?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>To personalize the logo and branding</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>IRS deduction rules differ per entity type — LLC and S-Corp have different rules</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>To calculate the correct state tax rate</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>To connect to the right type of bank account</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="Case 4 is the fresh-start scenario — no prior transaction history was found, so TaxPilot begins tracking from today."
+             data-explanation-wrong="Case 4 is not a failure state. The bank connected fine — there is just no transaction history to analyze yet. Tracking begins now.">
+          <h3 class="quiz-question">A user sees Case 4 (No History) on the Discovery screen. What does this mean?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The bank connection failed and needs to be retried</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>No prior transaction history was found — tracking starts from now</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>All expenses were flagged as personal, not deductible</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div><span>The API returned a server error</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Try Again</button>
+      </div>
+    </div>
+
+  </div>
+</section>

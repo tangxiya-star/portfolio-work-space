@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background with rounded corners -->
+  <rect width="200" height="200" rx="16" fill="#0d0d0d"/>
+  <!-- Logo centered -->
+  <g transform="translate(40, 40) scale(1)">
+    <path d="M 40 20 L 20 20 L 20 100 L 40 100" fill="none" stroke="#e3dfd5" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M 80 20 L 100 20 L 100 100 L 80 100" fill="none" stroke="#e3dfd5" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter"/>
+    <line x1="30" y1="90" x2="70" y2="30" stroke="#22C55F" stroke-width="16" stroke-linecap="square"/>
+    <path d="M 40 30 L 70 30 L 70 60" fill="none" stroke="#22C55F" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

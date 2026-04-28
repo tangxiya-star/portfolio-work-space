@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxPilot · Information Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background: #F5F5F3;
+    color: #1a1a1a;
+    padding: 40px 32px;
+  }
+
+  .doc-header { margin-bottom: 32px; border-bottom: 1px solid #E0DED8; padding-bottom: 16px; }
+  .doc-title { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .doc-meta { font-size: 12px; color: #888; }
+
+  .layer { margin-bottom: 48px; }
+  .layer-title {
+    font-size: 11px; font-weight: 500; color: #888;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 20px; padding-bottom: 8px;
+    border-bottom: 1px solid #E0DED8;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .layer-status {
+    font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    border: 0.5px solid;
+  }
+  .status-confirmed { border-color: #3B6D11; color: #3B6D11; background: #EAF3DE; }
+  .status-draft { border-color: #854F0B; color: #854F0B; background: #FAEEDA; }
+
+  .page-card {
+    background: #fff;
+    border: 0.5px solid #D0CEC8;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 600px;
+  }
+
+  .page-header {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 20px;
+  }
+
+  .page-section {
+    padding: 14px 20px;
+    border-bottom: 0.5px solid #EEECEA;
+  }
+
+  .page-section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+  }
+
+  .item-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .item-list li {
+    font-size: 13px;
+    color: #1a1a1a;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .item-list li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: #888;
+  }
+
+  .nav-list li { color: #444; }
+
+  .nav-arrow {
+    color: #3B6D11;
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .page-section:has(.section-label:first-child) .section-label[style] { color: #854F0B; }
+
+  .page-card .page-section:last-child .section-label {
+    color: #854F0B;
+  }
+
+  .page-card .page-section:last-child {
+    background: #FAEEDA;
+  }
+
+  .page-card .page-section:last-child .item-list li {
+    color: #633806;
+  }
+
+  .page-card .page-section:last-child .item-list li::before {
+    color: #854F0B;
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-title">TaxPilot · Information Architecture</div>
+  <div class="doc-meta">逐层确认 · 最后更新 2026年3月20日</div>
+</div>
+
+<!-- PAGE 1: 启动页 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 1 · 启动页
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">启动页</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>品牌名称</li>
+        <li>核心价值主张文案（"你每年多交的税，不是因为税率高……"）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>开始注册（Apple Sign In / Google Sign In）</li>
+        <li>已有账号登录入口</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 收入类型页（新用户注册后）</li>
+        <li><span class="nav-arrow">→</span> 主页（已有账号登录后）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 2: 问卷第1屏·你是谁 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 2 · 问卷第1屏 · 你是谁
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">收入来源 + 实体类型</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>进度指示（1/3）</li>
+        <li>问题一标题："你有哪些收入来源？"（多选）</li>
+        <li>问题二标题："你的业务实体类型？"（单选）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>收入来源多选：W-2工资 / 自雇收入（1099）/ 副业收入 / 公司K-1分配 / 租金收入</li>
+        <li>实体类型单选：无实体（个人）/ LLC单一成员 / S-Corp / 多成员LLC或合伙企业</li>
+        <li>继续按钮（两题均有选择后可点击）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 问卷第2屏（你在哪）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>收入来源多选，覆盖混合情况（W-2+副业、工资+K-1等）</li>
+        <li>选择K-1收入的用户→后续提示需手动录入K-1表格数据</li>
+        <li>选择租金收入的用户→AI激活Schedule E相关判断逻辑</li>
+        <li>仅选W-2的用户→AI切换到"联邦层面几乎无抵扣"模式，但根据所在州（加州/纽约州/宾夕法尼亚州等）激活州税抵扣逻辑，例如：销售员客户礼品、护士工作服工具、老师教室用品等</li>
+        <li>产品不拒绝任何人群，但核心优化体验为②③④⑤⑥类用户</li>
+        <li>用户可随时在设置页修改收入类型，系统立即激活对应判断逻辑</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 3: 问卷第2屏·你在哪 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 3 · 问卷第2屏 · 你在哪
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">所在州 + 婚姻状态</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>进度指示（2/3）</li>
+        <li>问题一标题："你所在的州？"</li>
+        <li>问题二标题："你的婚姻状态？"</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>州：下拉选择（全部美国州）</li>
+        <li>婚姻状态单选：单身 / 已婚共同申报 / 已婚分开申报</li>
+        <li>继续按钮（两题均有选择后可点击）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 问卷第3屏（你的历史）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 4: 问卷第3屏·你的历史 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 4 · 问卷第3屏 · 你的历史
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">报税起点</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>进度指示（3/3）</li>
+        <li>问题标题："从何时开始以此身份报税？"</li>
+        <li>辅助说明："用于确定历史数据分析起点，最多回溯24个月"</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>单选：2024年或更早 / 2025年 / 2026年（刚开始）</li>
+        <li>完成设置按钮（选择后可点击）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> Plaid 银行连接页</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>选"2024年或更早"→ Plaid直接按用户报税起点到今天的天数拉取，上限24个月</li>
+        <li>选"2025年"→ 从2025年1月1日开始拉取</li>
+        <li>选"2026年"→ 无历史数据，从今日开始追踪</li>
+        <li>2025年漏掉的抵扣→ 可在当年税表直接申报（截止2026年4月15日）</li>
+        <li>2024年及更早漏掉的抵扣→ 需通过1040-X修正税表找回，App提示用户，不直接执行</li>
+        <li>用户感知层面统一为："这些钱本来就是你的，现在找回来了"</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 6: Plaid银行连接 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 5 · Plaid 银行连接
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">Plaid 银行连接</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>说明文字：只读取交易记录，不能转账，不能动钱，随时可断开</li>
+        <li>提示文字："请连接所有与业务相关的账户，包括个人账户、信用卡，以及公司银行账户（如有）"</li>
+        <li>Plaid 品牌标识（建立信任背书）</li>
+        <li>安全说明：256位加密 · 只读权限 · 随时可断</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>通过 Plaid 安全连接按钮（唤起 Plaid Link 原生界面，用户在银行自己的界面完成 OAuth 认证）</li>
+        <li>可重复添加，连接多个账户（个人账户 / 信用卡 / 公司账户均可）</li>
+        <li>已连接账户列表展示，可单独断开某个账户</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 数据加载页（至少连接一个账户后）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>Plaid不区分个人账户和公司账户，所有已连接账户流水统一处理</li>
+        <li>S-Corp / 合伙企业用户需连接公司账户才能捕捉公司层面支出</li>
+        <li>产品不强制区分账户类型，用户自行决定连哪些账户</li>
+        <li>设置页可随时添加或断开账户</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 7: 数据加载 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 6 · 数据加载
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">数据加载</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>加载状态标题："正在分析你的交易记录"</li>
+        <li>回溯时间范围（如"从 2024年1月 至今"）</li>
+        <li>已连接银行账户列表，逐条显示连接状态（✓ 已连接 / 转圈 处理中 / 灰色 待处理）</li>
+        <li>当前处理步骤说明（识别可抵扣支出 / 生成税务报告）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>无用户操作，纯等待状态</li>
+        <li>系统后台：Plaid拉取历史数据 → 批量AI判断 → 写入数据库</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 首次发现页（加载完成后自动跳转）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 8: 首次发现 第一步 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 7 · 首次发现（第一步）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">首次发现 · 三种渲染情况</div>
+
+    <div class="page-section">
+      <div class="section-label">情况一：全部Clear（理论存在，概率极低）</div>
+      <ul class="item-list">
+        <li>所有历史交易AI均高置信度判断，无需用户声明</li>
+        <li>已确认可抵扣总金额大字显示 + 按分类明细展示</li>
+        <li>预计可减少税款金额</li>
+        <li>查看明细按钮 → 直接进入过渡页</li>
+      </ul>
+    </div>
+
+    <div class="page-section">
+      <div class="section-label">情况二：部分Clear + 部分模糊（最常见）</div>
+      <ul class="item-list">
+        <li>已确认金额大字显示 + "另有X笔待你确认"单独列出</li>
+        <li>按分类列出已确认支出明细</li>
+        <li>预计可减少税款金额（基于已确认部分）</li>
+        <li>单一按钮：查看明细 → 进入过渡页 → 主页</li>
+        <li>不在首次发现页强迫用户做决定，选择权交给用户，进入主页后想改就改，想跳就跳</li>
+        <li>Onboarding流程保持简洁，不因模糊款项而变长</li>
+      </ul>
+    </div>
+
+    <div class="page-section">
+      <div class="section-label">情况三：全部模糊</div>
+      <ul class="item-list">
+        <li>标题："发现了X笔可能的抵税机会，需要你来确认"</li>
+        <li>金额显示$???（不给具体数字，给悬念）</li>
+        <li>说明文字："告诉我每笔支出的用途，我来帮你判断能不能抵税"</li>
+        <li>开始确认按钮 → 进入主页，省税页待确认分类优先展示</li>
+      </ul>
+    </div>
+
+    <div class="page-section">
+      <div class="section-label">情况四：无历史数据（2026年全新用户）</div>
+      <ul class="item-list">
+        <li>跳过首次发现页，直接显示欢迎页</li>
+        <li>文案："你的追踪从今天开始，从现在起每一笔业务支出我们都帮你记录和识别，一分不漏"</li>
+        <li>开始追踪按钮 → 直接进入主页，不显示过渡页</li>
+      </ul>
+    </div>
+
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>后端判断路径：全Clear→情况一，部分Clear→情况二，全模糊→情况三，无数据→情况四</li>
+        <li>情况二用户选"稍后再说"→ 模糊款项保留在待确认队列，主页和省税页随时可处理</li>
+        <li>历史模糊款项调整入口：日历页（按日期找）+ 省税页待确认分类（按类找）</li>
+        <li>不单独新增历史调整页，融入日常使用流程</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 8B: 首次发现 第二步·过渡页 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 7B · 首次发现（第二步·过渡页）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">首次发现 · 怎么拿回来</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>标题："这些钱怎么拿回来？"</li>
+        <li>2025年抵扣说明：可在今年税表直接申报，显示距截止天数（系统自动计算：2026-04-15 - 今天）</li>
+        <li>2024年及更早抵扣说明：通过1040-X修正税表找回，报告页会告知具体操作</li>
+        <li>留存承诺文案："从今天起，每一笔该抵的支出我们都帮你盯着，全年追踪，一分不漏"</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>开始追踪按钮 → 正式进入主界面</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 主页（点击开始追踪）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>距截止天数 = (2026-04-15 - today()).days，后端直接计算，不需要AI</li>
+        <li>报税起点为2025年且当前日期早于4月15日 → 显示"直接申报+倒计时"</li>
+        <li>报税起点为2024年或更早 → 显示"1040-X修正税表"说明</li>
+        <li>报税起点为2026年 → 不显示历史找回说明，只显示留存承诺</li>
+        <li>这是用户情绪峰值时刻，留存承诺文案务必真诚，不用营销语气</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 9: 主页 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 8 · 主页（Tab 1）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">主页</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>四格核心指标：总收入 / 可抵扣支出 / 应税收入 / 预计减少税款</li>
+        <li>待确认款项数量</li>
+        <li>待处理交易列表（商户名 + 金额 + 日期 + 状态标签）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>点击任意交易条目 → 进入支出详情页</li>
+        <li>"添加收入"按钮 → 进入手动收入录入页（K-1 / 现金 / 其他收入）</li>
+        <li>底部导航栏切换四大 Tab</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 支出详情页（点击交易条目）</li>
+        <li><span class="nav-arrow">→</span> 手动收入录入页（点击添加收入）</li>
+        <li><span class="nav-arrow">↔</span> 日历 / 省税 / 报告（Tab切换）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>季度预估税估算模块已砍掉，不在主页展示</li>
+        <li>季度税务截止日仅通过推送通知提醒用户，不在主页显示估算数字</li>
+        <li>四格指标计算链：总收入 - 可抵扣支出 = 应税收入 × 税率 = 预计税款，与季度预估税无关，只记录已发生收入</li>
+        <li>总收入 = 今年Plaid已识别入账收入 + 用户手动录入收入，所有数字基于今年数据，时间维度统一</li>
+        <li>所有数字均为年度估算，随时更新，界面加注"基于今年已入账收入估算 · 随时更新"</li>
+        <li>季度缴税≠季度计税：IRS按年度计税，季度只是预付机制，产品层面只显示年度汇总</li>
+        <li>边界情况：今年收入 < 今年可抵扣支出 → 应税收入显示$0，预计税款显示$0，加注"今年支出超过收入，本年度暂无应税收入"</li>
+        <li>没有收入变量，省税数字无法成立，四格指标必须完整展示</li>
+        <li>核心聚焦：帮用户找回可抵扣支出，告诉他能少交多少税</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 10: 日历 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 9 · 日历（Tab 2）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">日历</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>月历视图（有交易的日期标点、税务截止日特殊标注）</li>
+        <li>选中日期的交易明细列表（商户名 + 金额 + 来源 + 状态标签）</li>
+        <li>历史回溯数据与新数据统一展示，无区别对待</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>切换月份（前后翻页）</li>
+        <li>点击日期展开当天所有交易（含历史回溯数据）</li>
+        <li>点击交易条目 → 进入支出详情页（可修改声明、重新触发AI）</li>
+        <li>底部导航栏切换四大 Tab</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 支出详情页（点击交易条目）</li>
+        <li><span class="nav-arrow">↔</span> 主页 / 省税 / 报告（Tab切换）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>历史回溯数据完整可见，用户可在任意历史日期找到交易并修改声明</li>
+        <li>修改声明后重新触发AI判断，省税数字实时更新</li>
+        <li>税务截止日标注仅作提示，不展示估算金额</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 11: 省税 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 10 · 省税（Tab 3）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">省税</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>年度可抵扣支出总额</li>
+        <li>预计减少税款金额</li>
+        <li>按分类列出支出明细（软件订阅 / 业务差旅 / 业务餐饮 / 办公支出等）</li>
+        <li>每个分类显示：支出总额 + 对应省税换算金额</li>
+        <li>年度 / 历史数据切换（今年 / 去年）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>点击分类展开该分类下所有交易条目（含历史数据）</li>
+        <li>点击交易条目 → 进入支出详情页（可修改声明、重新触发AI）</li>
+        <li>底部导航栏切换四大 Tab</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 支出详情页（点击交易条目）</li>
+        <li><span class="nav-arrow">↔</span> 主页 / 日历 / 报告（Tab切换）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>历史回溯数据完整可见，用户可找到任意历史交易并修改声明</li>
+        <li>修改声明后重新触发AI判断，省税数字实时更新</li>
+        <li>省税换算基于用户税务框架设定的税率计算</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 12: 报告 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 11 · 报告（Tab 4）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">报告</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>年度切换选项（今年 / 去年）</li>
+        <li>第一层（默认展开）：四格核心指标——总收入 / 可抵扣支出 / 应税收入 / 预计减少税款</li>
+        <li>第一层（默认展开）：完整税务计算过程——总收入 - 可抵扣支出 = 应税收入 → 联邦税 + 自雇税 + 州税 = 全年预估税，每项标注IRS依据</li>
+        <li>第二层（默认收起，点击展开）：按分类列出可抵扣支出明细，每条显示商户名 + 金额 + 抵扣比例 + IRS依据摘要</li>
+        <li>底部固定：导出PDF + 发送给CPA两个按钮</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>切换年度（今年 / 去年）</li>
+        <li>点击分类标题 → 展开/收起该分类下所有抵扣条目</li>
+        <li>点击单笔抵扣条目 → 进入支出详情页</li>
+        <li>导出 PDF（底部按钮）</li>
+        <li>发送给 CPA：输入邮箱直接发送（底部按钮，无需跳转独立页面）</li>
+        <li>自行报税指南：按Schedule行号列出每个数字该填在哪，用户对照TurboTax / FreeTaxUSA直接抄</li>
+        <li>底部导航栏切换四大 Tab</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 支出详情页（点击单笔抵扣条目）</li>
+        <li><span class="nav-arrow">↔</span> 主页 / 日历 / 省税（Tab切换）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>信息三层分级：总览→分类明细→单笔详情，用户一次只看一个层级，视觉不冗余</li>
+        <li>抵扣明细默认收起，用户主动展开才显示，保持页面干净</li>
+        <li>无独立抵扣明细页和发送CPA页，所有操作在报告页内完成</li>
+        <li>发送给CPA的报告包含：收入汇总 / 每笔抵扣明细 / 银行交易ID / 用户声明原文 / IRS依据 / 税务计算过程</li>
+        <li>自行报税指南按Schedule组织输出：Schedule C各行（广告/软件/差旅/餐饮×50%/家庭办公室等）/ Schedule SE自雇净收入 / Schedule E（K-1收入如有）/ Schedule 1自雇税抵扣</li>
+        <li>每行标注对应税表行号，用户打开TurboTax或FreeTaxUSA直接对号入座填数字，无需理解税法</li>
+        <li>不用CPA也能完整报税是产品核心差异化之一：$240/年TaxPilot vs $500-$2,000/年CPA</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 13: 支出详情页 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 12 · 支出详情页（四个入口共用）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">支出详情页</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>商户名称 + 金额 + 日期 + 来源（Plaid银行账户 / 手动录入）</li>
+        <li>税务判断区块：性质 / 抵扣比例 / 可抵扣金额 / 判断来源（AI自动识别 / 用户声明）/ 状态（已确认 / 待确认）</li>
+        <li>三层凭证链：① 银行原始记录（交易ID）/ ② 判断来源（AI识别逻辑 或 用户声明原文）/ ③ IRS依据（Publication编号 + 条款描述）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>待确认状态：AI返回多分支预计算结果，每个分支直接显示分类名称+可抵扣金额+省税数字+IRS依据，用户选择后立即确认，无需二次AI调用</li>
+        <li>已确认状态·修改声明：自由文本输入框，用户描述新用途 → 标注"已修改·未提交"橙色状态，不立即触发AI</li>
+        <li>手动录入状态：填写商户名称 + 金额 + 日期 + 用途声明 + 生成卡片 → 标注待提交</li>
+        <li>底部浮出"提交X条修改"按钮（有未提交修改时出现）→ 一次性打包AI处理所有修改声明</li>
+        <li>离开页面时若有未提交修改 → 提示"你有X条修改未提交，是否现在提交？"</li>
+        <li>分支选择和批量提交是两套独立机制：分支选择无需提交按钮直接确认，修改声明才需要批量提交</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">←</span> 返回来源页（主页 / 日历 / 省税 / 报告，保留各自入口上下文）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>四个入口（主页/日历/省税/报告）共用同一个组件，返回时回到各自来源页</li>
+        <li>用户声明内容由用户自己负责，产品忠实记录并生成凭证链</li>
+        <li>任何已确认记录随时可修改，没有锁死状态</li>
+        <li>修改采用批量提交机制：单次修改只标注状态，不触发AI；点击"提交X条修改"后统一打包AI处理</li>
+        <li>批量提交减少AI调用次数，节约成本，提升响应效率</li>
+        <li>提交后所有相关数字统一更新</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- PAGE 14: 手动收入录入 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 13 · 手动收入录入（多入口）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">手动收入录入</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>三种录入类型选项：K-1收入 / 现金收入 / 其他收入</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">K-1收入录入表单</div>
+      <ul class="item-list">
+        <li>来源实体名称</li>
+        <li>税年</li>
+        <li>普通业务收入 / 亏损</li>
+        <li>租金净收入（选填）</li>
+        <li>利息收入（选填）</li>
+        <li>资本利得（选填）</li>
+        <li>其他收入（选填）</li>
+        <li>提交按钮 → AI处理，计入应税收入</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">现金 / 其他收入录入表单</div>
+      <ul class="item-list">
+        <li>收入来源描述</li>
+        <li>金额</li>
+        <li>日期</li>
+        <li>提交按钮 → AI处理，计入应税收入</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">入口来源</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">←</span> 主页"添加收入"按钮</li>
+        <li><span class="nav-arrow">←</span> 设置页</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">←</span> 返回来源页（提交后应税收入实时更新）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>K-1收入不会出现在银行流水里，必须手动录入</li>
+        <li>只填有数字的格子，空白格子跳过，AI根据填入内容判断应税收入</li>
+        <li>录入后与Plaid数据合并计算全年应税收入</li>
+        <li>用户可随时修改或删除已录入的收入记录</li>
+        <li>Onboarding选择了K-1收入的用户，首次进入主页时主动提示录入K-1</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- PAGE 17: 账户重新认证流程 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 14 · 账户重新认证流程
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">账户重新认证（Plaid Re-auth）</div>
+    <div class="page-section">
+      <div class="section-label">触发场景</div>
+      <ul class="item-list">
+        <li>银行要求定期重新授权（通常每90天到1年一次，取决于银行）</li>
+        <li>只影响需要重新认证的那张卡，其他账户正常运行</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>推送通知：精确到具体账户名（如"Chase Checking需要重新验证"）</li>
+        <li>主页Banner：橙色警告，精确显示哪张卡出问题，其他账户显示"正常同步中"</li>
+        <li>设置页账户列表：每张卡独立状态，出问题的显示橙色⚠标识</li>
+        <li>重新认证页：说明原因（银行安全机制）+ 承诺历史记录不丢失</li>
+        <li>恢复成功页：绿色确认，告知数据已恢复</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>点击推送通知 → 直接进入重新认证页</li>
+        <li>点击主页Banner"重新连接" → 进入重新认证页</li>
+        <li>点击设置页该账户"重新连接" → 进入重新认证页</li>
+        <li>重新认证页点击"通过Plaid重新连接" → 唤起Plaid Link Update Mode</li>
+        <li>认证成功 → 显示恢复成功页 → 返回主页</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> Plaid Link Update Mode（重新认证）</li>
+        <li><span class="nav-arrow">→</span> 主页（认证成功后）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>监听Plaid的PENDING_EXPIRATION webhook → 提前提醒用户</li>
+        <li>监听ITEM_LOGIN_REQUIRED错误 → 触发重新认证流程</li>
+        <li>多卡情况：每张卡独立状态，互不影响</li>
+        <li>重新认证后历史数据完整保留，不删除不重置</li>
+        <li>每个步骤强调"历史记录不丢失"，降低用户焦虑和流失</li>
+        <li>这是留存的关键节点，用户忽略提示会导致数据断档，影响省税准确性</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<!-- PAGE 13: 设置页 -->
+<div class="layer">
+  <div class="layer-title">
+    页面 15 · 设置页（全局入口）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">设置页</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>税务框架设定：收入类型 / 实体类型 / 报税起点 / 所在州 / 婚姻状态</li>
+        <li>已连接银行账户列表（账户名 + 连接状态）</li>
+        <li>订阅状态（当前方案 + 到期日）</li>
+        <li>账户管理（删除账户入口）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>修改任意税务框架字段 → 所有数据实时重算</li>
+        <li>添加银行账户（重新唤起 Plaid Link）</li>
+        <li>断开银行账户连接</li>
+        <li>管理订阅（升级 / 取消）</li>
+        <li>删除账户及所有数据</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">←</span> 返回来源页（全局入口，任意页面均可进入）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>修改实体类型可模拟不同税务结构下的数字，用户看完可随时改回</li>
+        <li>账户连接有两种操作：① 暂停同步——停止拉取新交易，历史数据和连接状态保留，随时可恢复；② 断开连接——彻底撤销Plaid授权，但历史交易数据仍保留在TaxPilot，不删除</li>
+        <li>二次确认弹窗必须清楚说明"断开不等于数据消失"</li>
+        <li>断开账户为Plaid合规要求，必须提供此入口</li>
+        <li>删除账户及数据为不可逆操作，需二次确认</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- PAGE 14: Paywall -->
+<div class="layer">
+  <div class="layer-title">
+    页面 16 · Paywall（试用到期触发）
+    <span class="layer-status status-confirmed">已确认</span>
+  </div>
+
+  <div class="page-card">
+    <div class="page-header">Paywall</div>
+    <div class="page-section">
+      <div class="section-label">包含信息</div>
+      <ul class="item-list">
+        <li>试用到期提示文案</li>
+        <li>省税总金额：模糊显示（$?,???）</li>
+        <li>分类明细：仅显示类别名称，条目数量和金额全部模糊</li>
+        <li>待确认款项数量：模糊显示</li>
+        <li>具体交易列表：完全遮罩，商户名和金额均不可见</li>
+        <li>订阅方案选择：月付 $19.99 / 年付 $179（省25%）</li>
+        <li>价值说明文案（"解锁你已找到的所有省税空间"）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">功能 / 操作</div>
+      <ul class="item-list">
+        <li>选择订阅方案（月付 / 年付）</li>
+        <li>Apple IAP 付款</li>
+        <li>恢复购买（已订阅用户找回）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">导航出口</div>
+      <ul class="item-list nav-list">
+        <li><span class="nav-arrow">→</span> 主页（付款成功后，所有数据解锁）</li>
+      </ul>
+    </div>
+    <div class="page-section">
+      <div class="section-label">⚑ 业务逻辑备注（开发时落实）</div>
+      <ul class="item-list">
+        <li>模糊策略：金额、交易列表、凭证链全部锁定，只保留分类名称和"已发现X条"的感知</li>
+        <li>"知道有但看不到"是最强付费驱动，不只模糊数字</li>
+        <li>具体哪些元素模糊、哪些保留，开发时细化</li>
+        <li>Paywall无关闭按钮，试用到期后必须付费才能继续使用</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

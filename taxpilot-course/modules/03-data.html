@@ -1,0 +1,331 @@
+<section class="module" id="module-3" style="background: var(--color-bg)">
+  <div class="module-inner">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 1 — The Mock→Real Swap
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 3 / SCREEN 1</p>
+        <h2 class="module-title">How Data Travels</h2>
+        <p class="module-subtitle">You tap a transaction row — TaxPilot shows details instantly with no loading spinner. How? The data was already cached before you tapped.</p>
+
+        <p style="margin-bottom: var(--space-6); color: var(--color-text-secondary); font-size: var(--text-sm); font-family: var(--font-body);">
+          Think of TaxPilot as a postal sorting centre. <span class="tooltip" data-tip="React Query is the sorting system — it manages delivery addresses (queryKeys), decides what to re-fetch, and holds packages in cache so recipients get them instantly.">React Query</span> is the sorting system. Every data request has a mailbox address called a <span class="tooltip" data-tip="A unique array key like ['tax-summary', 2026] that React Query uses to identify cached data — like a postal address for a specific piece of information.">queryKey</span>. Screens are the recipients.
+        </p>
+
+        <!-- Side-by-side: Dev vs Launch -->
+        <div class="animate-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
+          <div style="background: var(--color-bg-code); border-radius: var(--radius-md); padding: var(--space-5); border: 2px solid var(--color-actor-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <span style="background: var(--color-actor-4); color: #000; font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full);">DURING DEV</span>
+            </div>
+            <pre style="font-family: var(--font-mono); font-size: var(--text-xs); color: #98C379; margin: 0; white-space: pre-wrap; line-height: 1.7;"><code><span style="color: #6B7280;">// real call commented out</span>
+<span style="color: #6B7280;">// return api.get&lt;TaxSummary&gt;(</span>
+<span style="color: #6B7280;">//   `/tax/summary?year=${year}`</span>
+<span style="color: #6B7280;">// )</span>
+<span style="color: #98C379;">return mockTaxSummary</span></code></pre>
+            <p style="font-family: var(--font-body); font-size: var(--text-xs); color: #9E9790; margin: var(--space-3) 0 0; line-height: 1.5;">Mock data active. No backend needed.</p>
+          </div>
+          <div style="background: var(--color-bg-code); border-radius: var(--radius-md); padding: var(--space-5); border: 2px solid var(--color-success);">
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+              <span style="background: var(--color-success); color: #fff; font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full);">AFTER LAUNCH</span>
+            </div>
+            <pre style="font-family: var(--font-mono); font-size: var(--text-xs); color: #98C379; margin: 0; white-space: pre-wrap; line-height: 1.7;"><code><span style="color: #C678DD;">return</span> <span style="color: #61AFEF;">api.get</span><span style="color: #ABB2BF;">&lt;</span><span style="color: #E5C07B;">TaxSummary</span><span style="color: #ABB2BF;">&gt;(</span>
+  <span style="color: #98C379;">`/tax/summary?year=${year}`</span>
+<span style="color: #ABB2BF;">)</span>
+<span style="color: #6B7280;">// mock import removed</span></code></pre>
+            <p style="font-family: var(--font-body); font-size: var(--text-xs); color: #9E9790; margin: var(--space-3) 0 0; line-height: 1.5;">Real API active. Zero UI changes needed.</p>
+          </div>
+        </div>
+
+        <!-- Code ↔ English: useTaxSummary.ts -->
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — hooks/useTaxSummary.ts</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">import</span> { <span class="code-function">useQuery</span> } <span class="code-keyword">from</span> <span class="code-string">'@tanstack/react-query'</span></span>
+<span class="code-line"><span class="code-keyword">import</span> { <span class="code-property">api</span> } <span class="code-keyword">from</span> <span class="code-string">'../services/api'</span></span>
+<span class="code-line"><span class="code-keyword">import type</span> { <span class="code-type">TaxSummary</span> } <span class="code-keyword">from</span> <span class="code-string">'../types/tax'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">import</span> { <span class="code-property">mockTaxSummary</span> } <span class="code-keyword">from</span> <span class="code-string">'../mocks/data'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export function</span> <span class="code-function">useTaxSummary</span>(<span class="code-property">year</span>: <span class="code-type">number</span>) {</span>
+<span class="code-line">  <span class="code-keyword">return</span> <span class="code-function">useQuery</span>({</span>
+<span class="code-line">    <span class="code-property">queryKey</span>: [<span class="code-string">'tax-summary'</span>, <span class="code-property">year</span>],</span>
+<span class="code-line">    <span class="code-property">queryFn</span>: <span class="code-keyword">async</span> () => {</span>
+<span class="code-line">      <span class="code-comment">// return api.get&lt;TaxSummary&gt;(`/tax/summary?year=${year}`)</span></span>
+<span class="code-line">      <span class="code-keyword">return</span> <span class="code-property">mockTaxSummary</span></span>
+<span class="code-line">    },</span>
+<span class="code-line">    <span class="code-property">staleTime</span>: <span class="code-string">30 * 1000</span>,</span>
+<span class="code-line">    <span class="code-property">refetchOnWindowFocus</span>: <span class="code-keyword">true</span>,</span>
+<span class="code-line">  })</span>
+<span class="code-line">}</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl">Lines 1–3: Import the useQuery hook and TypeScript type definitions for TaxSummary data.</p>
+              <p class="tl">Line 5: Import fake data for development — this import gets removed entirely when the backend is ready.</p>
+              <p class="tl">Lines 7–8: This hook accepts a year (2024, 2025, 2026) as its input argument.</p>
+              <p class="tl">Line 9: Start a React Query data-fetching request managed by the cache.</p>
+              <p class="tl">Line 10: The cache address — "tax summary for this specific year." Change the year, get a different slot.</p>
+              <p class="tl">Lines 11–13: The actual fetcher — currently returns fake data. The real API call sits above it, commented out.</p>
+              <p class="tl">Line 15: Consider data fresh for 30 seconds. No network re-fetch happens during this window.</p>
+              <p class="tl">Line 16: Re-fetch automatically when the user comes back to the app from the background.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight animate-in">
+          <span class="callout-icon">💡</span>
+          <div><strong>Engineering elegance.</strong> The screen component does not know or care whether data came from mock or real API — zero UI changes needed when the backend goes live. Swap one line, ship to production.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 2 — The React Query Lifecycle
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 3 / SCREEN 2</p>
+        <h2 class="module-title">The React Query Lifecycle</h2>
+        <p class="module-subtitle">A request leaves the screen, bounces through the sorting centre, and returns with data — watch it happen step by step.</p>
+
+        <div class="flow-animation animate-in" data-steps='[
+          {"highlight":"flow-actor-m3-1","label":"Home screen mounts and calls useTransactions()"},
+          {"highlight":"flow-actor-m3-2","label":"Hook checks: is [transactions, home] in the cache?"},
+          {"highlight":"flow-actor-m3-3","label":"Cache miss — data is not there yet"},
+          {"highlight":"flow-actor-m3-4","label":"Hook calls the service to fetch data","packet":true,"from":"actor-m3-3","to":"actor-m3-4"},
+          {"highlight":"flow-actor-m3-5","label":"Service returns mock transaction data","packet":true,"from":"actor-m3-4","to":"actor-m3-5"},
+          {"highlight":"flow-actor-m3-3","label":"React Query stores the result with key [transactions, home]","packet":true,"from":"actor-m3-5","to":"actor-m3-3"},
+          {"highlight":"flow-actor-m3-1","label":"Hook delivers data to Screen — renders transaction list","packet":true,"from":"actor-m3-3","to":"actor-m3-1"}
+        ]'>
+          <div class="flow-actors">
+            <div class="flow-actor" id="flow-actor-m3-1">
+              <div class="flow-actor-icon">📱</div>
+              <span>Screen</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-m3-2">
+              <div class="flow-actor-icon">🪝</div>
+              <span>Hook</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-m3-3">
+              <div class="flow-actor-icon">📬</div>
+              <span>Cache</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-m3-4">
+              <div class="flow-actor-icon">⚙️</div>
+              <span>Service</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-m3-5">
+              <div class="flow-actor-icon">🗄️</div>
+              <span>Mock/Backend</span>
+            </div>
+          </div>
+          <div class="flow-packet" id="flow-packet"></div>
+          <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+          <div class="flow-controls">
+            <button class="btn flow-next-btn">Next Step</button>
+            <button class="btn flow-reset-btn">Restart</button>
+            <span class="flow-progress"></span>
+          </div>
+        </div>
+
+        <div class="callout callout-insight animate-in" style="margin-top: var(--space-6);">
+          <span class="callout-icon">📬</span>
+          <div><strong>Second tap is instant.</strong> After step 7, the data lives in cache. The next screen that calls <code>useTransactions()</code> skips steps 4–6 entirely — the sorting centre already has the package ready to deliver.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 3 — The API Service
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 3 / SCREEN 3</p>
+        <h2 class="module-title">The API Service — One Gate for All Traffic</h2>
+        <p class="module-subtitle">Every network request in TaxPilot passes through a single file. One gate. One rule enforcer.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — services/api.ts</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-property">BASE_URL</span> = <span class="code-property">process.env</span>.<span class="code-property">EXPO_PUBLIC_API_URL</span></span>
+<span class="code-line">  ?? <span class="code-string">'http://localhost:8000/api'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">class</span> <span class="code-type">APIError</span> <span class="code-keyword">extends</span> <span class="code-type">Error</span> {</span>
+<span class="code-line">  <span class="code-property">code</span>: <span class="code-type">string</span></span>
+<span class="code-line">  <span class="code-function">constructor</span>(<span class="code-property">code</span>: <span class="code-type">string</span>, <span class="code-property">message</span>: <span class="code-type">string</span>) {</span>
+<span class="code-line">    <span class="code-keyword">super</span>(<span class="code-property">message</span>)</span>
+<span class="code-line">    <span class="code-keyword">this</span>.<span class="code-property">code</span> = <span class="code-property">code</span></span>
+<span class="code-line">    <span class="code-keyword">this</span>.<span class="code-property">name</span> = <span class="code-string">'APIError'</span></span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">async function</span> <span class="code-function">request</span>&lt;<span class="code-type">T</span>&gt;(</span>
+<span class="code-line">  <span class="code-property">endpoint</span>: <span class="code-type">string</span>,</span>
+<span class="code-line">  <span class="code-property">options</span>?: <span class="code-type">RequestInit</span></span>
+<span class="code-line">): <span class="code-type">Promise</span>&lt;<span class="code-type">T</span>&gt; {</span>
+<span class="code-line">  <span class="code-keyword">const</span> <span class="code-property">token</span> = <span class="code-keyword">await</span> <span class="code-property">storage</span>.<span class="code-function">getToken</span>()</span>
+<span class="code-line">  <span class="code-keyword">const</span> <span class="code-property">response</span> = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">`${BASE_URL}${endpoint}`</span>, {</span>
+<span class="code-line">    <span class="code-property">headers</span>: {</span>
+<span class="code-line">      <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>,</span>
+<span class="code-line">      ...(<span class="code-property">token</span> ? { <span class="code-property">Authorization</span>: <span class="code-string">`Bearer ${token}`</span> } : {}),</span>
+<span class="code-line">    },</span>
+<span class="code-line">    ...<span class="code-property">options</span>,</span>
+<span class="code-line">  })</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">if</span> (!<span class="code-property">response</span>.<span class="code-property">ok</span>) {</span>
+<span class="code-line">    <span class="code-keyword">const</span> <span class="code-property">error</span> = <span class="code-keyword">await</span> <span class="code-property">response</span>.<span class="code-function">json</span>()</span>
+<span class="code-line">    <span class="code-keyword">throw new</span> <span class="code-function">APIError</span>(<span class="code-property">error</span>.<span class="code-property">error</span>.<span class="code-property">code</span>, <span class="code-property">error</span>.<span class="code-property">error</span>.<span class="code-property">message</span>)</span>
+<span class="code-line">  }</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">return</span> <span class="code-property">response</span>.<span class="code-function">json</span>()</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export const</span> <span class="code-property">api</span> = {</span>
+<span class="code-line">  <span class="code-property">get</span>: &lt;<span class="code-type">T</span>&gt;(<span class="code-property">endpoint</span>: <span class="code-type">string</span>) =&gt;</span>
+<span class="code-line">    <span class="code-function">request</span>&lt;<span class="code-type">T</span>&gt;(<span class="code-property">endpoint</span>),</span>
+<span class="code-line">  <span class="code-property">post</span>: &lt;<span class="code-type">T</span>&gt;(<span class="code-property">endpoint</span>: <span class="code-type">string</span>, <span class="code-property">body</span>: <span class="code-type">unknown</span>) =&gt;</span>
+<span class="code-line">    <span class="code-function">request</span>&lt;<span class="code-type">T</span>&gt;(<span class="code-property">endpoint</span>, { <span class="code-property">method</span>: <span class="code-string">'POST'</span>, <span class="code-property">body</span>: <span class="code-type">JSON</span>.<span class="code-function">stringify</span>(<span class="code-property">body</span>) }),</span>
+<span class="code-line">}</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>BASE_URL</strong> — The server address. Reads from an environment variable; falls back to localhost during development.</p>
+              <p class="tl"><strong>APIError</strong> — A custom error type that carries a machine-readable <code>code</code> alongside the human message. Screens can switch on the code to show specific error UI.</p>
+              <p class="tl"><strong>request()</strong> — The universal template. It grabs the stored auth token, attaches it to every request as a Bearer header, calls fetch, and throws a typed APIError if the server responds with an error status.</p>
+              <p class="tl"><strong>api.get / api.post</strong> — Clean, one-line wrappers the rest of the app calls. The caller never sees fetch() directly — they just call <code>api.get('/tax/summary?year=2026')</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight animate-in">
+          <span class="callout-icon">🚪</span>
+          <div><strong>One gate.</strong> No <code>fetch()</code> appears anywhere else in the app — only here. If the API URL or auth method ever changes, there is exactly one file to update.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 4 — queryKey: The Postal Address + Quiz
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 3 / SCREEN 4</p>
+        <h2 class="module-title">queryKey — The Postal Address</h2>
+        <p class="module-subtitle">Every cached result needs a unique address. Change one element in the array — different slot, different data, no collisions.</p>
+
+        <div class="pattern-cards animate-in stagger-children">
+          <div class="pattern-card">
+            <div class="pattern-icon">📬</div>
+            <h4>Home Transactions</h4>
+            <p>useTransactions() — the home screen transaction list.</p>
+            <code class="pattern-example">['transactions', 'home']</code>
+          </div>
+          <div class="pattern-card">
+            <div class="pattern-icon">📬</div>
+            <h4>2026 Tax Summary</h4>
+            <p>useTaxSummary(2026) — current year tax calculations.</p>
+            <code class="pattern-example">['tax-summary', 2026]</code>
+          </div>
+          <div class="pattern-card">
+            <div class="pattern-icon">📬</div>
+            <h4>2025 Tax Summary</h4>
+            <p>useTaxSummary(2025) — previous year. A completely separate cache slot!</p>
+            <code class="pattern-example">['tax-summary', 2025]</code>
+          </div>
+        </div>
+
+        <div class="callout callout-insight animate-in" style="margin-top: var(--space-6);">
+          <span class="callout-icon">🏷️</span>
+          <div><strong>The queryKey IS the address.</strong> Changing the year argument creates a new cache slot. 2026 and 2025 summaries never overwrite each other — they live at different addresses in the sorting centre.</div>
+        </div>
+
+        <!-- QUIZ -->
+        <div class="quiz-container animate-in" id="quiz-module3" style="margin-top: var(--space-8);">
+
+          <!-- Q1 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="staleTime is set to 30 seconds (30 * 1000 ms). Two minutes old means the data is stale and a re-fetch is triggered on next focus — but the old data is shown immediately while the fresh data loads."
+               data-explanation-wrong="Think about which setting controls how long React Query considers data fresh before triggering a background re-fetch.">
+            <h3 class="quiz-question">The Home screen shows tax data from 2 minutes ago even though a transaction was just confirmed. Which setting controls this?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>refetchOnWindowFocus</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>staleTime — set to 30 s, so data older than 30 s triggers a re-fetch</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>queryKey</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>BASE_URL</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="The service layer rule: all fetch calls go through services/api.ts. You add the function there, then create a new hook in hooks/ that calls it via React Query."
+               data-explanation-wrong="Remember the Critical Rule from CLAUDE.md: no direct fetch in components, and server data does not live in Zustand.">
+            <h3 class="quiz-question">You want to add a /tax/deductions endpoint. Where in the codebase do you add the fetch call?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Directly in the screen component</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In services/api.ts, then call it from a new hook in hooks/</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In store/taxStore.ts</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In mocks/data.ts</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Same queryKey = same cache slot. React Query deduplicates: the second screen gets the already-cached result, and only one network request ever fires."
+               data-explanation-wrong="Think about what the queryKey uniquely identifies — and what happens when two hooks share the exact same key.">
+            <h3 class="quiz-question">Two screens both call useTaxSummary(2026). How many actual network requests happen?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Two — one per screen</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>One — React Query shares the cached result between both screens</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Zero — mock data never hits the network</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>It depends on component mount order</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

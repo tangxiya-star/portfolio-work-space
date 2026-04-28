@@ -1,0 +1,426 @@
+<section class="module" id="module-4" style="background: var(--color-bg-warm)">
+  <div class="module-inner">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 1 — The Colour Pyramid
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 4 / SCREEN 1</p>
+        <h2 class="module-title">The Design Engine</h2>
+        <p class="module-subtitle">TaxPilot's entire visual identity — every green, every font, every rounded corner — flows from a single 196-line file called theme.ts.</p>
+
+        <p style="margin-bottom: var(--space-6); color: var(--color-text-secondary); font-size: var(--text-sm); font-family: var(--font-body);">
+          Think of it like a fashion house style guide. One master document defines all approved colours, fabrics (fonts), and silhouettes (spacing). Any deviation gets flagged immediately. The system is built in three tiers.
+        </p>
+
+        <!-- Colour Pyramid -->
+        <div class="animate-in" style="margin-bottom: var(--space-8);">
+          <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text); margin-bottom: var(--space-4); font-weight: 700;">The Colour Pyramid</h3>
+
+          <!-- Tier 1: Brand Primitives (top / smallest) -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+
+            <div style="background: linear-gradient(135deg, #2D8B55, #22C55E); border-radius: var(--radius-md) var(--radius-md) 0 0; padding: var(--space-5) var(--space-8); width: 55%; text-align: center; box-shadow: var(--shadow-md);">
+              <p style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: #fff; letter-spacing: 0.08em; margin-bottom: var(--space-3);">TIER 1 — BRAND PRIMITIVES</p>
+              <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: #0D0D0D; border: 2px solid rgba(255,255,255,0.3);"></div>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.9);">ink</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: #E3DFD5; border: 2px solid rgba(255,255,255,0.3);"></div>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.9);">newsprint</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: #22C55F; border: 2px solid rgba(255,255,255,0.3);"></div>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.9);">emerald</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: #FFFFFF; border: 2px solid rgba(255,255,255,0.3);"></div>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.9);">white</span>
+                </div>
+              </div>
+              <p style="font-family: var(--font-body); font-size: var(--text-xs); color: rgba(255,255,255,0.8); margin-top: var(--space-2);">4 raw hex values. Never used directly in components.</p>
+            </div>
+
+            <!-- Tier 2: Semantic Tokens (middle) -->
+            <div style="background: linear-gradient(135deg, #2A7B9B, #2D8B55); padding: var(--space-5) var(--space-8); width: 75%; text-align: center; box-shadow: var(--shadow-md);">
+              <p style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: #fff; letter-spacing: 0.08em; margin-bottom: var(--space-3);">TIER 2 — SEMANTIC TOKENS</p>
+              <div style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
+                <div style="background: rgba(255,255,255,0.15); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">textPrimary → ink</div>
+                <div style="background: rgba(255,255,255,0.15); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">background → newsprint</div>
+                <div style="background: rgba(255,255,255,0.15); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">accent → emerald</div>
+                <div style="background: rgba(255,255,255,0.15); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">border → ink @ 10%</div>
+              </div>
+              <p style="font-family: var(--font-body); font-size: var(--text-xs); color: rgba(255,255,255,0.8); margin-top: var(--space-2);">Meaningful names that reference primitives. Screens use these.</p>
+            </div>
+
+            <!-- Tier 3: Component Usage (bottom / widest) -->
+            <div style="background: linear-gradient(135deg, #7B6DAA, #2A7B9B); border-radius: 0 0 var(--radius-md) var(--radius-md); padding: var(--space-5) var(--space-8); width: 100%; text-align: center; box-shadow: var(--shadow-md);">
+              <p style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: #fff; letter-spacing: 0.08em; margin-bottom: var(--space-3);">TIER 3 — COMPONENT USAGE</p>
+              <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">HomeScreen</div>
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">TransactionCard</div>
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">SavingsScreen</div>
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">CalendarScreen</div>
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">PendingPill</div>
+                <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; color: #fff;">15+ more…</div>
+              </div>
+              <p style="font-family: var(--font-body); font-size: var(--text-xs); color: rgba(255,255,255,0.8); margin-top: var(--space-2);">Screens use semantic names only — never raw hex values.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code ↔ English: theme.ts brand + semantic colors -->
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — constants/theme.ts (colour section)</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-property">brand</span> = {</span>
+<span class="code-line">  <span class="code-property">ink</span>: <span class="code-string">'#0D0D0D'</span>,</span>
+<span class="code-line">  <span class="code-property">newsprint</span>: <span class="code-string">'#E3DFD5'</span>,</span>
+<span class="code-line">  <span class="code-property">emerald</span>: <span class="code-string">'#22C55F'</span>,</span>
+<span class="code-line">  <span class="code-property">white</span>: <span class="code-string">'#FFFFFF'</span>,</span>
+<span class="code-line">} <span class="code-keyword">as const</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export const</span> <span class="code-property">theme</span> = {</span>
+<span class="code-line">  <span class="code-property">colors</span>: {</span>
+<span class="code-line">    ...<span class="code-property">brand</span>,</span>
+<span class="code-line">    <span class="code-property">primary</span>: <span class="code-property">brand</span>.<span class="code-property">ink</span>,</span>
+<span class="code-line">    <span class="code-property">accent</span>: <span class="code-property">brand</span>.<span class="code-property">emerald</span>,</span>
+<span class="code-line">    <span class="code-property">background</span>: <span class="code-property">brand</span>.<span class="code-property">newsprint</span>,</span>
+<span class="code-line">    <span class="code-property">surface</span>: <span class="code-property">brand</span>.<span class="code-property">white</span>,</span>
+<span class="code-line">    <span class="code-property">textPrimary</span>: <span class="code-property">brand</span>.<span class="code-property">ink</span>,</span>
+<span class="code-line">    <span class="code-property">textSecondary</span>: <span class="code-function">hexToRgba</span>(<span class="code-property">brand</span>.<span class="code-property">ink</span>, <span class="code-string">0.6</span>),</span>
+<span class="code-line">    <span class="code-property">textTertiary</span>: <span class="code-function">hexToRgba</span>(<span class="code-property">brand</span>.<span class="code-property">ink</span>, <span class="code-string">0.5</span>),</span>
+<span class="code-line">    <span class="code-property">border</span>: <span class="code-function">hexToRgba</span>(<span class="code-property">brand</span>.<span class="code-property">ink</span>, <span class="code-string">0.1</span>),</span>
+<span class="code-line">    <span class="code-property">green</span>: <span class="code-property">brand</span>.<span class="code-property">emerald</span>,</span>
+<span class="code-line">    <span class="code-property">greenBg</span>: <span class="code-function">hexToRgba</span>(<span class="code-property">brand</span>.<span class="code-property">emerald</span>, <span class="code-string">0.1</span>),</span>
+<span class="code-line">    <span class="code-property">amber</span>: <span class="code-string">'#C2410C'</span>,</span>
+<span class="code-line">    <span class="code-property">amberBg</span>: <span class="code-string">'rgba(194, 65, 12, 0.1)'</span>,</span>
+<span class="code-line">  },</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>brand</strong> — the 4 raw colour values. The <code>as const</code> tells TypeScript these strings are exact literals, not just any string. These are never referenced directly in components.</p>
+              <p class="tl"><strong>theme.colors</strong> builds semantic names on top of the primitives. <code>textPrimary</code> means ink. <code>accent</code> means emerald. This indirection is the entire point of the system.</p>
+              <p class="tl"><strong>hexToRgba()</strong> creates semi-transparent versions. <code>textSecondary</code> is ink at 60% opacity — a softer label colour without introducing a new hex value.</p>
+              <p class="tl"><strong>amber</strong> is the one exception — a status colour with no primitive alias. It still lives in theme.ts so it has a single source of truth.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout animate-in" style="background: var(--color-error-light); border-left: 3px solid var(--color-error); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); display: flex; gap: var(--space-3); align-items: flex-start; margin-top: var(--space-6);">
+          <span style="font-size: 1.25rem;">⚠️</span>
+          <div><strong>CLAUDE.md rule:</strong> Never hardcode hex values in components. If AI writes <code style="background: var(--color-error-light); padding: 1px 4px;">color: '#0D0D0D'</code> in a screen, flag it immediately — it should be <code style="background: var(--color-error-light); padding: 1px 4px;">theme.colors.ink</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 2 — Typography: Font Styles as Variables
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 4 / SCREEN 2</p>
+        <h2 class="module-title">Typography — Font Styles as Variables</h2>
+        <p class="module-subtitle">Instead of remembering font sizes and weights, components import pre-built style objects. One name, all the right values, guaranteed consistent.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — constants/typography.ts (display + title styles)</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">export const</span> <span class="code-property">typography</span> = {</span>
+<span class="code-line">  <span class="code-property">display</span>: {</span>
+<span class="code-line">    <span class="code-property">fontFamily</span>: <span class="code-property">theme</span>.<span class="code-property">fonts</span>.<span class="code-property">display</span>,</span>
+<span class="code-line">    <span class="code-property">fontSize</span>: <span class="code-property">theme</span>.<span class="code-property">fontSize</span>.<span class="code-property">display</span>,</span>
+<span class="code-line">    <span class="code-property">lineHeight</span>: <span class="code-property">theme</span>.<span class="code-property">lineHeight</span>.<span class="code-property">display</span>,</span>
+<span class="code-line">    <span class="code-property">fontWeight</span>: <span class="code-string">'700'</span>,</span>
+<span class="code-line">    <span class="code-property">letterSpacing</span>: <span class="code-property">theme</span>.<span class="code-property">letterSpacing</span>.<span class="code-property">tight</span>,</span>
+<span class="code-line">    <span class="code-property">color</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">textPrimary</span>,</span>
+<span class="code-line">  } <span class="code-keyword">as</span> <span class="code-type">TextStyle</span>,</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-property">title1</span>: {</span>
+<span class="code-line">    <span class="code-property">fontFamily</span>: <span class="code-property">theme</span>.<span class="code-property">fonts</span>.<span class="code-property">display</span>,</span>
+<span class="code-line">    <span class="code-property">fontSize</span>: <span class="code-property">theme</span>.<span class="code-property">fontSize</span>.<span class="code-property">title1</span>,</span>
+<span class="code-line">    <span class="code-property">lineHeight</span>: <span class="code-property">theme</span>.<span class="code-property">lineHeight</span>.<span class="code-property">title1</span>,</span>
+<span class="code-line">    <span class="code-property">fontWeight</span>: <span class="code-string">'700'</span>,</span>
+<span class="code-line">    <span class="code-property">letterSpacing</span>: <span class="code-property">theme</span>.<span class="code-property">letterSpacing</span>.<span class="code-property">snug</span>,</span>
+<span class="code-line">    <span class="code-property">color</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">textPrimary</span>,</span>
+<span class="code-line">  } <span class="code-keyword">as</span> <span class="code-type">TextStyle</span>,</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-property">title2</span>: {</span>
+<span class="code-line">    <span class="code-property">fontFamily</span>: <span class="code-property">theme</span>.<span class="code-property">fonts</span>.<span class="code-property">heading</span>,</span>
+<span class="code-line">    <span class="code-property">fontSize</span>: <span class="code-property">theme</span>.<span class="code-property">fontSize</span>.<span class="code-property">title2</span>,</span>
+<span class="code-line">    <span class="code-property">lineHeight</span>: <span class="code-property">theme</span>.<span class="code-property">lineHeight</span>.<span class="code-property">title2</span>,</span>
+<span class="code-line">    <span class="code-property">fontWeight</span>: <span class="code-string">'600'</span>,</span>
+<span class="code-line">    <span class="code-property">letterSpacing</span>: <span class="code-property">theme</span>.<span class="code-property">letterSpacing</span>.<span class="code-property">snug</span>,</span>
+<span class="code-line">    <span class="code-property">color</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">textPrimary</span>,</span>
+<span class="code-line">  } <span class="code-keyword">as</span> <span class="code-type">TextStyle</span>,</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>display</strong> — 34px Space Grotesk Bold with tight letter-spacing. This is the style used for the dollar amount hero on the home screen. Large, heavy, commanding.</p>
+              <p class="tl"><strong>title1</strong> — 28px, also Space Grotesk Bold. Used for section headers like "Your Deductions" or year labels. Same weight as display, smaller scale.</p>
+              <p class="tl"><strong>title2</strong> — 22px, switching to the heading font at weight 600. Slightly lighter — used for card titles and subsection labels.</p>
+              <p class="tl">Each style is a pre-built object. A component just writes <code>style={'{'}typography.display{'}'}</code> and gets every property at once — no guessing, no drift.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Font scale cards -->
+        <h3 class="animate-in" style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text); margin: var(--space-8) 0 var(--space-4); font-weight: 700;">The Font Scale</h3>
+        <div class="pattern-cards animate-in stagger-children">
+          <div class="pattern-card" style="text-align: center;">
+            <div style="font-size: 2.1rem; font-weight: 800; font-family: var(--font-display); line-height: 1.1; color: var(--color-text); margin-bottom: var(--space-2);">$4,890</div>
+            <h4 style="font-size: var(--text-xs); margin-bottom: 4px;">display</h4>
+            <p style="font-size: var(--text-xs); margin: 0;">34px · Bold · Space Grotesk</p>
+          </div>
+          <div class="pattern-card" style="text-align: center;">
+            <div style="font-size: 1.75rem; font-weight: 700; font-family: var(--font-display); line-height: 1.2; color: var(--color-text); margin-bottom: var(--space-2);">Tax Summary</div>
+            <h4 style="font-size: var(--text-xs); margin-bottom: 4px;">title1</h4>
+            <p style="font-size: var(--text-xs); margin: 0;">28px · Bold · Space Grotesk</p>
+          </div>
+          <div class="pattern-card" style="text-align: center;">
+            <div style="font-size: 1.375rem; font-weight: 600; font-family: var(--font-display); line-height: 1.3; color: var(--color-text); margin-bottom: var(--space-2);">Deductions</div>
+            <h4 style="font-size: var(--text-xs); margin-bottom: 4px;">title2</h4>
+            <p style="font-size: var(--text-xs); margin: 0;">22px · SemiBold · Heading font</p>
+          </div>
+          <div class="pattern-card" style="text-align: center;">
+            <div style="font-size: 1.0625rem; font-weight: 400; font-family: var(--font-body); line-height: 1.5; color: var(--color-text); margin-bottom: var(--space-2);">Transaction details and descriptions go here.</div>
+            <h4 style="font-size: var(--text-xs); margin-bottom: 4px;">body</h4>
+            <p style="font-size: var(--text-xs); margin: 0;">17px · Regular · Body font</p>
+          </div>
+          <div class="pattern-card" style="text-align: center;">
+            <div style="font-size: 0.8125rem; font-weight: 400; font-family: var(--font-body); line-height: 1.5; color: var(--color-text-secondary); margin-bottom: var(--space-2);">Date · Category · Source label</div>
+            <h4 style="font-size: var(--text-xs); margin-bottom: 4px;">footnote</h4>
+            <p style="font-size: var(--text-xs); margin: 0;">13px · Regular · Muted labels</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 3 — StyleSheet.create: Styles as Objects
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 4 / SCREEN 3</p>
+        <h2 class="module-title">StyleSheet.create — Styles as Objects</h2>
+        <p class="module-subtitle">React Native has no CSS files. Instead, styles are JavaScript objects — but the pattern maps directly to CSS concepts you already know.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — PendingPill StyleSheet block</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">const</span> <span class="code-property">pendingStyles</span> = <span class="code-function">StyleSheet</span>.<span class="code-function">create</span>({</span>
+<span class="code-line">  <span class="code-property">pill</span>: {</span>
+<span class="code-line">    <span class="code-property">flexDirection</span>: <span class="code-string">'row'</span>,</span>
+<span class="code-line">    <span class="code-property">alignItems</span>: <span class="code-string">'center'</span>,</span>
+<span class="code-line">    <span class="code-property">alignSelf</span>: <span class="code-string">'flex-start'</span>,</span>
+<span class="code-line">    <span class="code-property">backgroundColor</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">surface</span>,</span>
+<span class="code-line">    <span class="code-property">paddingHorizontal</span>: <span class="code-property">theme</span>.<span class="code-property">spacing</span>.<span class="code-property">lg</span>,</span>
+<span class="code-line">    <span class="code-property">paddingVertical</span>: <span class="code-property">theme</span>.<span class="code-property">spacing</span>.<span class="code-property">sm</span>,</span>
+<span class="code-line">    <span class="code-property">minHeight</span>: <span class="code-string">44</span>,</span>
+<span class="code-line">    <span class="code-property">borderRadius</span>: <span class="code-property">theme</span>.<span class="code-property">radius</span>.<span class="code-property">round</span>,</span>
+<span class="code-line">    <span class="code-property">gap</span>: <span class="code-property">theme</span>.<span class="code-property">spacing</span>.<span class="code-property">sm</span>,</span>
+<span class="code-line">  },</span>
+<span class="code-line">  <span class="code-property">pillPressed</span>: {</span>
+<span class="code-line">    <span class="code-property">backgroundColor</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">ink</span>,</span>
+<span class="code-line">  },</span>
+<span class="code-line">  <span class="code-property">text</span>: {</span>
+<span class="code-line">    <span class="code-property">fontWeight</span>: <span class="code-string">'600'</span>,</span>
+<span class="code-line">    <span class="code-property">color</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">textPrimary</span>,</span>
+<span class="code-line">  },</span>
+<span class="code-line">  <span class="code-property">textPressed</span>: {</span>
+<span class="code-line">    <span class="code-property">color</span>: <span class="code-property">theme</span>.<span class="code-property">colors</span>.<span class="code-property">white</span>,</span>
+<span class="code-line">  },</span>
+<span class="code-line">})</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><span class="tooltip" data-tip="React Native's equivalent of CSS classes — a function that validates your style objects at startup for better performance and type safety.">StyleSheet.create()</span> is like writing CSS classes. Each key (pill, text) is a named style object you apply to a component — exactly like a CSS class name.</p>
+              <p class="tl"><span class="tooltip" data-tip="In CSS this is 'display: flex'. React Native defaults to column layout — 'row' puts children side by side.">flexDirection: row</span> = CSS <code>display: flex; flex-direction: row</code>. <code>paddingHorizontal</code> = CSS <code>padding-left + padding-right</code> combined into one shorthand.</p>
+              <p class="tl"><span class="tooltip" data-tip="Apple Human Interface Guidelines — Apple's official design specifications for iOS apps, covering touch target sizes, typography, spacing, and more.">minHeight: 44</span> is an Apple <span class="tooltip" data-tip="Human Interface Guidelines — Apple's official design rules for iOS. 44pt is the minimum touch target size to ensure fingers can reliably tap UI elements.">HIG</span> requirement. Touch targets must be at least 44×44 points. This is an accessibility rule, not a preference.</p>
+              <p class="tl"><strong>pillPressed / textPressed</strong> are the pressed-state overrides. The component applies both style arrays simultaneously when the button is active: <code>style={'{'}[styles.pill, isPressed &amp;&amp; styles.pillPressed]{'}'}</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight animate-in">
+          <span class="callout-icon">👆</span>
+          <div><strong>minHeight: 44 is not optional.</strong> Apple Human Interface Guidelines require touch targets to be at least 44×44 points. Too small means users miss taps — especially for people with motor impairments. This is an accessibility requirement baked into every interactive component in TaxPilot.</div>
+        </div>
+
+        <!-- Design token reference table -->
+        <div class="animate-in" style="margin-top: var(--space-8);">
+          <h3 style="font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-4);">CSS ↔ React Native Quick Reference</h3>
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; font-family: var(--font-mono); font-size: var(--text-xs);">
+              <div style="padding: var(--space-3) var(--space-4); background: var(--color-bg-code); color: #ABB2BF; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05);">CSS</div>
+              <div style="padding: var(--space-3) var(--space-4); background: var(--color-bg-code); color: #ABB2BF; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05);">React Native</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #98C379; border-bottom: 1px solid var(--color-border-light);">display: flex</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #61AFEF; border-bottom: 1px solid var(--color-border-light);">flexDirection: 'row'</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #98C379; border-bottom: 1px solid var(--color-border-light);">padding: 8px 16px</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #61AFEF; border-bottom: 1px solid var(--color-border-light);">paddingVertical: 8, paddingHorizontal: 16</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #98C379; border-bottom: 1px solid var(--color-border-light);">border-radius: 9999px</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #61AFEF; border-bottom: 1px solid var(--color-border-light);">borderRadius: theme.radius.round</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #98C379;">gap: 8px</div>
+              <div style="padding: var(--space-3) var(--space-4); color: #61AFEF;">gap: theme.spacing.sm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 4 — One File to Rule Them All + Quiz
+    ════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 4 / SCREEN 4</p>
+        <h2 class="module-title">One File to Rule Them All</h2>
+        <p class="module-subtitle">A single change to theme.ts ripples through the entire app instantly. No find-and-replace. No missed screens. No broken consistency.</p>
+
+        <!-- What-if scenario cards -->
+        <div class="animate-in stagger-children" style="display: grid; grid-template-columns: 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); border-left: 4px solid #FF6B35;">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: 1.5rem;">🎨</span>
+              <div>
+                <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0 0 2px;">SCENARIO 1</p>
+                <h4 style="font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin: 0;">Change <code>brand.emerald</code> to orange <code style="color: #FF6B35;">#FF6B35</code></h4>
+              </div>
+            </div>
+            <p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3);">Everything referencing <code>accent</code>, <code>green</code>, or <code>greenBg</code> updates automatically:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Hero card background</span>
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Confirmed badges</span>
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Year indicator</span>
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Savings progress bar</span>
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Calendar highlights</span>
+              <span style="background: rgba(255,107,53,0.12); color: #C4420C; font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">+ 15 more screens</span>
+            </div>
+          </div>
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); border-left: 4px solid var(--color-info);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: 1.5rem;">📐</span>
+              <div>
+                <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0 0 2px;">SCENARIO 2</p>
+                <h4 style="font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin: 0;">Change <code>theme.spacing.lg</code> from 16 to 24</h4>
+              </div>
+            </div>
+            <p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3);">Every component using <code>theme.spacing.lg</code> respaces simultaneously:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+              <span style="background: var(--color-info-light); color: var(--color-info); font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Button padding</span>
+              <span style="background: var(--color-info-light); color: var(--color-info); font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Card padding</span>
+              <span style="background: var(--color-info-light); color: var(--color-info); font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Nav item spacing</span>
+              <span style="background: var(--color-info-light); color: var(--color-info); font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">Input padding</span>
+              <span style="background: var(--color-info-light); color: var(--color-info); font-family: var(--font-mono); font-size: var(--text-xs); padding: 3px 8px; border-radius: var(--radius-sm);">PendingPill horizontal</span>
+            </div>
+          </div>
+
+          <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); border-left: 4px solid var(--color-success);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: 1.5rem;">✨</span>
+              <div>
+                <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0 0 2px;">SCENARIO 3</p>
+                <h4 style="font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin: 0;">Add a new colour <code>coral</code> to the palette</h4>
+              </div>
+            </div>
+            <p style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3);">Define it once in theme.ts. It becomes available everywhere, immediately, with full TypeScript autocomplete:</p>
+            <pre style="background: var(--color-bg-code); border-radius: var(--radius-sm); padding: var(--space-3); font-family: var(--font-mono); font-size: var(--text-xs); color: #98C379; margin: 0; white-space: pre-wrap;"><code><span style="color: #C678DD;">coral</span>: <span style="color: #98C379;">'#FF6B6B'</span>,   <span style="color: #6B7280;">// add this one line</span>
+<span style="color: #ABB2BF;">theme.colors.coral  </span><span style="color: #6B7280;">// now valid everywhere</span></code></pre>
+          </div>
+        </div>
+
+        <!-- QUIZ -->
+        <div class="quiz-container animate-in" id="quiz-module4">
+
+          <!-- Q1 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Hardcoding a hex value breaks the design token system. If the team later changes the ink colour, this component will not update — it becomes a visual inconsistency that is hard to track down."
+               data-explanation-wrong="The issue is not about whether the hex value exists — it is about where it is defined. One change to theme.ts should update the whole app.">
+            <h3 class="quiz-question">AI wrote <code>color: '#0D0D0D'</code> directly in a screen component. What is the problem?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>That hex code does not exist in the app</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>It hardcodes a value that should reference theme.colors.ink — breaking the single source of truth</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>It works fine as long as it matches the current ink value</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Should be theme.colors.black instead of theme.colors.ink</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Single source of truth — define it once in theme.ts under the colors object, and it becomes available everywhere with TypeScript autocomplete and type safety."
+               data-explanation-wrong="The goal is one definition that everything else references. Defining it in multiple places creates the exact drift problem the design system is built to prevent.">
+            <h3 class="quiz-question">You want to add a warning colour to TaxPilot. Where do you define it?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In each component that uses it</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In theme.ts under the colors object</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>In a separate colors.ts file</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Inline as a hex value in each component that needs it</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="typography.title1 uses theme.fonts.display — which is SpaceGrotesk_700Bold — at theme.fontSize.title1 which resolves to 28. Bold weight (700) with snug letter-spacing."
+               data-explanation-wrong="Check the typography code block above: title1 uses theme.fonts.display (Space Grotesk), not the heading or mono font, and fontSize.title1 is 28, not 22 or 34.">
+            <h3 class="quiz-question">A screen uses <code>typography.title1</code>. Which font family and size does that resolve to?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Plus Jakarta Sans at 22px</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>Space Grotesk Bold at 28px</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>JetBrains Mono at 28px</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div><span>DM Sans at 34px</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Try Again</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

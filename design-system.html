@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxPilot Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #E3DFD5;
+    color: #0D0D0D;
+    padding: 48px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.3px; margin: 48px 0 24px; border-bottom: 2px solid rgba(13,13,13,0.1); padding-bottom: 12px; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.3px; margin: 32px 0 16px; }
+  .subtitle { color: rgba(13,13,13,0.5); font-size: 17px; margin-bottom: 32px; }
+
+  /* Sections */
+  .section { margin-bottom: 48px; }
+
+  /* Color Grid */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .color-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(13,13,13,0.08);
+  }
+  .color-swatch { height: 100px; display: flex; align-items: flex-end; padding: 12px; }
+  .color-swatch span { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 4px 8px; border-radius: 4px; }
+  .color-info { padding: 16px; }
+  .color-info .token { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(13,13,13,0.5); }
+  .color-info .usage { font-size: 13px; color: rgba(13,13,13,0.5); margin-top: 4px; }
+  .color-info .name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+
+  /* Typography samples */
+  .type-sample {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(13,13,13,0.05);
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .type-sample .preview { flex: 1; min-width: 300px; }
+  .type-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .type-meta span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: #F5F5F0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: rgba(13,13,13,0.5);
+    white-space: nowrap;
+  }
+
+  /* Spacing */
+  .spacing-row { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .spacing-bar { background: #22C55F; height: 24px; border-radius: 4px; transition: width 0.3s; }
+  .spacing-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; min-width: 60px; text-align: right; }
+  .spacing-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(13,13,13,0.5); min-width: 40px; }
+
+  /* Radius */
+  .radius-grid { display: flex; gap: 24px; flex-wrap: wrap; align-items: end; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px; height: 80px;
+    background: #0D0D0D;
+    margin-bottom: 8px;
+  }
+  .radius-item .token { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(13,13,13,0.5); }
+  .radius-item .val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
+
+  /* Shadows */
+  .shadow-grid { display: flex; gap: 32px; flex-wrap: wrap; }
+  .shadow-item { text-align: center; }
+  .shadow-box {
+    width: 120px; height: 120px;
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+  .shadow-sm { box-shadow: 0 1px 2px rgba(13,13,13,0.05); }
+  .shadow-md { box-shadow: 0 4px 12px rgba(13,13,13,0.08); }
+  .shadow-lg { box-shadow: 0 8px 24px rgba(13,13,13,0.12); }
+
+  /* Buttons */
+  .button-grid { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: #0D0D0D; color: #fff; }
+  .btn-accent { background: #22C55F; color: #fff; }
+  .btn-outline { background: transparent; color: #0D0D0D; border: 1.5px solid rgba(13,13,13,0.1); }
+  .btn-ghost { background: transparent; color: #0D0D0D; }
+  .btn-danger { background: #DC2626; color: #fff; }
+  .btn-sm { padding: 8px 16px; font-size: 13px; }
+  .btn-pill { border-radius: 9999px; }
+
+  /* Card preset */
+  .card-demo {
+    background: #fff;
+    border-radius: 40px;
+    padding: 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    max-width: 360px;
+  }
+
+  /* Status badges */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .badge-green { background: rgba(34,197,95,0.1); color: #22C55F; }
+  .badge-amber { background: rgba(194,65,12,0.1); color: #C2410C; }
+  .badge-red { background: rgba(220,38,38,0.1); color: #DC2626; }
+  .badge-blue { background: rgba(37,99,235,0.1); color: #2563EB; }
+
+  /* Text color demos */
+  .text-demo { padding: 16px 0; }
+  .text-demo p { margin-bottom: 8px; font-size: 15px; }
+
+  /* Grid helper */
+  .inline-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<h1>TaxPilot Design System</h1>
+<p class="subtitle">Visual reference generated from <code>constants/theme.ts</code> + <code>constants/typography.ts</code></p>
+
+<!-- ═══════════════ COLORS ═══════════════ -->
+<h2>Brand Colors</h2>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background:#0D0D0D"><span style="color:#fff;background:rgba(255,255,255,0.15)">#0D0D0D</span></div>
+    <div class="color-info"><div class="name">Ink</div><div class="token">brand.ink / primary</div><div class="usage">Brand black, primary actions, text</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#E3DFD5"><span style="color:#0D0D0D;background:rgba(13,13,13,0.08)">#E3DFD5</span></div>
+    <div class="color-info"><div class="name">Newsprint</div><div class="token">brand.newsprint / background</div><div class="usage">Page background, warm grey</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#22C55F"><span style="color:#fff;background:rgba(255,255,255,0.2)">#22C55F</span></div>
+    <div class="color-info"><div class="name">Emerald</div><div class="token">brand.emerald / accent</div><div class="usage">The ONLY green allowed. Accent, savings, positive</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#FFFFFF;border-bottom:1px solid rgba(13,13,13,0.1)"><span style="color:#0D0D0D;background:rgba(13,13,13,0.05)">#FFFFFF</span></div>
+    <div class="color-info"><div class="name">White</div><div class="token">surface</div><div class="usage">Cards, inputs, surfaces</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#F5F5F0;border-bottom:1px solid rgba(13,13,13,0.05)"><span style="color:#0D0D0D;background:rgba(13,13,13,0.05)">#F5F5F0</span></div>
+    <div class="color-info"><div class="name">Surface Dim</div><div class="token">surfaceDim</div><div class="usage">Subtle surface variation, secondary backgrounds</div></div>
+  </div>
+</div>
+
+<h3>Text Colors</h3>
+<div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(13,13,13,0.05)">
+  <p style="color:#0D0D0D;font-size:17px;margin-bottom:8px"><strong>textPrimary</strong> — #0D0D0D — Headings, primary content</p>
+  <p style="color:rgba(13,13,13,0.5);font-size:17px;margin-bottom:8px"><strong>textSecondary</strong> — rgba(13,13,13,0.5) — Labels, descriptions</p>
+  <p style="color:rgba(13,13,13,0.35);font-size:17px;margin-bottom:8px"><strong>textTertiary</strong> — rgba(13,13,13,0.35) — Hints</p>
+  <p style="color:rgba(13,13,13,0.3);font-size:17px;margin-bottom:8px"><strong>textMuted</strong> — rgba(13,13,13,0.3) — Placeholders, disabled</p>
+  <div style="background:#0D0D0D;border-radius:8px;padding:16px;margin-top:8px">
+    <p style="color:#FFFFFF;font-size:17px;margin-bottom:4px"><strong>textInverse</strong> — #FFFFFF — Text on dark backgrounds</p>
+    <p style="color:rgba(255,255,255,0.6);font-size:17px"><strong>textInverseMuted</strong> — rgba(255,255,255,0.6)</p>
+  </div>
+</div>
+
+<h3>Border Colors</h3>
+<div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(13,13,13,0.05);display:flex;gap:24px;flex-wrap:wrap">
+  <div style="border:2px solid rgba(13,13,13,0.1);border-radius:12px;padding:16px 24px">
+    <code>border</code> — rgba(13,13,13,0.1)
+  </div>
+  <div style="border:2px solid rgba(13,13,13,0.05);border-radius:12px;padding:16px 24px">
+    <code>borderLight</code> — rgba(13,13,13,0.05)
+  </div>
+</div>
+
+<h3>Status Colors</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background:#22C55F"><span style="color:#fff;background:rgba(255,255,255,0.2)">#22C55F</span></div>
+    <div class="color-info"><div class="name">Green</div><div class="usage">Savings, positive states</div>
+      <div style="margin-top:8px"><span class="badge badge-green">Savings found</span></div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#C2410C"><span style="color:#fff;background:rgba(255,255,255,0.2)">#C2410C</span></div>
+    <div class="color-info"><div class="name">Amber</div><div class="usage">Pending, warnings</div>
+      <div style="margin-top:8px"><span class="badge badge-amber">Pending review</span></div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#DC2626"><span style="color:#fff;background:rgba(255,255,255,0.2)">#DC2626</span></div>
+    <div class="color-info"><div class="name">Red</div><div class="usage">Errors, destructive actions</div>
+      <div style="margin-top:8px"><span class="badge badge-red">Error occurred</span></div>
+    </div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background:#2563EB"><span style="color:#fff;background:rgba(255,255,255,0.2)">#2563EB</span></div>
+    <div class="color-info"><div class="name">Blue</div><div class="usage">Info, links</div>
+      <div style="margin-top:8px"><span class="badge badge-blue">Info available</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TYPOGRAPHY ═══════════════ -->
+<h2>Typography</h2>
+
+<h3>Font Families</h3>
+<div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(13,13,13,0.05);margin-bottom:24px">
+  <p style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;margin-bottom:16px">Space Grotesk — Display & Headings</p>
+  <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;margin-bottom:16px">Plus Jakarta Sans — Body & UI text</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:17px">JetBrains Mono — Numbers & Code</p>
+</div>
+
+<h3>Type Scale</h3>
+
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:700;line-height:56px">$12,450</div>
+  <div class="type-meta"><span>hero</span><span>52px / 56</span><span>Space Grotesk 700</span><span>Home hero amount</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:700;line-height:52px">$8,200</div>
+  <div class="type-meta"><span>feature</span><span>48px / 52</span><span>Space Grotesk 700</span><span>Discovery confirmed</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:700;line-height:44px">Big Title</div>
+  <div class="type-meta"><span>jumbo</span><span>40px / 44</span><span>Space Grotesk 700</span><span>Large display</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;line-height:41px;letter-spacing:-0.5px">Display Heading</div>
+  <div class="type-meta"><span>display</span><span>34px / 41</span><span>Space Grotesk 700</span><span>ls: -0.5</span><span>Hero headlines</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;line-height:34px;letter-spacing:-0.3px">Title 1 — Page Titles</div>
+  <div class="type-meta"><span>title1</span><span>28px / 34</span><span>Space Grotesk 700</span><span>ls: -0.3</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:400;line-height:30px">2,847</div>
+  <div class="type-meta"><span>metric</span><span>24px / 30</span><span>JetBrains Mono</span><span>Grid stat values</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;line-height:28px;letter-spacing:-0.3px">Title 2 — Section Heading</div>
+  <div class="type-meta"><span>title2</span><span>22px / 28</span><span>Space Grotesk 600</span><span>ls: -0.3</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;line-height:25px;letter-spacing:-0.3px">Title 3 — Sub-section</div>
+  <div class="type-meta"><span>title3</span><span>20px / 25</span><span>Space Grotesk 600</span><span>ls: -0.3</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:600;line-height:22px">Headline — Emphasized body text</div>
+  <div class="type-meta"><span>headline</span><span>17px / 22</span><span>Plus Jakarta Sans 600</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:400;line-height:22px">Body — Default text for reading. The quick brown fox jumps over the lazy dog.</div>
+  <div class="type-meta"><span>body</span><span>17px / 22</span><span>Plus Jakarta Sans 400</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:400;line-height:21px">Callout — Buttons and prominent UI elements</div>
+  <div class="type-meta"><span>callout</span><span>16px / 21</span><span>Plus Jakarta Sans 400</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:400;line-height:20px;color:rgba(13,13,13,0.5)">Subhead — Supporting text below headings</div>
+  <div class="type-meta"><span>subhead</span><span>15px / 20</span><span>Plus Jakarta Sans 400</span><span>textSecondary</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:400;line-height:18px;color:rgba(13,13,13,0.5)">Footnote — Secondary labels and helper text</div>
+  <div class="type-meta"><span>footnote</span><span>13px / 18</span><span>Plus Jakarta Sans 400</span><span>textSecondary</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;line-height:16px;letter-spacing:0.2px;color:rgba(13,13,13,0.5)">Caption 1 — Image captions, metadata</div>
+  <div class="type-meta"><span>caption1</span><span>12px / 16</span><span>Plus Jakarta Sans 500</span><span>ls: 0.2</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;line-height:13px;letter-spacing:0.2px;color:rgba(13,13,13,0.3)">Caption 2 — Micro labels, timestamps</div>
+  <div class="type-meta"><span>caption2</span><span>11px / 13</span><span>Plus Jakarta Sans 500</span><span>textMuted</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(13,13,13,0.5)">Label — Uppercase tracking</div>
+  <div class="type-meta"><span>label</span><span>12px / 16</span><span>uppercase</span><span>ls: 1.5</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(13,13,13,0.5)">MICRO LABEL PRESET</div>
+  <div class="type-meta"><span>microLabel</span><span>10px</span><span>weight 600</span><span>ls: 2</span><span>uppercase</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:400;line-height:22px">$1,234.56 — Mono regular</div>
+  <div class="type-meta"><span>mono</span><span>17px / 22</span><span>JetBrains Mono 400</span></div>
+</div>
+<div class="type-sample">
+  <div class="preview" style="font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;line-height:22px">$9,876.54 — Mono bold</div>
+  <div class="type-meta"><span>monoBold</span><span>17px / 22</span><span>JetBrains Mono 700</span></div>
+</div>
+
+<!-- ═══════════════ BUTTONS ═══════════════ -->
+<h2>Buttons</h2>
+
+<h3>Variants</h3>
+<div class="button-grid">
+  <button class="btn btn-primary">Primary</button>
+  <button class="btn btn-accent">Accent</button>
+  <button class="btn btn-outline">Outline</button>
+  <button class="btn btn-ghost">Ghost</button>
+  <button class="btn btn-danger">Danger</button>
+</div>
+
+<h3>Sizes & Shapes</h3>
+<div class="button-grid">
+  <button class="btn btn-primary">Default (16px pad)</button>
+  <button class="btn btn-primary btn-sm">Small</button>
+  <button class="btn btn-primary btn-pill">Pill Shape</button>
+  <button class="btn btn-accent btn-pill">Accent Pill</button>
+  <button class="btn btn-outline btn-pill btn-sm">Small Pill</button>
+</div>
+
+<h3>Full Width (mobile pattern)</h3>
+<div style="max-width:360px">
+  <button class="btn btn-primary" style="width:100%;margin-bottom:12px">Continue</button>
+  <button class="btn btn-outline" style="width:100%">Go Back</button>
+</div>
+
+<!-- ═══════════════ SPACING ═══════════════ -->
+<h2>Spacing (8pt Grid)</h2>
+<div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(13,13,13,0.05)">
+  <div class="spacing-row"><div class="spacing-label">xxs</div><div class="spacing-bar" style="width:2px"></div><div class="spacing-value">2px</div></div>
+  <div class="spacing-row"><div class="spacing-label">xs</div><div class="spacing-bar" style="width:4px"></div><div class="spacing-value">4px</div></div>
+  <div class="spacing-row"><div class="spacing-label">sm</div><div class="spacing-bar" style="width:8px"></div><div class="spacing-value">8px</div></div>
+  <div class="spacing-row"><div class="spacing-label">md</div><div class="spacing-bar" style="width:12px"></div><div class="spacing-value">12px</div></div>
+  <div class="spacing-row"><div class="spacing-label">lg</div><div class="spacing-bar" style="width:16px"></div><div class="spacing-value">16px</div></div>
+  <div class="spacing-row"><div class="spacing-label">xl</div><div class="spacing-bar" style="width:24px"></div><div class="spacing-value">24px</div></div>
+  <div class="spacing-row"><div class="spacing-label">2xl</div><div class="spacing-bar" style="width:32px"></div><div class="spacing-value">32px</div></div>
+  <div class="spacing-row"><div class="spacing-label">3xl</div><div class="spacing-bar" style="width:48px"></div><div class="spacing-value">48px</div></div>
+  <div class="spacing-row"><div class="spacing-label">4xl</div><div class="spacing-bar" style="width:64px"></div><div class="spacing-value">64px</div></div>
+</div>
+
+<!-- ═══════════════ BORDER RADIUS ═══════════════ -->
+<h2>Border Radius</h2>
+<div class="radius-grid">
+  <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="val">4px</div><div class="token">xs — checkboxes</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="val">8px</div><div class="token">sm — tags</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="val">12px</div><div class="token">button</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="val">16px</div><div class="token">md — cards</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="val">24px</div><div class="token">lg — modals</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:40px"></div><div class="val">40px</div><div class="token">xl — feature cards</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:48px"></div><div class="val">48px</div><div class="token">2xl — panels</div></div>
+  <div class="radius-item"><div class="radius-box" style="border-radius:9999px;width:80px;height:80px"></div><div class="val">9999px</div><div class="token">round — pills</div></div>
+</div>
+
+<!-- ═══════════════ SHADOWS ═══════════════ -->
+<h2>Shadows</h2>
+<div class="shadow-grid">
+  <div class="shadow-item">
+    <div class="shadow-box shadow-sm"></div>
+    <div style="font-weight:600">sm</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(13,13,13,0.5)">y:1 blur:2 op:0.05</div>
+    <div style="font-size:13px;color:rgba(13,13,13,0.5)">Subtle lift</div>
+  </div>
+  <div class="shadow-item">
+    <div class="shadow-box shadow-md"></div>
+    <div style="font-weight:600">md</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(13,13,13,0.5)">y:4 blur:12 op:0.08</div>
+    <div style="font-size:13px;color:rgba(13,13,13,0.5)">Cards</div>
+  </div>
+  <div class="shadow-item">
+    <div class="shadow-box shadow-lg"></div>
+    <div style="font-weight:600">lg</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(13,13,13,0.5)">y:8 blur:24 op:0.12</div>
+    <div style="font-size:13px;color:rgba(13,13,13,0.5)">Modals, popovers</div>
+  </div>
+</div>
+
+<!-- ═══════════════ CARD PRESET ═══════════════ -->
+<h2>Card Preset</h2>
+<div class="card-demo">
+  <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:8px">Card Title</div>
+  <div style="font-size:15px;color:rgba(13,13,13,0.5);margin-bottom:16px">This card uses the <code>theme.card</code> preset: radius 40, padding 32, shadow md.</div>
+  <button class="btn btn-primary" style="width:100%">Action</button>
+</div>
+
+<!-- ═══════════════ STATUS BADGES ═══════════════ -->
+<h2>Status Badges</h2>
+<div class="inline-grid" style="margin-bottom:16px">
+  <span class="badge badge-green">&#x2713; Savings Found</span>
+  <span class="badge badge-amber">&#x25CF; Pending Review</span>
+  <span class="badge badge-red">&#x2717; Error</span>
+  <span class="badge badge-blue">&#x2139; Info</span>
+</div>
+
+<div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(13,13,13,0.05)">
+  <table style="width:100%;border-collapse:collapse;font-size:14px">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(13,13,13,0.1)">
+        <th style="text-align:left;padding:8px 12px">Status</th>
+        <th style="text-align:left;padding:8px 12px">Foreground</th>
+        <th style="text-align:left;padding:8px 12px">Background</th>
+        <th style="text-align:left;padding:8px 12px">When to use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding:8px 12px"><span style="color:#22C55F">&#x25CF;</span> Green</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">#22C55F</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">rgba(34,197,95,0.1)</td><td style="padding:8px 12px">Savings, positive, success</td></tr>
+      <tr><td style="padding:8px 12px"><span style="color:#C2410C">&#x25CF;</span> Amber</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">#C2410C</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">rgba(194,65,12,0.1)</td><td style="padding:8px 12px">Pending, warnings</td></tr>
+      <tr><td style="padding:8px 12px"><span style="color:#DC2626">&#x25CF;</span> Red</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">#DC2626</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">rgba(220,38,38,0.1)</td><td style="padding:8px 12px">Errors, destructive</td></tr>
+      <tr><td style="padding:8px 12px"><span style="color:#2563EB">&#x25CF;</span> Blue</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">#2563EB</td><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px">rgba(37,99,235,0.1)</td><td style="padding:8px 12px">Info, links</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="height:64px"></div>
+<p style="text-align:center;font-size:13px;color:rgba(13,13,13,0.35)">TaxPilot Design System v2.0 — Generated from theme.ts + typography.ts</p>
+<div style="height:32px"></div>
+
+</body>
+</html>

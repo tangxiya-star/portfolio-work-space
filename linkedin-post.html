@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LinkedIn Post — Copy Ready</title>
+<style>
+  body {
+    font-family: -apple-system, sans-serif;
+    max-width: 680px;
+    margin: 60px auto;
+    padding: 40px;
+    background: #f3f2ef;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    white-space: pre-wrap;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #000;
+  }
+  h2 { margin-bottom: 16px; font-size: 14px; color: #666; }
+  .note {
+    margin-top: 24px;
+    padding: 16px;
+    background: #fffbe6;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+<h2>Select all → Copy → Paste into LinkedIn</h2>
+<div class="card" id="post">My college friend and I are shipping a full product in 30 days.
+
+Here's what we did before writing a single line of code.
+
+Tax season hit and we kept seeing the same complaint everywhere — filing taxes in the US is painful, confusing, and expensive.
+
+So we decided to build something about it. Him on backend. Me on frontend. No team. No funding. Just two college friends and a deadline.
+
+But here's the thing most people get wrong about moving fast:
+𝗦𝗽𝗲𝗲𝗱 𝗰𝗼𝗺𝗲𝘀 𝗳𝗿𝗼𝗺 𝗽𝗿𝗲𝗽𝗮𝗿𝗮𝘁𝗶𝗼𝗻, 𝗻𝗼𝘁 𝘀𝗵𝗼𝗿𝘁𝗰𝘂𝘁𝘀.
+
+Before we wrote a single component, we created 4 documents:
+→ A full API contract spec
+→ An information architecture doc covering every page's logic
+→ A frontend dev standards guide
+→ A complete mock data file so I could build without waiting for backend
+
+Why this matters from a frontend architecture perspective:
+
+Most side projects rot after v1. We designed ours not to.
+
+1. Strict separation of concerns
+No business logic in components. No fetch calls outside the service layer. Every API call goes through one file. When we swap mock data for real endpoints — 𝘇𝗲𝗿𝗼 𝗰𝗼𝗺𝗽𝗼𝗻𝗲𝗻𝘁 𝗰𝗵𝗮𝗻𝗴𝗲𝘀.
+
+2. State management with clear boundaries
+Zustand for client-only state. React Query for all server data. No overlap. No confusion about source of truth.
+
+3. A real design system from day one
+One green. One type scale. One spacing grid. Not a UI library — just a theme file and a typography file that every component references. Consistency without dependency.
+
+4. The code is the documentation
+File names are the routing. Hooks describe what they do. Types are strict — no `any`, ever. Six months from now, either of us can onboard a new contributor in an afternoon.
+
+We're not launched yet. But the foundation is set so that when we do, we can iterate fast without rewriting everything.
+
+𝗜𝗳 𝘆𝗼𝘂'𝗿𝗲 𝗯𝘂𝗶𝗹𝗱𝗶𝗻𝗴 𝘄𝗶𝘁𝗵 𝗮 𝘀𝗺𝗮𝗹𝗹 𝘁𝗲𝗮𝗺 — 𝗶𝗻𝘃𝗲𝘀𝘁 𝗶𝗻 𝘁𝗵𝗲 𝗯𝗼𝗿𝗶𝗻𝗴 𝘀𝘁𝘂𝗳𝗳 𝗳𝗶𝗿𝘀𝘁.
+
+#buildinpublic #frontend #reactnative #startup #sideproject</div>
+
+<div class="note">💡 The bold text uses Unicode math bold characters (𝗯𝗼𝗹𝗱) which render on LinkedIn. Just select all text in the white box above and paste directly.</div>
+</body>
+</html>

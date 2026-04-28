@@ -1,0 +1,75 @@
+/*
+  TaxPilot Motion System (CSS Implementation)
+  Derived from constants/motion.ts for web / design-system.html use.
+*/
+
+:root {
+  /* ── Duration ─────────────── */
+  /* Micro-interactions: button press, icon swap */
+  --motion-duration-instant: 150ms;
+  
+  /* Standard UI feedback: fade, color change */
+  --motion-duration-fast: 250ms;
+  
+  /* Page-level transitions: slide, fade in/out */
+  --motion-duration-normal: 400ms;
+  
+  /* Emphasis: hero card entrance, onboarding reveals */
+  --motion-duration-slow: 600ms;
+  
+  /* Splash / intro-only */
+  --motion-duration-dramatic: 900ms;
+
+  /* ── Easing ───────────────── */
+  /* Easing.out(Easing.cubic) - fast start, gentle settle (entering screen) */
+  --motion-easing-enter: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  
+  /* Easing.in(Easing.cubic) - gentle start, fast finish (leaving screen) */
+  --motion-easing-exit: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  
+  /* Easing.inOut(Easing.cubic) - on-screen movement */
+  --motion-easing-standard: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  
+  /* Spring approximations for CSS (since pure CSS lacks spring physics) */
+  --motion-spring-snappy: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --motion-spring-gentle: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Stagger & Distances ──── */
+  --motion-stagger-offset: 80ms;
+  
+  --motion-distance-xs: 12px;
+  --motion-distance-md: 40px;
+}
+
+/* 
+  Utility Classes Example 
+  These map to the preset config in motion.ts
+*/
+.animate-fade-in {
+  animation: fadeIn var(--motion-duration-fast) var(--motion-easing-enter) forwards;
+}
+
+.animate-slide-up-enter {
+  animation: slideUpEnter var(--motion-duration-normal) var(--motion-easing-enter) forwards;
+}
+
+.animate-card-enter {
+  animation: slideUpEnter var(--motion-duration-slow) var(--motion-easing-enter) forwards;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-distance-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

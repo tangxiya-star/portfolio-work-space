@@ -1,0 +1,521 @@
+<section class="module" id="module-5" style="background: var(--color-bg); --color-accent: #2D8B55">
+  <div class="module-inner">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 1 — File = Route: Expo Router Magic
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 5 / SCREEN 1</p>
+        <h2 class="module-title">File = Route</h2>
+        <p class="module-subtitle">Adding a new screen to TaxPilot takes 30 seconds — create a file in the right folder and it appears automatically. Here is the magic behind that.</p>
+
+        <div class="file-tree">
+          <div class="file-tree-item file-tree-dir">
+            <span class="file-tree-icon">📁</span>
+            <span class="file-tree-name">app/</span>
+            <span class="file-tree-desc">All screens — filename = route</span>
+          </div>
+
+          <div class="file-tree-item file-tree-file" style="margin-left: 1.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">index.tsx</span>
+            <span class="file-tree-desc">→ / (root redirect to /intro)</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 1.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">detail.tsx</span>
+            <span class="file-tree-desc">→ /detail (transaction modal)</span>
+          </div>
+
+          <div class="file-tree-item file-tree-dir" style="margin-left: 1.5rem">
+            <span class="file-tree-icon">📁</span>
+            <span class="file-tree-name">(auth)/</span>
+            <span class="file-tree-desc">route group — does NOT appear in URL</span>
+          </div>
+
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">intro.tsx</span>
+            <span class="file-tree-desc">→ /intro</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">welcome.tsx</span>
+            <span class="file-tree-desc">→ /welcome</span>
+          </div>
+
+          <div class="file-tree-item file-tree-dir" style="margin-left: 3rem">
+            <span class="file-tree-icon">📁</span>
+            <span class="file-tree-name">onboarding/</span>
+            <span class="file-tree-desc"></span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 4.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">step1.tsx</span>
+            <span class="file-tree-desc">→ /onboarding/step1</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 4.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">step2.tsx</span>
+            <span class="file-tree-desc">→ /onboarding/step2</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 4.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">step3.tsx</span>
+            <span class="file-tree-desc">→ /onboarding/step3</span>
+          </div>
+
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">connect.tsx</span>
+            <span class="file-tree-desc">→ /connect</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">loading.tsx</span>
+            <span class="file-tree-desc">→ /loading</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">analyzing.tsx</span>
+            <span class="file-tree-desc">→ /analyzing</span>
+          </div>
+
+          <div class="file-tree-item file-tree-dir" style="margin-left: 3rem">
+            <span class="file-tree-icon">📁</span>
+            <span class="file-tree-name">discovery/</span>
+            <span class="file-tree-desc"></span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 4.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">index.tsx</span>
+            <span class="file-tree-desc">→ /discovery</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 4.5rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">case1.tsx</span>
+            <span class="file-tree-desc">→ /discovery/case1</span>
+          </div>
+
+          <div class="file-tree-item file-tree-dir" style="margin-left: 1.5rem">
+            <span class="file-tree-icon">📁</span>
+            <span class="file-tree-name">(tabs)/</span>
+            <span class="file-tree-desc">route group — becomes the tab bar</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">index.tsx</span>
+            <span class="file-tree-desc">→ Home tab</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">calendar.tsx</span>
+            <span class="file-tree-desc">→ Calendar tab</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">savings.tsx</span>
+            <span class="file-tree-desc">→ Savings tab</span>
+          </div>
+          <div class="file-tree-item file-tree-file" style="margin-left: 3rem">
+            <span class="file-tree-icon">📄</span>
+            <span class="file-tree-name">report.tsx</span>
+            <span class="file-tree-desc">→ Report tab</span>
+          </div>
+        </div>
+
+        <p style="margin-top: 1.25rem;">Parentheses in folder names like <code>(auth)</code> and <code>(tabs)</code> create <span class="tooltip" data-tip="A folder whose name is wrapped in parentheses. It organises files without adding a URL segment — the folder name is invisible in the final route.">route groups</span> — they organise files without adding a URL segment. The folder name is invisible in the final URL.</p>
+
+        <div class="callout callout-insight">
+          <span class="callout-icon">💡</span>
+          <div><strong>Aha!</strong> To add a new tab, create a file in <code>app/(tabs)/</code>. The router finds it automatically — no imports, no config changes. This is called <span class="tooltip" data-tip="A routing system where the file system is the source of truth. Each file in the app/ directory automatically becomes a route — no manual registration needed.">file-based routing</span>.</div>
+        </div>
+
+        <div class="translation-block animate-in" style="margin-top: 1.5rem">
+          <div class="translation-code">
+            <span class="translation-label">CODE</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">&lt;Tabs</span> <span class="code-property">screenOptions</span>={{ <span class="code-property">tabBarStyle</span>: { <span class="code-property">backgroundColor</span>: <span class="code-string">theme.colors.background</span> } }}<span class="code-keyword">&gt;</span></span>
+<span class="code-line">  <span class="code-keyword">&lt;Tabs.Screen</span> <span class="code-property">name</span>=<span class="code-string">"index"</span>    <span class="code-property">options</span>={{ <span class="code-property">title</span>: <span class="code-string">'Home'</span>,     <span class="code-property">tabBarIcon</span>: ... }} <span class="code-keyword">/&gt;</span></span>
+<span class="code-line">  <span class="code-keyword">&lt;Tabs.Screen</span> <span class="code-property">name</span>=<span class="code-string">"calendar"</span> <span class="code-property">options</span>={{ <span class="code-property">title</span>: <span class="code-string">'Calendar'</span>, <span class="code-property">tabBarIcon</span>: ... }} <span class="code-keyword">/&gt;</span></span>
+<span class="code-line">  <span class="code-keyword">&lt;Tabs.Screen</span> <span class="code-property">name</span>=<span class="code-string">"savings"</span>  <span class="code-property">options</span>={{ <span class="code-property">title</span>: <span class="code-string">'Savings'</span>,  <span class="code-property">tabBarIcon</span>: ... }} <span class="code-keyword">/&gt;</span></span>
+<span class="code-line">  <span class="code-keyword">&lt;Tabs.Screen</span> <span class="code-property">name</span>=<span class="code-string">"report"</span>   <span class="code-property">options</span>={{ <span class="code-property">title</span>: <span class="code-string">'Report'</span>,   <span class="code-property">tabBarIcon</span>: ... }} <span class="code-keyword">/&gt;</span></span>
+<span class="code-line"><span class="code-keyword">&lt;/Tabs&gt;</span></span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><code>name="index"</code> matches the file <code>app/(tabs)/index.tsx</code> automatically.</p>
+              <p class="tl">Add a <code>Tabs.Screen</code> for any new file you create — that is the only registration required.</p>
+              <p class="tl">The tab bar renders in the order the screens appear here, top to bottom.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 2 — The Hook Extraction Rule
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 5 / SCREEN 2</p>
+        <h2 class="module-title">The Hook Extraction Rule</h2>
+        <p class="module-subtitle">Screen components are dumb on purpose. All the intelligence lives in hooks. Here is what that looks like in practice.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — hooks/useOnboardingStep1.ts</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">export function</span> <span class="code-function">useOnboardingStep1</span>() {</span>
+<span class="code-line">  <span class="code-keyword">const</span> [<span class="code-property">selectedIncome</span>, <span class="code-function">setSelectedIncome</span>] = <span class="code-function">useState</span>&lt;<span class="code-type">string[]</span>&gt;([])</span>
+<span class="code-line">  <span class="code-keyword">const</span> [<span class="code-property">selectedEntity</span>, <span class="code-function">setSelectedEntity</span>] = <span class="code-function">useState</span>&lt;<span class="code-type">string</span>&gt;(<span class="code-string">''</span>)</span>
+<span class="code-line">  <span class="code-keyword">const</span> [<span class="code-property">selectedOccupation</span>, <span class="code-function">setSelectedOccupation</span>] = <span class="code-function">useState</span>&lt;<span class="code-type">string</span>&gt;(<span class="code-string">''</span>)</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> <span class="code-property">isComplete</span> =</span>
+<span class="code-line">    <span class="code-property">selectedIncome</span>.length &gt; <span class="code-string">0</span> &amp;&amp;</span>
+<span class="code-line">    !!<span class="code-property">selectedEntity</span> &amp;&amp;</span>
+<span class="code-line">    !!<span class="code-property">selectedOccupation</span></span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">const</span> <span class="code-function">handleContinue</span> = <span class="code-keyword">async</span> () =&gt; {</span>
+<span class="code-line">    <span class="code-comment">// save to store, navigate to step2</span></span>
+<span class="code-line">  }</span>
+<span class="code-line"></span>
+<span class="code-line">  <span class="code-keyword">return</span> {</span>
+<span class="code-line">    <span class="code-property">selectedIncome</span>, <span class="code-property">selectedEntity</span>, <span class="code-property">selectedOccupation</span>,</span>
+<span class="code-line">    <span class="code-property">isComplete</span>, <span class="code-function">handleContinue</span>,</span>
+<span class="code-line">    <span class="code-function">setSelectedIncome</span>, <span class="code-function">setSelectedEntity</span>, <span class="code-function">setSelectedOccupation</span>,</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>Line 1:</strong> This <span class="tooltip" data-tip="A custom React hook — a plain function whose name starts with 'use'. It can hold state and side-effects and is reusable across components.">hook</span> manages all the state for the first onboarding screen.</p>
+              <p class="tl"><strong>Lines 2–4:</strong> Three pieces of state — what income types the user selected, their entity type, and their occupation.</p>
+              <p class="tl"><strong>Lines 6–9:</strong> <code>isComplete</code> is <code>true</code> only when all three fields have a value — this controls whether the Continue button is enabled.</p>
+              <p class="tl"><strong>Lines 11–13:</strong> <code>handleContinue</code> saves selections and navigates to step 2.</p>
+              <p class="tl"><strong>Lines 15–24:</strong> Return everything the screen component needs — it just receives and uses these values.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+          <div style="background: var(--color-surface, #f5f4f0); border-radius: 12px; padding: 1.25rem; border: 2px solid #e0dbd0;">
+            <h4 style="margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.6;">What Screen Files Do</h4>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Render JSX elements</li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Apply styles from <code>StyleSheet</code></li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Import and call hooks</li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Show/hide things based on hook data</li>
+            </ul>
+          </div>
+          <div style="background: var(--color-surface, #f5f4f0); border-radius: 12px; padding: 1.25rem; border: 2px solid #2D8B55; box-shadow: 0 0 0 1px #2D8B5522;">
+            <h4 style="margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: #2D8B55;">What Hooks Do</h4>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Manage <code>useState</code> and state updates</li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Call services (API calls)</li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Run business logic (validation, calculations)</li>
+              <li style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--color-accent)">→</span> Navigate between screens</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-insight" style="margin-top: 1.25rem;">
+          <span class="callout-icon">📌</span>
+          <div><strong>Rule from CLAUDE.md:</strong> No business logic in components — extract to <code>hooks/</code>. When AI puts logic in a screen component, ask it to move it to a hook.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 3 — TypeScript: The Safety Net
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 5 / SCREEN 3</p>
+        <h2 class="module-title">TypeScript — The Safety Net</h2>
+        <p class="module-subtitle"><span class="tooltip" data-tip="A superset of JavaScript that adds static types. The TypeScript compiler checks your code before it runs — catching mismatches, typos, and missing fields at build time rather than at runtime.">TypeScript</span> acts like airport security: every value is checked before it passes through. Nothing ships broken.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE — types/transaction.ts</span>
+            <pre><code>
+<span class="code-line"><span class="code-keyword">export type</span> <span class="code-type">TransactionStatus</span> = <span class="code-string">'pending'</span> | <span class="code-string">'confirmed'</span> | <span class="code-string">'excluded'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export type</span> <span class="code-type">TransactionCategory</span> =</span>
+<span class="code-line">  | <span class="code-string">'software'</span></span>
+<span class="code-line">  | <span class="code-string">'travel'</span></span>
+<span class="code-line">  | <span class="code-string">'office'</span></span>
+<span class="code-line">  | <span class="code-string">'meals'</span></span>
+<span class="code-line">  | <span class="code-string">'personal'</span></span>
+<span class="code-line">  | <span class="code-string">'income'</span></span>
+<span class="code-line">  | <span class="code-string">'other'</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">export interface</span> <span class="code-type">Transaction</span> {</span>
+<span class="code-line">  <span class="code-property">id</span>: <span class="code-type">string</span></span>
+<span class="code-line">  <span class="code-property">merchant_name</span>: <span class="code-type">string</span></span>
+<span class="code-line">  <span class="code-property">amount</span>: <span class="code-type">number</span></span>
+<span class="code-line">  <span class="code-property">date</span>: <span class="code-type">string</span></span>
+<span class="code-line">  <span class="code-property">status</span>: <span class="code-type">TransactionStatus</span></span>
+<span class="code-line">  <span class="code-property">category</span>: <span class="code-type">TransactionCategory</span> | <span class="code-keyword">null</span></span>
+<span class="code-line">  <span class="code-property">account_id</span>: <span class="code-type">string</span></span>
+<span class="code-line">  <span class="code-property">account_mask</span>: <span class="code-type">string</span></span>
+<span class="code-line">}</span>
+            </code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>Line 1:</strong> <code>TransactionStatus</code> can ONLY be one of these three values — anything else refuses to compile.</p>
+              <p class="tl"><strong>Lines 3–10:</strong> <code>TransactionCategory</code> is a fixed list — writing <code>'food'</code> anywhere in the codebase immediately causes a TypeScript error.</p>
+              <p class="tl"><strong>Lines 12–20:</strong> A <code>Transaction</code> is a contract — every transaction object must have exactly these fields with exactly these types.</p>
+              <p class="tl"><strong>Line 15:</strong> <code>amount</code> is always a <code>number</code> — never a string like <code>"$54.99"</code>.</p>
+              <p class="tl"><strong>Line 17:</strong> <code>category</code> can be <code>null</code> (uncategorized) or one of the valid categories — both are allowed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+          <div style="background: #fff2f2; border-radius: 12px; padding: 1.25rem; border: 2px solid #ffcccc;">
+            <h4 style="margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: #cc3333;">Without TypeScript</h4>
+            <p style="margin: 0; line-height: 1.6;"><code>status</code> could be <code>'approved'</code>, <code>'rejected'</code>, or <code>'done'</code> — each developer uses different values, logic silently breaks, bugs reach users.</p>
+          </div>
+          <div style="background: #f0faf4; border-radius: 12px; padding: 1.25rem; border: 2px solid #2D8B55;">
+            <h4 style="margin: 0 0 0.75rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: #2D8B55;">With TypeScript Strict</h4>
+            <p style="margin: 0; line-height: 1.6;">Write <code>'approved'</code> anywhere and the editor underlines it in red <em>immediately</em> — before the app even runs.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-insight" style="margin-top: 1.25rem;">
+          <span class="callout-icon">🛡️</span>
+          <div><strong>Rule from CLAUDE.md:</strong> No <code>any</code> type — strict TypeScript everywhere. If AI uses <code>any</code>, ask it to replace it with the proper type from <code>types/</code>. The types folder is the app's contract with itself.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCREEN 4 — How to Add a Feature + Group Chat + Quiz
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="screen animate-in">
+      <div class="screen-content">
+        <p class="module-label">MODULE 5 / SCREEN 4</p>
+        <h2 class="module-title">Adding a Feature — The Full Loop</h2>
+        <p class="module-subtitle">Every new feature in TaxPilot follows the same five-step pattern. Here is how to add a Notes field to a transaction — from type to screen.</p>
+
+        <div class="step-cards">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>📝 Add the type</h4>
+              <p>Add <code>notes?: string</code> to the <code>Transaction</code> interface in <code>types/transaction.ts</code>. This is the contract — everything else flows from here.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>🌐 Add the service call</h4>
+              <p>Add <code>patch('/transactions/:id', &#123; notes &#125;)</code> in <code>services/api.ts</code>. All network calls live here — never directly in a component or hook.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>🪝 Create the hook</h4>
+              <p>Create <code>hooks/useUpdateNote.ts</code> with a <span class="tooltip" data-tip="A React Query function that performs a data-changing operation (POST, PATCH, DELETE). It handles loading states, errors, and cache invalidation automatically.">React Query mutation</span> that calls the service and invalidates the cache on success.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>📱 Update the screen</h4>
+              <p>Render a text input in <code>app/detail.tsx</code> and call <code>useUpdateNote</code>. The screen stays thin — no logic, just UI and a hook call.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>🎨 Style it</h4>
+              <p>Use only <code>theme.colors</code> and <code>typography</code> tokens — never add new hex values. The design system handles consistency automatically.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin: 2rem 0 0.75rem; font-size: 1.1rem;">Watch the data flow — message by message</h3>
+        <p style="margin: 0 0 1rem; opacity: 0.7; font-size: 0.9rem;">See how a user typing a note travels through every layer of the architecture.</p>
+
+        <div class="chat-window" id="chat-module5">
+          <div class="chat-messages">
+
+            <div class="chat-message" data-msg="0" data-sender="screen" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">S</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Detail Screen</span>
+                <p>Hey useUpdateNote, the user just typed a note for transaction tx_001.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="1" data-sender="hook" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">H</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">useUpdateNote</span>
+                <p>Got it. Sending a PATCH request to the API service.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="2" data-sender="service" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-4)">A</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-4)">API Service</span>
+                <p>Received PATCH /transactions/tx_001. Attaching auth token and sending to backend.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="3" data-sender="backend" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">B</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Backend</span>
+                <p>Note saved. Returning the updated transaction object.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="4" data-sender="hook" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">H</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">useUpdateNote</span>
+                <p>Success. Invalidating the transactions cache so the list re-fetches.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="5" data-sender="screen" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">S</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Detail Screen</span>
+                <p>The note is now showing on screen. React Query updated automatically.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="chat-typing" id="chat-typing" style="display:none">
+            <div class="chat-avatar" id="typing-avatar" style="background: var(--color-actor-2)">H</div>
+            <div class="chat-typing-dots">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+          </div>
+
+          <div class="chat-controls">
+            <button class="btn chat-next-btn">Next Message</button>
+            <button class="btn chat-all-btn">Play All</button>
+            <button class="btn chat-reset-btn">Replay</button>
+            <span class="chat-progress"></span>
+          </div>
+        </div>
+
+        <!-- ─── CAPSTONE QUIZ ─── -->
+        <h3 style="margin: 2.5rem 0 0.5rem; font-size: 1.2rem;">🎓 Capstone Quiz — Prove You Know the Architecture</h3>
+        <p style="margin: 0 0 1.25rem; opacity: 0.7; font-size: 0.9rem;">Three questions. All four modules in one test.</p>
+
+        <div class="quiz-container" id="quiz-module5">
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Exactly — file-based routing means creating the file IS the registration. app/(tabs)/breakdown.tsx becomes the /breakdown tab route with no further config."
+               data-explanation-wrong="Not quite — in Expo Router, the file system is the router. Creating a file in app/(tabs)/ is all that is needed. No manual registration in _layout.tsx, no component wrappers.">
+            <h3 class="quiz-question">Q1: You want to add a <code>/tax/breakdown</code> screen. Where do you create the file?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>In <code>components/</code> as a new component</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>In <code>app/(tabs)/breakdown.tsx</code> — it becomes a tab route automatically</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>In <code>hooks/</code> as a new hook</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Register it manually in the root <code>_layout.tsx</code></span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Correct — two rules are broken at once: no business logic in components (extract to hooks/) and no direct fetch in components (all API calls go through services/api.ts)."
+               data-explanation-wrong="Not quite — look at CLAUDE.md. Two critical rules are violated: business logic must live in hooks/, and all fetch calls must go through services/api.ts. The component is doing both.">
+            <h3 class="quiz-question">Q2: AI wrote a function inside a screen component that calls <code>fetch()</code> directly and updates state. Which two CLAUDE.md rules does this break?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>No rules are broken — it is valid React Native</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>No business logic in components AND no direct fetch in components — both belong in a hook calling a service</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Only the TypeScript rule</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Only the naming convention rule</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Correct — strict TypeScript catches type mismatches at build time, not at runtime. The editor and compiler both show an error before the app can even start."
+               data-explanation-wrong="Not quite — this is the key power of TypeScript. Type errors surface at compile time. The app refuses to build until the type mismatch is resolved — no runtime surprise required.">
+            <h3 class="quiz-question">Q3: You add a <code>status</code> value <code>'disputed'</code> to transaction objects but forget to update <code>TransactionStatus</code> in <code>types/transaction.ts</code>. What happens?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The app crashes at runtime when it encounters the new status</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>TypeScript shows a compile-time error before you can run the app</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Nothing — TypeScript is optional in this project</span>
+              </button>
+              <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The value is automatically cast to <code>undefined</code></span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Try Again</button>
+        </div>
+
+        <!-- ─── CLOSING CALLOUT ─── -->
+        <div class="callout callout-tip" style="margin-top: 2rem;">
+          <span class="callout-icon">🎯</span>
+          <div><strong>You did it.</strong> You now know the full architecture of TaxPilot — the screens, the hooks, the store, the services, the design system, and the routing. When you prompt AI to build on this codebase, you know exactly what to ask for and where it belongs.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
