@@ -102,7 +102,7 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
       onClick={() => {
         if (isNonInteractive) return;
         if (isScanReasonCard) {
-          window.open('/scanreason', '_blank', 'noopener,noreferrer');
+          window.open('https://scan-reason-ai.vercel.app', '_blank', 'noopener,noreferrer');
           return;
         }
         onClick(project);

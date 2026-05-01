@@ -1,7 +1,5 @@
 {
   "rewrites": [
-    { "source": "/scanreason", "destination": "https://scan-reason-ai.vercel.app/scanreason" },
-    { "source": "/scanreason/:path*", "destination": "https://scan-reason-ai.vercel.app/scanreason/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
