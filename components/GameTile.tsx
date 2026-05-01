@@ -41,7 +41,7 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
   const isTaxPilotCard = project.id === 'taxpilot';
   const isScanReasonCard = project.id === 'scanreason-ai';
   const isPlaceholderCard = isTaxPilotCard;
-  const isNonInteractive = isTaxPilotCard || isScanReasonCard;
+  const isNonInteractive = isTaxPilotCard;
   const cardKeywords = KEYWORD_MAP[project.title] ?? project.skills ?? [];
   const leadTag = cardKeywords.length > 0 ? cardKeywords[0] : project.category;
   const yearLabel = isPatientlyCard ? '2026' : isTaxPilotCard ? '2026' : isScanReasonCard ? '2026' : project.title === '2D Moon' ? '2023' : '2024';
@@ -99,7 +99,14 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
   return (
     <article
       className={`group ${isNonInteractive ? 'cursor-default' : 'cursor-pointer'}`}
-      onClick={() => { if (!isNonInteractive) onClick(project); }}
+      onClick={() => {
+        if (isNonInteractive) return;
+        if (isScanReasonCard) {
+          window.open('/scanreason', '_blank', 'noopener,noreferrer');
+          return;
+        }
+        onClick(project);
+      }}
     >
       {/* ── Image area ─────────────────────────────────────────────── */}
       <div
@@ -197,7 +204,7 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
                   textShadow: '0 1px 6px rgba(0,0,0,0.5)',
                 }}
               >
-                View Case Study →
+                {isScanReasonCard ? 'Try the Product ↗' : 'View Case Study →'}
               </span>
             </div>
           </>
