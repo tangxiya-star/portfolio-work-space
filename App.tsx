@@ -330,7 +330,7 @@ const App: React.FC = () => {
       window.open('https://hollytanguxlab.framer.website/2d-moon', '_blank', 'noopener,noreferrer');
       return;
     }
-    if (project.id === 'coming-soon') return;
+    if (project.id === 'coming-soon' || project.id === 'taxpilot') return;
     setSelectedProject(project);
   };
 
@@ -358,10 +358,10 @@ const App: React.FC = () => {
           <div className="pt-8">
             <h1 className="font-serif font-bold text-[#111111] leading-tight tracking-[-0.02em] mb-4"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
-              I'm Holly — a product designer<br />who builds with systems thinking.
+              I'm Holly — a product designer<br />who ships in code.
             </h1>
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#AAAAAA]">
-              Founding Product Designer · San Francisco · AI-Native Products
+              Systems thinking · Design engineering · AI-native products
             </p>
           </div>
         </section>

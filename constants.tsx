@@ -61,6 +61,30 @@ const TilesArt = () => (
 
 export const PROJECTS: Project[] = [
   {
+    id: 'taxpilot',
+    title: 'TaxPilot',
+    description: 'AI-native tax copilot — in the works.',
+    category: ProjectCategory.PRODUCT_STRATEGY,
+    color: COLORS.aqua,
+    icon: 'Target',
+    coverImage: '',
+    difficulty: 'Medium',
+    skills: ['AI UX', 'Financial Workflows', 'Product Strategy'],
+    content: ``
+  },
+  {
+    id: 'scanreason-ai',
+    title: 'ScanReason AI',
+    description: '🏆 1st place — HackSquad "Build Your Next YC Unicorn" hackathon.',
+    category: ProjectCategory.PRODUCT_STRATEGY,
+    color: COLORS.red,
+    icon: 'Search',
+    coverImage: '',
+    difficulty: 'Hard',
+    skills: ['AI Product', 'Hackathon', '0→1'],
+    content: ``
+  },
+  {
     id: 'spelling-bee-redesign',
     title: 'Patiently',
     description: 'AI-powered health infrastructure — founding designer, 2025.',

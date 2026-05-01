@@ -38,10 +38,18 @@ const monoStyle = {
 
 const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
   const isPatientlyCard = project.title === 'Patiently';
-  const cardKeywords = KEYWORD_MAP[project.title] ?? [];
+  const isTaxPilotCard = project.id === 'taxpilot';
+  const isScanReasonCard = project.id === 'scanreason-ai';
+  const isPlaceholderCard = isTaxPilotCard;
+  const isNonInteractive = isTaxPilotCard || isScanReasonCard;
+  const cardKeywords = KEYWORD_MAP[project.title] ?? project.skills ?? [];
   const leadTag = cardKeywords.length > 0 ? cardKeywords[0] : project.category;
-  const yearLabel = isPatientlyCard ? '2026' : project.title === '2D Moon' ? '2023' : '2024';
-  const statusLabel = (project.title === 'Uniwell' || project.title === '2D Moon') ? 'Case Study' : 'Shipped';
+  const yearLabel = isPatientlyCard ? '2026' : isTaxPilotCard ? '2026' : isScanReasonCard ? '2026' : project.title === '2D Moon' ? '2023' : '2024';
+  const statusLabel = isTaxPilotCard
+    ? 'Coming Soon'
+    : isScanReasonCard
+    ? 'Hackathon Winner'
+    : (project.title === 'Uniwell' || project.title === '2D Moon') ? 'Case Study' : 'Shipped';
   const description = project.description;
   const kb = KB_CONFIG[index % KB_CONFIG.length];
 
@@ -90,15 +98,46 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
 
   return (
     <article
-      className="group cursor-pointer"
-      onClick={() => onClick(project)}
+      className={`group ${isNonInteractive ? 'cursor-default' : 'cursor-pointer'}`}
+      onClick={() => { if (!isNonInteractive) onClick(project); }}
     >
       {/* ── Image area ─────────────────────────────────────────────── */}
       <div
         className="relative w-full overflow-hidden"
         style={{ aspectRatio: '16/10' }}
       >
-        {isPatientlyCard ? (
+        {isPlaceholderCard ? (
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background:
+                'repeating-linear-gradient(135deg, #F4F1EA 0 14px, #EDE8DE 14px 28px)',
+            }}
+          >
+            <span
+              className="text-[#8A7B5C]"
+              style={{
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontSize: '11px',
+                letterSpacing: '0.28em',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+              }}
+            >
+              {isScanReasonCard ? 'Placeholder · Case Study Coming' : 'Placeholder · In Progress'}
+            </span>
+          </div>
+        ) : isScanReasonCard ? (
+          <video
+            src="/scanreason-demo.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : isPatientlyCard ? (
           patientlyFrames.map((src, i) => (
             <img
               key={i}
@@ -134,31 +173,35 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
         />
 
         {/* Hover overlay — stronger dark gradient + centered CTA */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100"
-          style={{
-            transition: 'opacity 180ms ease',
-            background: 'linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 flex items-end justify-start px-5 pb-5 opacity-0 group-hover:opacity-100"
-          style={{ transition: 'opacity 180ms ease' }}
-        >
-          <span
-            className="text-white"
-            style={{
-              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-              fontSize: '11px',
-              letterSpacing: '0.18em',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-            }}
-          >
-            View Case Study →
-          </span>
-        </div>
+        {!isNonInteractive && (
+          <>
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100"
+              style={{
+                transition: 'opacity 180ms ease',
+                background: 'linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)',
+              }}
+            />
+            <div
+              className="absolute inset-0 flex items-end justify-start px-5 pb-5 opacity-0 group-hover:opacity-100"
+              style={{ transition: 'opacity 180ms ease' }}
+            >
+              <span
+                className="text-white"
+                style={{
+                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                  fontSize: '11px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+                }}
+              >
+                View Case Study →
+              </span>
+            </div>
+          </>
+        )}
 
         {/* Category chip — top left */}
         <div className="absolute top-4 left-4">
@@ -192,19 +235,59 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
           >
             {project.title}
           </h3>
-          <span
-            className="shrink-0 px-1.5 py-0.5"
-            style={{
-              ...monoStyle,
-              fontSize: '8px',
-              letterSpacing: '0.14em',
-              fontWeight: 700,
-              backgroundColor: statusLabel === 'Shipped' ? '#D1FAE5' : '#EDE9FE',
-              color: statusLabel === 'Shipped' ? '#065F46' : '#5B21B6',
-            }}
-          >
-            {statusLabel}
-          </span>
+          {isScanReasonCard ? (
+            <span className="inline-flex items-center gap-1 shrink-0">
+              <span
+                className="px-2 py-1"
+                style={{
+                  ...monoStyle,
+                  fontSize: '9px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  border: '1.5px solid #111111',
+                  color: '#111111',
+                  backgroundColor: 'transparent',
+                }}
+              >
+                Hackathon
+              </span>
+              <span
+                className="inline-flex items-center gap-1 px-2 py-1"
+                style={{
+                  ...monoStyle,
+                  fontSize: '9px',
+                  letterSpacing: '0.18em',
+                  fontWeight: 700,
+                  background: 'linear-gradient(180deg, #F7DA21 0%, #E5B800 100%)',
+                  color: '#111111',
+                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)',
+                }}
+              >
+                <span aria-hidden style={{ fontSize: '11px', letterSpacing: 0 }}>🏆</span>
+                Winner
+              </span>
+            </span>
+          ) : (
+            <span
+              className="shrink-0 px-1.5 py-0.5"
+              style={{
+                ...monoStyle,
+                fontSize: '8px',
+                letterSpacing: '0.14em',
+                fontWeight: 700,
+                backgroundColor:
+                  statusLabel === 'Shipped' ? '#D1FAE5'
+                  : statusLabel === 'Coming Soon' ? '#FEF3C7'
+                  : '#EDE9FE',
+                color:
+                  statusLabel === 'Shipped' ? '#065F46'
+                  : statusLabel === 'Coming Soon' ? '#92400E'
+                  : '#5B21B6',
+              }}
+            >
+              {statusLabel}
+            </span>
+          )}
         </div>
 
         {/* Year */}
