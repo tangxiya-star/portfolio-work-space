@@ -7,6 +7,7 @@ import ProjectModal from './components/ProjectModal';
 import BeanCharacter from './components/BeanCharacter';
 import Footer from './components/Footer';
 import PatientlyCaseStudyPage from './components/PatientlyCaseStudyPage';
+import TaxPilotCaseStudyPage from './components/TaxPilotCaseStudyPage';
 import AboutStandalonePage from './components/AboutStandalonePage';
 import ResumeStandalonePage from './components/ResumeStandalonePage';
 
@@ -293,6 +294,7 @@ const AboutPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 // ── App ──────────────────────────────────────────────────────────────────────
 const App: React.FC = () => {
   const isPatientlyCaseStudyRoute = window.location.pathname === '/case-studies/patiently';
+  const isTaxPilotCaseStudyRoute = window.location.pathname === '/case-studies/taxpilot';
   const isAboutRoute = window.location.pathname === '/about';
   const isResumeRoute = window.location.pathname === '/resume';
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -330,12 +332,20 @@ const App: React.FC = () => {
       window.open('https://hollytanguxlab.framer.website/2d-moon', '_blank', 'noopener,noreferrer');
       return;
     }
-    if (project.id === 'coming-soon' || project.id === 'taxpilot') return;
+    if (project.id === 'taxpilot') {
+      window.location.href = '/case-studies/taxpilot';
+      return;
+    }
+    if (project.id === 'coming-soon') return;
     setSelectedProject(project);
   };
 
   if (isPatientlyCaseStudyRoute) {
     return <PatientlyCaseStudyPage />;
+  }
+
+  if (isTaxPilotCaseStudyRoute) {
+    return <TaxPilotCaseStudyPage />;
   }
 
   if (isAboutRoute) {

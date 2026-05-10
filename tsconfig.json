@@ -21,6 +21,21 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@expo/vector-icons": [
+        "./components/taxpilot/_stubs/expoVectorIcons.tsx"
+      ],
+      "expo-router": [
+        "./components/taxpilot/_stubs/expoRouter.ts"
+      ],
+      "expo-haptics": [
+        "./components/taxpilot/_stubs/expoHaptics.ts"
+      ],
+      "expo-linear-gradient": [
+        "./components/taxpilot/_stubs/expoLinearGradient.tsx"
+      ],
+      "react-native-safe-area-context": [
+        "./components/taxpilot/_stubs/safeAreaContext.tsx"
       ]
     },
     "allowImportingTsExtensions": true,

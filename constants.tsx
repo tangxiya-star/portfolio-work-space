@@ -61,6 +61,18 @@ const TilesArt = () => (
 
 export const PROJECTS: Project[] = [
   {
+    id: 'taxpilot',
+    title: 'TaxPilot',
+    description: 'A tax app I designed, built, and shipped — solo. Founding designer + sole engineer.',
+    category: ProjectCategory.PRODUCT_STRATEGY,
+    color: COLORS.aqua,
+    icon: 'Target',
+    coverImage: '',
+    difficulty: 'Hard',
+    skills: ['React Native', 'Design System', 'Motion · Animated API', 'Solo Ship'],
+    content: ``
+  },
+  {
     id: 'scanreason-ai',
     title: 'ScanReason AI',
     description: '🏆 1st place — HackSquad "Build Your Next YC Unicorn" hackathon.',
