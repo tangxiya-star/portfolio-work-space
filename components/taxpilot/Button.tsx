@@ -31,11 +31,34 @@ interface ButtonProps {
   style?: LayoutStyle
 }
 
-const HEIGHT: Record<Size, number> = {
+export const BUTTON_HEIGHT: Record<Size, number> = {
   small: 36,
   medium: 44,
   large: 48,
 }
+const HEIGHT = BUTTON_HEIGHT
+
+/** Single source of truth for Button visuals. Read by the live design-system
+ *  reference page so the spec table always matches the real component. */
+export const BUTTON_SPEC = {
+  variants: {
+    primary:     { bg: theme.colors.primary,    border: 'transparent',           text: theme.colors.textInverse },
+    secondary:   { bg: theme.colors.surface,    border: theme.colors.border,     text: theme.colors.textPrimary },
+    outline:     { bg: 'transparent',           border: theme.colors.textPrimary, text: theme.colors.textPrimary },
+    ghost:       { bg: 'transparent',           border: 'transparent',           text: theme.colors.textPrimary },
+    destructive: { bg: theme.colors.surface,    border: theme.colors.border,     text: theme.colors.red },
+  },
+  pressed: {
+    primary:     { bg: theme.colors.ink,        text: theme.colors.textInverse, opacity: 0.85 },
+    secondary:   { bg: theme.colors.surfaceDim, text: theme.colors.textPrimary, opacity: 1 },
+    outline:     { bg: theme.colors.ink,        text: theme.colors.textInverse, opacity: 1 },
+    ghost:       { bg: theme.colors.surfaceDim, text: theme.colors.textPrimary, opacity: 1 },
+    destructive: { bg: theme.colors.redBg,      text: theme.colors.red,         opacity: 1 },
+  },
+  disabledOpacity: 0.3,
+  radius: theme.radius.button,
+  paddingX: { small: theme.spacing.md, medium: theme.spacing.lg, large: theme.spacing.lg },
+} as const
 
 export default function Button({
   title,

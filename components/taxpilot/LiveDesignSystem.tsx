@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextStyle } from 'react-native';
 import { theme } from './theme';
 import { typography } from './typography';
-import Button from './Button';
+import Button, { BUTTON_HEIGHT, BUTTON_SPEC } from './Button';
 import SmallButton from './SmallButton';
 import SegmentedControl from './SegmentedControl';
 import SelectionCard from './SelectionCard';
@@ -16,64 +16,150 @@ const Stage: React.FC<{ children: React.ReactNode; bg?: string }> = ({ children,
 );
 
 // ── 8a. Color ───────────────────────────────────────────────────────────────
-const SWATCHES: { name: string; hex: string; why: string }[] = [
-  { name: 'Ink',         hex: '#0D0D0D', why: 'Text + primary surfaces. Off-black to soften contrast.' },
-  { name: 'Newsprint',   hex: '#E3DFD5', why: 'Background. Warm paper tone, not a sterile gray.' },
-  { name: 'Emerald',     hex: '#22C55F', why: 'Polarity / positive value. The only green allowed.' },
-  { name: 'Surface',     hex: '#FFFFFF', why: 'Card surfaces.' },
-  { name: 'Surface dim', hex: '#F5F5F0', why: 'Pressed states + secondary surfaces.' },
-  { name: 'Amber',       hex: '#C2410C', why: 'Caution / pending status.' },
-  { name: 'Red',         hex: '#DC2626', why: 'Destructive / error.' },
-  { name: 'Blue',        hex: '#2563EB', why: 'Information / links.' },
+// Reference layout: 3 primary anchors as large swatches, then secondary
+// status colors as smaller swatches with grouping by intent.
+const PRIMARY: { name: string; hex: string; why: string }[] = [
+  { name: 'Ink',       hex: '#0D0D0D', why: 'Text + primary buttons. Off-black to soften contrast against newsprint.' },
+  { name: 'Newsprint', hex: '#E3DFD5', why: 'App background. Warm paper tone — the brand canvas.' },
+  { name: 'Emerald',   hex: '#22C55F', why: 'Brand mark + positive polarity. Locked in from the first logo variant the AI workflow produced — every other accent had to earn its place against it.' },
+];
+
+const SECONDARY_GROUPS: { title: string; intent: string; swatches: { hex: string; role: string }[] }[] = [
+  {
+    title: 'Status',
+    intent: 'Communicate polarity, urgency, and information state.',
+    swatches: [
+      { hex: '#22C55F', role: 'Positive · gains, confirmed' },
+      { hex: '#C2410C', role: 'Caution · pending, due soon' },
+      { hex: '#DC2626', role: 'Destructive · errors, owed' },
+      { hex: '#2563EB', role: 'Information · links' },
+    ],
+  },
+  {
+    title: 'Surface',
+    intent: 'Layered backgrounds — separation without strong contrast.',
+    swatches: [
+      { hex: '#FFFFFF', role: 'Surface · cards' },
+      { hex: '#F5F5F0', role: 'Surface dim · pressed states' },
+      { hex: '#E3DFD5', role: 'Newsprint · app bg' },
+    ],
+  },
 ];
 
 export const ColorBlock: React.FC = () => (
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-    {SWATCHES.map((s) => (
-      <div key={s.name} className="border border-[#E8E8E8] bg-white overflow-hidden">
-        <div className="h-24 w-full" style={{ background: s.hex }} />
-        <div className="p-3">
-          <p className="font-sans text-[13px] font-semibold text-[#111111]">{s.name}</p>
-          <p className="font-mono text-[11px] text-[#999999] mt-0.5">{s.hex}</p>
-          <p className="font-sans text-[12px] text-[#666666] mt-2 leading-snug">{s.why}</p>
-        </div>
+  <div className="space-y-12">
+    <div>
+      <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#111] pb-3 border-b border-[#111] mb-8">Primary</p>
+      <p className="font-sans text-[15px] text-[#666] leading-[1.65] max-w-[68ch] mb-8">
+        Ink on newsprint, with emerald as the brand mark. The green wasn't picked from a swatch library — it was the first logo variant my AI-native workflow returned, and the system was then built outward from that single color decision. Every other accent has to earn its place against these three.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {PRIMARY.map((s) => (
+          <div key={s.name}>
+            <div
+              className="h-48 w-full rounded-md"
+              style={{
+                background: s.hex,
+                border: s.hex === '#FFFFFF' ? '1px solid #111' : 'none',
+              }}
+            />
+            <p className="font-sans text-[18px] font-semibold text-[#111] mt-4">{s.name}</p>
+            <p className="font-mono text-[13px] text-[#999] mt-1">{s.hex}</p>
+            <p className="font-sans text-[13px] text-[#666] mt-3 leading-[1.6] max-w-[34ch]">{s.why}</p>
+          </div>
+        ))}
       </div>
-    ))}
+    </div>
+
+    <div>
+      <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#111] pb-3 border-b border-[#111] mb-8">Secondary</p>
+      <div className="space-y-10">
+        {SECONDARY_GROUPS.map((g) => (
+          <div key={g.title}>
+            <p className="font-sans text-[20px] font-semibold text-[#111]">{g.title}</p>
+            <p className="font-sans text-[14px] text-[#666] mt-1 mb-5">{g.intent}</p>
+            <div className="flex flex-wrap gap-6">
+              {g.swatches.map((sw) => (
+                <div key={sw.hex} className="w-[120px]">
+                  <div
+                    className="h-[88px] w-[88px] rounded-md"
+                    style={{
+                      background: sw.hex,
+                      border: sw.hex === '#FFFFFF' ? '1px solid #DDD' : 'none',
+                    }}
+                  />
+                  <p className="font-mono text-[12px] text-[#666] mt-3">{sw.hex}</p>
+                  <p className="font-sans text-[12px] text-[#999] mt-1 leading-snug">{sw.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 );
 
 // ── 8b. Typography ──────────────────────────────────────────────────────────
+// Reference (sample · name · family · weight · size · line-height) — pulls
+// from the actual `typography` styles so anything that drifts here would
+// surface a real drift in the app.
+const weightLabel = (w?: TextStyle['fontWeight']): string => {
+  switch (String(w)) {
+    case '300': return 'Light';
+    case '400': return 'Regular';
+    case '500': return 'Medium';
+    case '600': return 'Semibold';
+    case '700': return 'Bold';
+    case '800': return 'ExtraBold';
+    default: return 'Regular';
+  }
+};
+
 const RAMP: { key: keyof typeof typography; label: string; sample: string }[] = [
-  { key: 'display',   label: 'Display 34',  sample: 'A tax position, on any day.' },
-  { key: 'title1',    label: 'Title1 28',   sample: 'Last 30 days' },
-  { key: 'title2',    label: 'Title2 22',   sample: 'Income & expenses' },
-  { key: 'headline',  label: 'Headline 17', sample: 'You owe $4,128 in estimated tax.' },
-  { key: 'body',      label: 'Body 17',     sample: 'TaxPilot pulls transactions from your bank in the background.' },
-  { key: 'callout',   label: 'Callout 16',  sample: 'Tap a day to see what moved.' },
-  { key: 'subhead',   label: 'Subhead 15',  sample: 'Categorized · 4 hours ago' },
-  { key: 'footnote',  label: 'Footnote 13', sample: 'Plaid · auto-refreshed' },
-  { key: 'caption1',  label: 'Caption1 12', sample: 'TUE · 14 MAR' },
+  { key: 'display',    label: 'Display',  sample: 'Display' },
+  { key: 'title1',     label: 'Title 1',  sample: 'Title 1' },
+  { key: 'title2',     label: 'Title 2',  sample: 'Title 2' },
+  { key: 'headline',   label: 'Headline', sample: 'Headline' },
+  { key: 'body',       label: 'Body',     sample: 'Body' },
+  { key: 'callout',    label: 'Callout',  sample: 'Callout' },
+  { key: 'subhead',    label: 'Subhead',  sample: 'Subhead' },
+  { key: 'footnote',   label: 'Footnote', sample: 'Footnote' },
+  { key: 'caption1',   label: 'Caption',  sample: 'Caption' },
+  { key: 'monoAmount', label: 'Amount',   sample: '$1,284.07' },
+  { key: 'mono',       label: 'Mono',     sample: '0123456789' },
 ];
+
+const TypeRow: React.FC<{ row: typeof RAMP[number] }> = ({ row }) => {
+  const s = typography[row.key] as TextStyle;
+  return (
+    <div className="grid grid-cols-[1fr_140px_110px_70px_90px] items-center gap-6 py-6 border-b border-[#EEEEEE]">
+      <div className="min-w-0">
+        <Text style={[s as any, { color: '#111' }]} numberOfLines={1}>
+          {row.sample}
+        </Text>
+      </div>
+      <div>
+        <p className="font-sans text-[13px] text-[#111]">{row.label}</p>
+        <p className="font-mono text-[10px] text-[#999] mt-0.5">{s.fontFamily}</p>
+      </div>
+      <p className="font-sans text-[13px] text-[#444]">{weightLabel(s.fontWeight)}</p>
+      <p className="font-mono text-[13px] text-[#444] tabular-nums">{s.fontSize}</p>
+      <p className="font-mono text-[13px] text-[#444] tabular-nums">{s.lineHeight}</p>
+    </div>
+  );
+};
 
 export const TypographyBlock: React.FC = () => (
   <Stage bg="#FFFFFF">
-    <View style={{ gap: 18 }}>
-      {RAMP.map((r) => (
-        <View key={r.key} style={{ flexDirection: 'row', alignItems: 'baseline', gap: 24 }}>
-          <Text style={[typography.caption2 as any, { width: 110, color: '#999' }]}>{r.label}</Text>
-          <Text style={typography[r.key] as any}>{r.sample}</Text>
-        </View>
-      ))}
-      <View style={{ height: 1, backgroundColor: theme.colors.border, marginVertical: 8 }} />
-      <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 24 }}>
-        <Text style={[typography.caption2 as any, { width: 110, color: '#999' }]}>Mono amount</Text>
-        <Text style={typography.monoAmount as any}>$1,284.07</Text>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 24 }}>
-        <Text style={[typography.caption2 as any, { width: 110, color: '#999' }]}>Mono</Text>
-        <Text style={typography.mono as any}>JetBrains Mono · 17</Text>
-      </View>
-    </View>
+    <div className="grid grid-cols-[1fr_140px_110px_70px_90px] items-center gap-6 pb-3 border-b border-[#111]">
+      <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-[#111]">Sample</p>
+      <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-[#111]">Name / Family</p>
+      <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-[#111]">Weight</p>
+      <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-[#111]">Size</p>
+      <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-[#111]">Line&nbsp;Height</p>
+    </div>
+    {RAMP.map((r) => <TypeRow key={r.key} row={r} />)}
   </Stage>
 );
 
@@ -758,9 +844,8 @@ const RadiusHeroCardExample: React.FC = () => (
 );
 
 export const SpacingBlock: React.FC = () => {
-  const [t, setT] = useState(true);
   return (
-    <Stage>
+    <Stage bg="#FFFFFF">
       <Text style={[typography.label as any, { marginBottom: 4 }]}>Spacing — 8pt grid</Text>
       <Text style={[typography.caption2 as any, { color: '#666', marginBottom: 20, maxWidth: 560 }]}>
         Seven steps. Started with nine — <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>xxs(2)</Text> merged into <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>xs(4)</Text> (2px wasn't distinct at body-text scale) and <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>4xl(64)</Text> cut (never referenced in production). Examples below are verbatim screen fragments.
@@ -817,51 +902,193 @@ export const SpacingBlock: React.FC = () => {
         </ExampleCell>
       </div>
 
-      <Text style={[typography.label as any, { marginTop: 36, marginBottom: 4 }]}>Radius</Text>
-      <Text style={[typography.caption2 as any, { color: '#666', marginBottom: 20, maxWidth: 560 }]}>
-        Six steps, each on the actual element. The dashed arc + value sits at the corner. <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>button(12)</Text> is a semantic alias — RN convention reserves a numeric step exclusively for touch targets.
-      </Text>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <ExampleCell token="xs" value="4px" note="Confirmed status chip inside TransactionRow.">
-          <div style={{ position: 'relative' }}>
-            <RadiusChipExample />
-            <RadiusAnnot r={4} value="4" />
+      <div className="mt-16 mb-10">
+        <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#111] pb-3 border-b border-[#111] mb-6">Border Radius</p>
+        <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[64ch]">
+          Corner radius scales with surface size: small for chips and inputs, larger for cards and sheets. Each step has one job — the alias <span className="font-mono text-[13px]">button</span> reserves 12px exclusively for touch targets, so a stray <span className="font-mono text-[13px]">md</span> never lands on a tappable element.
+        </p>
+      </div>
+      <div className="mx-auto max-w-[900px] grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-14 justify-items-center">
+        {RADIUS_TILES.map((r) => (
+          <div key={r.label} className="flex flex-col items-start w-[200px]">
+            <div className="relative w-[200px] h-[200px]">
+              {/* White tile */}
+              <div
+                className="relative w-full h-full bg-white flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                style={{ borderRadius: r.preview }}
+              >
+                <span className="font-sans text-[22px] font-medium text-[#111] tabular-nums">{r.label}</span>
+              </div>
+              {/* Magnifier — glass lens on top of the corner. Mostly transparent
+                  so the rounded corner of the tile reads through it. */}
+              <div
+                aria-hidden="true"
+                className="absolute left-4 top-4 w-[96px] h-[96px] rounded-full pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0) 80%)',
+                  border: '1.5px solid rgba(255,255,255,0.85)',
+                  boxShadow:
+                    '0 8px 24px rgba(0,0,0,0.12), inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -10px 18px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.06)',
+                  backdropFilter: 'blur(1.5px) saturate(105%)',
+                  WebkitBackdropFilter: 'blur(1.5px) saturate(105%)',
+                  transform: 'translate(-30%, -30%)',
+                }}
+              />
+            </div>
+            <p className="font-sans text-[14px] text-[#111] mt-5">
+              <span className="font-mono text-[12px] text-[#22C55F] mr-2">{r.token}</span>
+              {r.use}
+            </p>
           </div>
-        </ExampleCell>
-        <ExampleCell token="sm" value="8px" note="Stats grid card · text inputs · onboarding cards.">
-          <div style={{ position: 'relative' }}>
-            <RadiusInputExample />
-            <RadiusAnnot r={8} value="8" />
-          </div>
-        </ExampleCell>
-        <ExampleCell token="button" value="12px" note="Every Button. Reserved name for touch targets.">
-          <div style={{ position: 'relative' }}>
-            <Button title="Connect bank" onPress={() => {}} variant="primary" />
-            <RadiusAnnot r={12} value="12" />
-          </div>
-        </ExampleCell>
-        <ExampleCell token="md" value="16px" note="Feature cards, sheets.">
-          <div style={{ position: 'relative' }}>
-            <RadiusFeatureCardExample />
-            <RadiusAnnot r={16} value="16" />
-          </div>
-        </ExampleCell>
-        <ExampleCell token="lg" value="24px" note="Hero cards (home estimated-tax card), paywall.">
-          <div style={{ position: 'relative' }}>
-            <RadiusHeroCardExample />
-            <RadiusAnnot r={24} value="24" />
-          </div>
-        </ExampleCell>
-        <ExampleCell token="round" value="pill" note="Toggles, SegmentedControl — anything that reads as round.">
-          <div style={{ position: 'relative' }}>
-            <Toggle value={t} onValueChange={setT} />
-            <RadiusAnnot r={9999} value="pill" />
-          </div>
-        </ExampleCell>
+        ))}
       </div>
     </Stage>
   );
 };
+
+const RADIUS_TILES: { token: string; label: string; preview: number; use: string }[] = [
+  { token: 'xs',     label: '4px',  preview: 8,  use: 'Status chips inside TransactionRow.' },
+  { token: 'sm',     label: '8px',  preview: 16, use: 'Inputs · onboarding cards · stats grid.' },
+  { token: 'button', label: '12px', preview: 24, use: 'All touch targets. Reserved alias.' },
+  { token: 'md',     label: '16px', preview: 32, use: 'Feature cards · sheets.' },
+  { token: 'lg',     label: '24px', preview: 48, use: 'Hero cards · paywall surface.' },
+  { token: 'round',  label: 'pill', preview: 9999, use: 'Toggles · SegmentedControl.' },
+];
+
+// ── Button reference (Button Scale + Basic States) ──────────────────────────
+// All values pulled from `BUTTON_SPEC` / `BUTTON_HEIGHT` in Button.tsx, so the
+// spec table is locked to the real component — change Button.tsx and these
+// swatches change with it.
+type RealVariant = keyof typeof BUTTON_SPEC.variants;
+type ButtonState = 'default' | 'pressed' | 'disabled';
+type RealSize = keyof typeof BUTTON_HEIGHT;
+
+const VARIANT_KEYS: RealVariant[] = ['primary', 'secondary', 'outline', 'ghost', 'destructive'];
+const SIZE_KEYS: RealSize[] = ['small', 'medium', 'large'];
+
+const SIZE_PADDING_X: Record<RealSize, number> = { small: 12, medium: 16, large: 16 };
+const SIZE_FONT: Record<RealSize, number> = { small: 13, medium: 16, large: 16 };
+
+/** Engineering-style vertical dimension annotation. Renders a line that exactly
+ *  matches the target height with arrowhead caps at top and bottom, plus the
+ *  numeric value centered to the left. */
+const DimVertical: React.FC<{ value: number }> = ({ value }) => (
+  <div className="flex items-center gap-2">
+    <span className="font-mono text-[11px] text-[#111] tabular-nums">{value}</span>
+    <svg width="10" height={value} viewBox={`0 0 10 ${value}`} fill="none" aria-hidden="true">
+      {/* top cap */}
+      <line x1="2" y1="1" x2="8" y2="1" stroke="#111" strokeWidth="1" />
+      {/* arrowhead top */}
+      <path d={`M5 1 L2 6 M5 1 L8 6`} stroke="#111" strokeWidth="1" />
+      {/* shaft */}
+      <line x1="5" y1="1" x2="5" y2={value - 1} stroke="#111" strokeWidth="1" />
+      {/* arrowhead bottom */}
+      <path d={`M5 ${value - 1} L2 ${value - 6} M5 ${value - 1} L8 ${value - 6}`} stroke="#111" strokeWidth="1" />
+      {/* bottom cap */}
+      <line x1="2" y1={value - 1} x2="8" y2={value - 1} stroke="#111" strokeWidth="1" />
+    </svg>
+  </div>
+);
+
+const SpecBtn: React.FC<{
+  variant: RealVariant;
+  state: ButtonState;
+  size?: RealSize;
+  icon?: 'left' | 'right';
+}> = ({ variant, state, size = 'medium', icon }) => {
+  const v = BUTTON_SPEC.variants[variant];
+  const p = BUTTON_SPEC.pressed[variant];
+  const isPressed = state === 'pressed';
+  const isDisabled = state === 'disabled';
+
+  const bg = isPressed ? p.bg : v.bg;
+  const text = isPressed ? p.text : v.text;
+  const border = v.border;
+  const opacity = isDisabled ? BUTTON_SPEC.disabledOpacity : isPressed ? p.opacity : 1;
+
+  const style: React.CSSProperties = {
+    height: BUTTON_HEIGHT[size],
+    padding: `0 ${SIZE_PADDING_X[size]}px`,
+    borderRadius: BUTTON_SPEC.radius,
+    background: bg,
+    color: text,
+    border: border === 'transparent' ? '1px solid transparent' : `1px solid ${border}`,
+    fontFamily: 'Plus Jakarta Sans, sans-serif',
+    fontSize: SIZE_FONT[size],
+    fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    whiteSpace: 'nowrap',
+    opacity,
+    cursor: isDisabled ? 'not-allowed' : 'pointer',
+    outline: 'none',
+    WebkitAppearance: 'none',
+    appearance: 'none',
+  };
+
+  return (
+    <button type="button" style={style} disabled={isDisabled} onFocus={(e) => e.currentTarget.blur()}>
+      {icon === 'left' && <span aria-hidden="true">●</span>}
+      Button Text
+      {icon === 'right' && <span aria-hidden="true">→</span>}
+    </button>
+  );
+};
+
+const ButtonReference: React.FC = () => (
+  <div>
+    {/* Button Scale — values from BUTTON_HEIGHT in Button.tsx */}
+    <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#111] pb-3 border-b border-[#111] mb-2">Button Scale</p>
+    <p className="font-sans text-[12px] text-[#999] mb-10">
+      components/taxpilot/Button.tsx · sizes from <span className="font-mono">BUTTON_HEIGHT</span>
+    </p>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+      {SIZE_KEYS.map((sz) => (
+        <div key={sz} className="flex flex-col items-center">
+          <div className="flex items-center gap-4">
+            <DimVertical value={BUTTON_HEIGHT[sz]} />
+            <SpecBtn variant="primary" state="default" size={sz} />
+          </div>
+          <p className="font-sans text-[14px] text-[#111] mt-5 capitalize">{sz}</p>
+          <p className="font-mono text-[11px] text-[#999] mt-1">size=&quot;{sz}&quot;</p>
+        </div>
+      ))}
+    </div>
+
+    {/* Basic States matrix — values from BUTTON_SPEC.variants + BUTTON_SPEC.pressed */}
+    <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#111] pb-3 border-b border-[#111] mb-2">Basic States</p>
+    <p className="font-sans text-[12px] text-[#999] mb-8">
+      All cells render from <span className="font-mono">BUTTON_SPEC</span> — the 5 real variants × 3 mobile states
+    </p>
+    <div className="bg-white rounded-[12px] p-6">
+      <div
+        className="grid gap-y-6 gap-x-3 items-center"
+        style={{ gridTemplateColumns: `80px repeat(${VARIANT_KEYS.length}, minmax(0, 1fr))` }}
+      >
+        <div />
+        {VARIANT_KEYS.map((v) => (
+          <p key={v} className="font-sans text-[12px] text-[#111] text-center capitalize">{v}</p>
+        ))}
+        {(['default', 'pressed', 'disabled'] as ButtonState[]).map((state) => (
+          <React.Fragment key={state}>
+            <p className="font-sans text-[12px] text-[#111] capitalize">{state}</p>
+            {VARIANT_KEYS.map((v) => (
+              <div key={v} className="flex items-center justify-center min-w-0">
+                <SpecBtn variant={v} state={state} size="small" />
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+      <p className="font-sans text-[12px] text-[#999] mt-8">
+        Mobile-only — no hover state. Pressed is the active feedback when a touch is held.
+      </p>
+    </div>
+  </div>
+);
 
 // ── 8d. Component library ───────────────────────────────────────────────────
 const Row: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
@@ -912,38 +1139,7 @@ export const ComponentLibrary: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <Section title="Button" source="components/taxpilot/Button.tsx">
-        <InlineRow label="primary">
-          <Button title="Connect bank" onPress={() => {}} variant="primary" />
-        </InlineRow>
-        <InlineRow label="secondary">
-          <Button title="Skip for now" onPress={() => {}} variant="secondary" />
-        </InlineRow>
-        <InlineRow label="outline">
-          <Button title="View report" onPress={() => {}} variant="outline" />
-        </InlineRow>
-        <InlineRow label="ghost">
-          <Button title="Cancel" onPress={() => {}} variant="ghost" />
-        </InlineRow>
-        <InlineRow label="destructive">
-          <Button title="Disconnect" onPress={() => {}} variant="destructive" />
-        </InlineRow>
-        <InlineRow label="loading">
-          <Button title="Connect bank" onPress={() => {}} variant="primary" loading />
-        </InlineRow>
-        <InlineRow label="disabled">
-          <Button title="Connect bank" onPress={() => {}} variant="primary" disabled />
-        </InlineRow>
-      </Section>
-
-      <Section title="SmallButton" source="components/taxpilot/SmallButton.tsx">
-        <InlineRow label="default">
-          <SmallButton title="Add receipt" onPress={() => {}} />
-        </InlineRow>
-        <InlineRow label="with icon">
-          <SmallButton title="Edit" onPress={() => {}} icon="create-outline" />
-        </InlineRow>
-      </Section>
+      <ButtonReference />
 
       <Section title="SegmentedControl" source="components/taxpilot/SegmentedControl.tsx">
         <SegmentedControl<Range>

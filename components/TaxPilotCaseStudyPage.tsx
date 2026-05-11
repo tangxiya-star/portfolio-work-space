@@ -17,6 +17,10 @@ import LoadingScreen from './taxpilot/screens/loading';
 import AnalyzingScreen from './taxpilot/screens/analyzing';
 import CalendarScreen from './taxpilot/screens/calendar';
 import AddExpenseDemo from './taxpilot/AddExpenseDemo';
+import { View } from 'react-native';
+import Toggle from './taxpilot/Toggle';
+import SegmentedControl from './taxpilot/SegmentedControl';
+import TransactionRow from './taxpilot/TransactionRow';
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
@@ -103,16 +107,335 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
   );
 };
 
+// ── Motion micro-interaction strip ──────────────────────────────────────────
+// Surfaces the small, easy-to-miss motion proofs (Toggle on/off, Row press)
+// at top-level so they don't get buried inside the collapsed Full system.
+const MotionMicroStrip: React.FC = () => {
+  const [t1, setT1] = useState(true);
+  const [t2, setT2] = useState(false);
+  const [year, setYear] = useState<number>(2026);
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-4">
+      {/* Left col — two micro-interactions stacked */}
+      <div className="grid grid-rows-2 gap-4">
+        <div className="border border-[#E8E8E8] bg-white p-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-4">
+            Toggle
+          </p>
+          <View style={{ height: 56, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 32 }}>
+            <Toggle value={t1} onValueChange={setT1} />
+            <Toggle value={t2} onValueChange={setT2} />
+          </View>
+        </div>
+        <div className="border border-[#E8E8E8] bg-white p-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-4">
+            Segmented control
+          </p>
+          <View style={{ height: 56, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ backgroundColor: '#E3DFD5', padding: 6, borderRadius: 999, alignSelf: 'center' }}>
+              <SegmentedControl
+                options={[
+                  { label: '2026', value: 2026 },
+                  { label: '2025', value: 2025 },
+                  { label: '2024', value: 2024 },
+                ]}
+                value={year}
+                onChange={setYear}
+              />
+            </View>
+          </View>
+        </div>
+      </div>
+
+      {/* Right col — TransactionRow at phone-native width (390pt), centered */}
+      <div className="border border-[#E8E8E8] bg-white p-5">
+        <div className="flex items-baseline justify-between mb-4">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F]">
+            Row · press feedback <span className="text-[#999] normal-case tracking-normal ml-2">↓ tap any row</span>
+          </p>
+          <p className="font-mono text-[10px] text-[#999999]">
+            rendered at 390pt — native iPhone width
+          </p>
+        </div>
+        <View style={{ width: 360, alignSelf: 'center', backgroundColor: '#E3DFD5', padding: 12, borderRadius: 8 }}>
+          <TransactionRow
+            item={{
+              id: '1', merchant_name: 'Stripe payout', amount: 4280.00,
+              date: 'Mar 14', status: 'confirmed', is_income: true,
+            } as any}
+            onPress={() => {}}
+          />
+          <TransactionRow
+            item={{
+              id: '2', merchant_name: 'Adobe Creative Cloud', amount: 54.99,
+              date: 'Mar 13', status: 'confirmed', is_income: false,
+              suggested_branches: [{ category: 'Software' }],
+            } as any}
+            onPress={() => {}}
+          />
+          <TransactionRow
+            item={{
+              id: '3', merchant_name: 'Uber', amount: 18.42,
+              date: 'Mar 12', status: 'pending', is_income: false,
+              suggested_branches: [{ category: 'Travel' }],
+            } as any}
+            onPress={() => {}}
+          />
+        </View>
+        <p className="font-sans text-[12px] text-[#666666] leading-[1.55] mt-4">
+          Subtle scale + background on press. Tabular figures keep the amount column aligned across rows. Three states — income, confirmed expense, pending review.
+        </p>
+        <p className="font-mono text-[10px] text-[#999999] mt-2">components/taxpilot/TransactionRow.tsx</p>
+      </div>
+    </div>
+  );
+};
+
+// ── Compiler diagram — scroll-driven assembly ────────────────────────────────
+// Three movements, all hairline:
+//   A — scanline reveal on the output home screen
+//   B — diamond markers fill in sequence as the section enters
+//   C — blinking caret at the end of the prompt sentence
+// Compact horizontal diagram: 3 real inputs (variant.png / wireframe.png / palette)
+// connected via a bracket into a single `claude` node, then arrow to home screen.
+// No card chrome — just mono labels, real images, hairlines.
+const CompilerDiagram: React.FC<{ onZoom: (src: string) => void }> = ({ onZoom }) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node) return;
+    const reduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { setStarted(true); return; }
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
+
+  const itemStyle = (i: number): React.CSSProperties => ({
+    opacity: started ? 1 : 0,
+    transform: started ? 'translateX(0)' : 'translateX(-6px)',
+    transition: `opacity 400ms ease-out ${i * 110}ms, transform 400ms ease-out ${i * 110}ms`,
+  });
+
+  const InputCard: React.FC<{
+    i: number;
+    n: string;
+    label: string;
+    hint: string;
+    img?: string;
+    custom?: React.ReactNode;
+  }> = ({ i, n, label, hint, img, custom }) => (
+    <div style={itemStyle(i)} className="flex items-start gap-5">
+      {img ? (
+        <button
+          type="button"
+          onClick={() => onZoom(img)}
+          aria-label={`Enlarge ${label}`}
+          className="block w-[200px] shrink-0 border border-[#E8E8E8] bg-white overflow-hidden cursor-zoom-in group"
+        >
+          <img
+            src={img}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </button>
+      ) : (
+        <div className="w-[200px] shrink-0 border border-[#E8E8E8] bg-white py-6 flex items-center justify-center gap-3">
+          {custom}
+        </div>
+      )}
+      <div className="pt-1 min-w-0">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999999] mb-1">
+          {n} · Input
+        </p>
+        <h4 className="font-sans text-[15px] font-semibold text-[#111111] leading-tight mb-1">
+          {label}
+        </h4>
+        <p className="font-sans text-[13px] text-[#666666] leading-[1.55]">{hint}</p>
+      </div>
+    </div>
+  );
+
+  return (
+    <div ref={rootRef}>
+      <style>{`
+        @keyframes tpCaretBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+        /* Reveal animation crops edges in the final state to hide black borders on the source PNG */
+        @keyframes tpScanReveal { from { clip-path: inset(7% 1.5% 100% 1.5%); } to { clip-path: inset(7% 1.5% 1.5% 1.5%); } }
+        @media (prefers-reduced-motion: reduce) {
+          .tp-caret { animation: none !important; opacity: 1 !important; }
+          .tp-scan-img { animation: none !important; clip-path: inset(7% 1.5% 1.5% 1.5%) !important; }
+          .tp-stroke { stroke-dashoffset: 0 !important; }
+        }
+      `}</style>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,420px)_minmax(120px,180px)_minmax(0,1fr)] items-center gap-8 lg:gap-6">
+        {/* LEFT — three inputs, larger + clickable */}
+        <div className="flex flex-col gap-7">
+          <InputCard i={0} n="01" label="Variant"       hint="Visual grammar — typography, rhythm, components."
+            img="/taxpilot/02-variant.png" />
+          <InputCard i={1} n="02" label="Wireframe"     hint="Flow + screen intent. Not pixel-perfect — just shape."
+            img="/taxpilot/01-wireframe.png" />
+          <InputCard i={2} n="03" label="Brand palette" hint="Ink · Newsprint · Emerald. Every accent had to earn its place."
+            custom={
+              <>
+                {[
+                  { hex: '#0D0D0D', name: 'Ink' },
+                  { hex: '#E3DFD5', name: 'Newsprint' },
+                  { hex: '#22C55F', name: 'Emerald' },
+                ].map((c) => (
+                  <span
+                    key={c.hex}
+                    title={`${c.name} ${c.hex}`}
+                    className="inline-block w-9 h-9 rounded-full"
+                    style={{ background: c.hex, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)' }}
+                  />
+                ))}
+              </>
+            }
+          />
+        </div>
+
+        {/* CENTER — bracket + claude node + outbound line */}
+        <div className="relative w-full self-stretch flex items-center justify-center min-h-[260px]">
+          <svg
+            viewBox="0 0 180 260"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full"
+            aria-hidden="true"
+          >
+            {/* three bracket arms from left edge → trunk at x=50 */}
+            {[44, 130, 216].map((y, i) => (
+              <line
+                key={y}
+                x1="0" y1={y} x2="50" y2={y}
+                stroke="#CCCCCC" strokeWidth="1" strokeDasharray="3 3"
+                className="tp-stroke"
+                style={{
+                  strokeDasharray: '70',
+                  strokeDashoffset: started ? 0 : 70,
+                  transition: `stroke-dashoffset 500ms ease-out ${260 + i * 110}ms`,
+                }}
+              />
+            ))}
+            {/* vertical trunk */}
+            <line
+              x1="50" y1="44" x2="50" y2="216"
+              stroke="#CCCCCC" strokeWidth="1" strokeDasharray="3 3"
+              className="tp-stroke"
+              style={{
+                strokeDasharray: '200',
+                strokeDashoffset: started ? 0 : 200,
+                transition: `stroke-dashoffset 500ms ease-out ${260 + 3 * 110}ms`,
+              }}
+            />
+            {/* trunk → claude (left side) */}
+            <line
+              x1="50" y1="130" x2="78" y2="130"
+              stroke="#111111" strokeWidth="1"
+              className="tp-stroke"
+              style={{
+                strokeDasharray: '40',
+                strokeDashoffset: started ? 0 : 40,
+                transition: `stroke-dashoffset 350ms ease-out ${260 + 3 * 110 + 200}ms`,
+              }}
+            />
+            {/* claude → output (right side, beyond the pill) */}
+            <line
+              x1="118" y1="130" x2="180" y2="130"
+              stroke="#111111" strokeWidth="1"
+              className="tp-stroke"
+              style={{
+                strokeDasharray: '70',
+                strokeDashoffset: started ? 0 : 70,
+                transition: `stroke-dashoffset 450ms ease-out ${260 + 3 * 110 + 600}ms`,
+              }}
+            />
+            {/* arrow head at right edge */}
+            <path
+              d="M 174 126 L 180 130 L 174 134"
+              fill="none" stroke="#111111" strokeWidth="1"
+              style={{
+                opacity: started ? 1 : 0,
+                transition: `opacity 200ms ease-out ${260 + 3 * 110 + 1000}ms`,
+              }}
+            />
+          </svg>
+          {/* claude pill — centered horizontally in the center column, on the trunk row */}
+          <div
+            className="relative z-10 bg-white border border-[#111111] px-2.5 py-1.5"
+            style={{
+              opacity: started ? 1 : 0,
+              transform: `scale(${started ? 1 : 0.9})`,
+              transition: 'opacity 280ms ease-out 850ms, transform 280ms cubic-bezier(0.2,0.7,0.2,1) 850ms',
+            }}
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#111111] leading-none whitespace-nowrap">
+              claude
+              <span
+                aria-hidden="true"
+                className="tp-caret inline-block align-[-1px] ml-[2px] w-[1.5px] h-[10px] bg-[#22C55F]"
+                style={{
+                  animation: 'tpCaretBlink 1.05s steps(1) infinite',
+                  animationDelay: '1200ms',
+                  opacity: started ? undefined : 0,
+                }}
+              />
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT — output home screen */}
+        <button
+          type="button"
+          onClick={() => onZoom('/taxpilot/03-app.png')}
+          className="relative block w-full max-w-[260px] justify-self-start cursor-zoom-in group"
+          aria-label="Enlarge home screen output"
+          style={{
+            opacity: started ? 1 : 0,
+            transform: started ? 'translateX(0)' : 'translateX(8px)',
+            transition: 'opacity 400ms ease-out 1100ms, transform 400ms ease-out 1100ms',
+          }}
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-2">
+            Output · Home screen
+          </p>
+          {/* Wrapper crops black edges of the source PNG via overflow + clipPath */}
+          <div className="relative w-full overflow-hidden border border-[#E8E8E8] bg-white">
+            <img
+              src="/taxpilot/03-app.png"
+              alt="First TaxPilot home screen, composed by Claude from Variant JSX, wireframe, and brand palette."
+              className="tp-scan-img w-full h-auto block transition-transform duration-300 group-hover:scale-[1.005]"
+              style={{
+                clipPath: started ? 'inset(7% 1.5% 1.5% 1.5%)' : 'inset(7% 1.5% 100% 1.5%)',
+                animation: started ? 'tpScanReveal 900ms cubic-bezier(0.2,0.6,0.2,1) 1300ms forwards' : 'none',
+              }}
+            />
+          </div>
+          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.22em] text-[#999999]">
+            First turn — production RN
+          </p>
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // ── Section nav ──────────────────────────────────────────────────────────────
 const navItems = [
   { id: 'hero',         label: 'Overview' },
   { id: 'product',      label: 'Product' },
   { id: 'problem',      label: 'Problem' },
-  { id: 'process',      label: 'Process' },
+  { id: 'build',        label: 'How it was built' },
   { id: 'ia',           label: 'Information Architecture' },
   { id: 'architecture', label: 'Decisions' },
-  { id: 'motion',       label: 'Motion' },
-  { id: 'visual',       label: 'Visual Design' },
+  { id: 'system',       label: 'Full system' },
   { id: 'next',         label: 'Next' },
 ];
 
@@ -120,6 +443,18 @@ const navItems = [
 const TaxPilotCaseStudyPage: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null); };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [lightbox]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -200,33 +535,93 @@ const TaxPilotCaseStudyPage: React.FC = () => {
 
               <div className="mb-6 h-10 w-1 bg-[#22C55F]" />
               <h1 className="font-serif text-[72px] md:text-[96px] leading-[0.90] text-[#111111]">TaxPilot</h1>
-              <p className="mt-6 font-sans text-[20px] md:text-[22px] leading-[1.5] text-[#111111] max-w-[44ch]">
-                A tax app I designed, built, and shipped — solo.
-              </p>
-              <p className="mt-4 font-sans text-[15px] leading-[1.7] text-[#666666] max-w-[52ch]">
-                Founding designer + sole engineer. From wireframe to production in 4 weeks. Every pixel, every animation, every line of React Native is mine.
+              <p className="mt-6 font-sans text-[17px] leading-[1.6] text-[#666666] max-w-[48ch]">
+                Tax as an ambient surface, not an annual panic.
               </p>
 
+              {/* Editorial byline dateline */}
               <div className="mt-8 flex flex-wrap items-center gap-2 font-sans text-[12px] tracking-[0.04em] text-[#666666]">
                 <span>Founding Designer + Design Engineer</span>
                 <span className="text-[#CCCCCC]">·</span>
-                <span>1 (me) + 1 founder</span>
+                <span>Me + 1 founder</span>
                 <span className="text-[#CCCCCC]">·</span>
-                <span>React Native · Expo · TypeScript · Zustand · React Query</span>
+                <span>Mobile Tax · React Native · 2026</span>
               </div>
 
-              {/* Pull quote */}
-              <blockquote className="mt-12 border-l-2 border-[#22C55F] pl-6 max-w-[60ch]">
-                <p className="font-serif text-[24px] md:text-[28px] leading-[1.35] text-[#111111] italic">
-                  "I didn't design a system and then build the app. I built the app, and the system fell out of it."
-                </p>
-              </blockquote>
+              <p className="mt-10 font-sans text-[17px] leading-[1.7] text-[#444444] max-w-[58ch]">
+                A mobile tax app for{' '}
+                <span className="bg-[#FFF8C5] px-1 rounded-sm">[PLACEHOLDER — US 1099 workers / freelancers]</span>{' '}
+                — auto-categorizes every bank transaction and shows your tax position any day of the year.
+              </p>
             </Reveal>
 
             <Reveal delay={120} className="mt-12 md:mt-14">
-              <DemoStage source="components/taxpilot/screens/case1.tsx" autoLoopMs={6000}>
-                <Case1Screen />
-              </DemoStage>
+              <div className="flex flex-col gap-4">
+                {/* Hero stage — wide Patiently-style composition.
+                    Soft single-tone gradient backdrop, phone mock centered. */}
+                <div
+                  className="relative w-full overflow-hidden rounded-[12px] flex items-center justify-center"
+                  style={{ aspectRatio: '3 / 2' }}
+                >
+                  {/* Backdrop — metallic emerald (deeper saturation + chrome-like sheen bands).
+                      Layered: conic sheen → radial highlight → emerald base. */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background: '#0F5F3A',
+                      backgroundImage: [
+                        // top-left specular highlight
+                        'radial-gradient(120% 80% at 22% 14%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 42%)',
+                        // bottom-right cool fall-off
+                        'radial-gradient(110% 90% at 86% 96%, rgba(4,40,24,0.65) 0%, rgba(4,40,24,0) 55%)',
+                        // chrome-like sheen bands
+                        'conic-gradient(from 210deg at 55% 50%, #1E8C58 0deg, #3CC080 70deg, #0A4A2E 150deg, #2BA670 230deg, #0F5F3A 320deg, #1E8C58 360deg)',
+                      ].join(', '),
+                    }}
+                  />
+                  {/* Subtle film-grain to break gradient banding */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.18]"
+                    style={{
+                      backgroundImage:
+                        "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+                    }}
+                  />
+                  {/* Phone mock — designed iPhone shape wrapping the video */}
+                  <div
+                    className="relative"
+                    style={{
+                      height: '92%',
+                      aspectRatio: '630 / 1346',
+                      padding: '10px',
+                      background: '#0D0D0D',
+                      borderRadius: 36,
+                      boxShadow:
+                        '0 24px 60px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.04) inset',
+                    }}
+                  >
+                    <div
+                      className="relative w-full h-full overflow-hidden"
+                      style={{ borderRadius: 28, background: '#000' }}
+                    >
+                      <video
+                        src="/taxpilot/taxpilot-hero.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        aria-label="TaxPilot product walkthrough — onboarding through connect-bank flow"
+                        className="block w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999999]">
+                  Onboarding
+                </p>
+              </div>
             </Reveal>
           </section>
 
@@ -235,12 +630,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
           {/* ── PRODUCT ───────────────────────────────────────────────── */}
           <section id="product" className="scroll-mt-28">
             <Reveal>
-              <SectionHeading label="Product" title="Tax as an ambient surface, not an annual panic." />
-              <p className="mt-8 font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[64ch]">
-                TaxPilot is a mobile tax app for{' '}
-                <span className="bg-[#FFF8C5] px-1 rounded-sm">[PLACEHOLDER — target user, e.g. US 1099 workers / freelancers / small business owners]</span>.
-                It connects to bank accounts, automatically categorizes income and expenses, surfaces deductions in real time, and generates the numbers needed at filing time — without the user opening a spreadsheet.
-              </p>
+              <SectionHeading label="Product" title="Four steps, no spreadsheet." />
             </Reveal>
 
             {/* 4 flows — hairline rows, no cards */}
@@ -283,53 +673,138 @@ const TaxPilotCaseStudyPage: React.FC = () => {
 
           <Rule />
 
-          {/* ── PROCESS ───────────────────────────────────────────────── */}
-          <section id="process" className="scroll-mt-28">
+          {/* ── HOW IT WAS BUILT — the AI-native compile loop ─────────── */}
+          <section id="build" className="scroll-mt-28">
             <Reveal>
-              <SectionHeading label="Process" title="An AI-native loop from wireframe to production code." />
+              <SectionHeading label="How it was built" title="An AI-native compile loop, not a handoff." />
               <p className="mt-8 font-sans text-[17px] leading-[1.75] text-[#666666] max-w-[64ch]">
-                Most designers hand off Figma. Most engineers hand off Jira tickets. I did neither. I used AI as a compiler between intent and production code, which collapsed the design–engineering loop from weeks to hours.
+                Most designers hand off Figma. Most engineers hand off Jira tickets. I did neither. I used AI as a compiler between intent and production code — the design system, the screens, and the components all emerged from the same loop, in the same repo, in the same week.
+              </p>
+              <p className="mt-4 font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[64ch]">
+                The system isn't a Figma file. It's <code className="font-mono text-[14px] bg-[#F0EDE8] px-1.5 py-0.5 rounded-sm">import &#123; Button &#125; from './Button'</code>. Every swatch, type ramp, and component lower on this page is the actual production code, imported and rendered live.
               </p>
             </Reveal>
 
-            <Reveal delay={80}>
-              <ol className="mt-10 list-none pl-0">
-                {[
-                  { t: 'Founder wireframes as input', b: 'Low-fidelity wireframes describing the user flow. Not pixel-perfect mocks — just intent: what screens exist, what each screen has to do.' },
-                  { t: 'Variant → code, immediately', b: 'Used Variant to generate React Native component code directly from visual intent, skipping the entire Figma → handoff → re-implement loop.' },
-                  { t: 'Design system emerged from code', b: 'Most teams design tokens in Figma, then implement. I inverted this. By end of week 1: 3 brand colors, 3 type families, 8pt spacing scale, 7-step radius scale, full Apple-HIG-aligned type ramp.' },
-                  { t: 'Iterate by editing production code', b: 'New colors and weights added during real screen design — not in a vacuum. Every token added was load-bearing.' },
-                  { t: 'Icon system + UI states locked last', b: 'Systematized icons (one family per use) and audited every component for full state coverage: default / pressed / disabled / loading / error / empty.' },
-                ].map((s, i, arr) => (
-                  <li
-                    key={s.t}
-                    className="grid grid-cols-1 lg:grid-cols-[34%_66%] gap-6 lg:gap-10 items-start py-10 border-t border-dashed border-[#E8E8E8]"
+            {/* Origin — variant flow + logo construction. The first concrete output of the loop. */}
+            <Reveal delay={80} className="mt-16">
+              <div className="border-t border-[#111111] pt-4 mb-8 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+                  Origin
+                </p>
+                <p className="font-mono text-[10px] text-[#999999]">
+                  one prompt · five variants · one kept
+                </p>
+              </div>
+              <p className="font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[60ch] mb-8">
+                The brand wasn't picked from a swatch library. I prompted in plain English — <em>"change the arrow to green, more related to money, calmer"</em> — and locked the system around the first variant that came back. Every color and component token elsewhere on this page was then justified against this one image, not the other way around.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <figure>
+                  <button
+                    type="button"
+                    onClick={() => setLightbox('/taxpilot/variant-flow.png')}
+                    className="block w-full border border-[#E8E8E8] bg-white overflow-hidden cursor-zoom-in group"
+                    aria-label="Enlarge variant flow screenshot"
                   >
-                    <div className="relative lg:pr-8">
-                      <div
-                        className={`absolute left-[7px] top-6 w-px border-l border-dashed border-[#CCCCCC] ${i === arr.length - 1 ? 'h-0' : 'h-[calc(100%+2.5rem)]'}`}
-                      />
-                      <div className="relative flex items-start gap-4">
-                        <span
-                          className="mt-[3px] inline-flex h-[15px] w-[15px] shrink-0 border border-[#CCCCCC] bg-white items-center justify-center"
-                          style={{ transform: 'rotate(45deg)' }}
-                        >
-                          <span className="h-[5px] w-[5px] bg-[#22C55F]" style={{ transform: 'rotate(-45deg)' }} />
-                        </span>
-                        <div>
-                          <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-[#767676] mb-1">Step {i + 1}</p>
-                          <h3 className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#111111]">
-                            {s.t}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="lg:pl-2">
-                      <p className="text-[17px] leading-[1.75] text-[#666666] max-w-[60ch]">{s.b}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                    <img
+                      src="/taxpilot/variant-flow.png"
+                      alt="AI design tool transcript: orange logo variant on the left, emerald-green final variant on the right, with the prompt that drove the change."
+                      className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.01]"
+                    />
+                  </button>
+                  <figcaption className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#999999]">
+                    Variant 01 · kept — emerald #22C55E, locked from this turn forward
+                  </figcaption>
+                </figure>
+                <figure>
+                  <button
+                    type="button"
+                    onClick={() => setLightbox('/taxpilot/logo-construction.png')}
+                    className="block w-full border border-[#E8E8E8] bg-white overflow-hidden cursor-zoom-in group"
+                    aria-label="Enlarge logo construction sheet"
+                  >
+                    <img
+                      src="/taxpilot/logo-construction.png"
+                      alt="TaxPilot logo construction sheet: symbol geometry, primary typeface Anton, core palette pills."
+                      className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.01]"
+                    />
+                  </button>
+                  <figcaption className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#999999]">
+                    Construction sheet — symbol geometry, primary typeface, core palette
+                  </figcaption>
+                </figure>
+              </div>
+            </Reveal>
+
+            {/* The compiler — three inputs, one screen (absorbs the earlier triptych) */}
+            <Reveal delay={80} className="mt-16">
+              <div className="border-t border-[#111111] pt-4 mb-10 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+                  The compiler
+                </p>
+                <p className="font-mono text-[10px] text-[#999999]">
+                  three inputs · one turn · production code
+                </p>
+              </div>
+
+              <p className="font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[60ch] mb-16">
+                Once Variant returned a screen with the right grammar, I copied the JSX into Claude alongside the wireframe and the three colors that had earned their place. One prompt, one turn — Claude composed it into the first home screen.
+              </p>
+
+              <CompilerDiagram onZoom={setLightbox} />
+            </Reveal>
+
+            <Reveal delay={80}>
+              <div className="mt-20 border-t border-[#111111] pt-4 mb-10 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+                  Division of labor
+                </p>
+                <p className="font-mono text-[10px] text-[#999999]">
+                  founder → me
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-6 items-stretch">
+                {/* Inputs — what the founder provided */}
+                <div className="border border-[#E8E8E8] bg-white p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999999] mb-5">
+                    Founder · inputs
+                  </p>
+                  <ul className="list-none pl-0 space-y-3 font-sans text-[15px] text-[#222222]">
+                    {['Wireframes', 'Information architecture', 'Tech stack'].map((x) => (
+                      <li key={x} className="flex items-center gap-3">
+                        <span className="h-px w-4 bg-[#CCCCCC]" />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Arrow */}
+                <div className="hidden md:flex items-center justify-center">
+                  <span className="font-mono text-[22px] text-[#22C55F]">→</span>
+                </div>
+
+                {/* Outputs — what I delivered */}
+                <div className="border border-[#111111] bg-white p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-5">
+                    Me · outputs
+                  </p>
+                  <ul className="list-none pl-0 space-y-3 font-sans text-[15px] text-[#111111]">
+                    {[
+                      'React Native screens',
+                      'Design system (tokens, type, spacing)',
+                      'Icon system + full state coverage',
+                      'UX rework where flows broke',
+                    ].map((x) => (
+                      <li key={x} className="flex items-center gap-3">
+                        <span className="h-px w-4 bg-[#22C55F]" />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </Reveal>
           </section>
 
@@ -447,6 +922,40 @@ const TaxPilotCaseStudyPage: React.FC = () => {
               </div>
             </Reveal>
 
+            {/* 6a.1 — Motion-as-state demo. The "no Reanimated" decision in flesh. */}
+            <Reveal delay={80} className="mt-16">
+              <div className="border-t border-[#111111] pt-4 mb-8 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+                  Motion, in evidence
+                </p>
+                <p className="font-mono text-[10px] text-[#999999]">
+                  RN Animated API · no third-party libraries
+                </p>
+              </div>
+              <p className="font-sans text-[17px] text-[#444444] leading-[1.7] max-w-[60ch] mb-10">
+                Every animation earns its place by clarifying state or absorbing latency. Built on React Native's built-in Animated API — no Reanimated, no third-party libraries. Constraint forces craft. Try the live components below; they're the production source, not recordings.
+              </p>
+
+              {/* Micro-interaction strip — small live mounts, three at a time */}
+              <MotionMicroStrip />
+
+              {/* Add-expense — the longest, fullest motion proof */}
+              <div className="mt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] gap-10 lg:gap-16 items-start">
+                <div className="max-w-[44ch]">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111] mb-3">Add-expense flow</p>
+                  <p className="font-sans text-[15px] text-[#444444] leading-[1.7]">
+                    Numeric keypad, category selection, fast keyboard interaction. The motion here is invisible unless you remove it — every micro-interaction exists to make the form feel responsive at native-app speed. This is the "power-user UX" demo: dense input, no wasted taps.
+                  </p>
+                </div>
+                <DemoStage
+                  source="components/taxpilot/screens/{index,addExpense}.tsx"
+                  autoLoopMs={5000}
+                >
+                  <AddExpenseDemo />
+                </DemoStage>
+              </div>
+            </Reveal>
+
             {/* 6b UX / flow — hairline rows */}
             <Reveal delay={80} className="mt-16">
               <p className="font-sans text-[12px] uppercase tracking-[0.2em] text-[#767676] mb-6">6b — Flow decisions</p>
@@ -478,68 +987,52 @@ const TaxPilotCaseStudyPage: React.FC = () => {
 
           <Rule />
 
-          {/* ── MOTION (philosophy summary; demos live with their arguments above) ── */}
-          <section id="motion" className="scroll-mt-28">
+          {/* ── FULL SYSTEM — collapsed by default; the receipts ─────── */}
+          <section id="system" className="scroll-mt-28">
             <Reveal>
-              <SectionHeading label="Motion" title="Motion as a state-management tool." />
-              <p className="mt-8 font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[64ch]">
-                Every animation in TaxPilot earns its place by clarifying state, guiding attention, or absorbing latency. Built on React Native's built-in Animated API — no Reanimated, no third-party libraries. Constraint forces craft.
-              </p>
-              <p className="mt-4 font-sans text-[15px] leading-[1.7] text-[#666666] max-w-[64ch]">
-                The demos for this argument live where the argument is made — Discovery in the hero, Calendar and Loading→Analyzing in <a href="#ia" className="underline decoration-[#CCC] hover:decoration-[#111]">Information Architecture</a>. The one below is the last: form motion you only notice if you remove it.
-              </p>
-            </Reveal>
-
-            <Reveal delay={80} className="mt-12">
-              <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] gap-10 lg:gap-16 items-start">
-                <div className="max-w-[44ch]">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111] mb-3">Add-expense flow</p>
-                  <p className="font-sans text-[15px] text-[#444444] leading-[1.7]">
-                    Numeric keypad, category selection, fast keyboard interaction. The motion here is invisible unless you remove it — every micro-interaction exists to make the form feel responsive at native-app speed. This is the "power-user UX" demo: dense input, no wasted taps.
-                  </p>
-                </div>
-                <DemoStage
-                  source="components/taxpilot/screens/{index,addExpense}.tsx"
-                  autoLoopMs={5000}
-                >
-                  <AddExpenseDemo />
-                </DemoStage>
-              </div>
-            </Reveal>
-          </section>
-
-          <Rule />
-
-          {/* ── VISUAL DESIGN — Live design system ────────────────────── */}
-          <section id="visual" className="scroll-mt-28">
-            <Reveal>
-              <SectionHeading label="Visual Design" title="The design system, live." />
+              <SectionHeading label="Full system" title="Receipts, on tap." />
               <p className="mt-8 font-sans text-[17px] leading-[1.75] text-[#666666] max-w-[64ch]">
-                Every swatch and component below is the actual production code, imported and rendered. Hover, click, drag — these are not images.
+                The complete production design system — color, type, spacing, radius, every component — is mounted live below. Collapsed by default because the case study isn't about the system; it's about how it got built. Open it if you want the receipts.
               </p>
             </Reveal>
 
-            <Reveal delay={80} className="mt-12">
-              <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8a. Color</h3>
-              <ColorBlock />
-            </Reveal>
+            <Reveal delay={80} className="mt-10">
+              <details className="group border-t border-[#111111]">
+                <summary className="cursor-pointer list-none flex items-baseline justify-between py-5 hover:bg-[#F5F2EC] transition-colors -mx-2 px-2">
+                  <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] flex items-center gap-3">
+                    <span className="inline-block transition-transform duration-200 group-open:rotate-90">▸</span>
+                    Explore the full system
+                  </span>
+                  <span className="font-mono text-[10px] text-[#999999] tracking-[0.14em]">
+                    color · type · spacing · radius · components
+                  </span>
+                </summary>
 
-            <Reveal delay={80} className="mt-12">
-              <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8b. Typography</h3>
-              <TypographyBlock />
-            </Reveal>
+                <div className="pt-4 pb-8 border-t border-[#E8E8E8]">
+                  <div className="mt-8">
+                    <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8a. Color</h3>
+                    <ColorBlock />
+                  </div>
 
-            <Reveal delay={80} className="mt-12">
-              <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8c. Spacing + radius</h3>
-              <SpacingBlock />
-            </Reveal>
+                  <div className="mt-16">
+                    <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8b. Typography</h3>
+                    <TypographyBlock />
+                  </div>
 
-            <Reveal delay={80} className="mt-12">
-              <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8d. Component library</h3>
-              <p className="font-sans text-[15px] text-[#666666] leading-[1.7] max-w-[64ch] mb-6">
-                Live mounts of production React Native components, rendered on the web via <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">react-native-web</code>. Each section discloses the real source path.
-              </p>
-              <ComponentLibrary />
+                  <div className="mt-16">
+                    <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8c. Spacing + radius</h3>
+                    <SpacingBlock />
+                  </div>
+
+                  <div className="mt-16">
+                    <h3 className="font-sans text-[22px] font-semibold text-[#111111] mb-4">8d. Component library</h3>
+                    <p className="font-sans text-[15px] text-[#666666] leading-[1.7] max-w-[64ch] mb-6">
+                      Live mounts of production React Native components, rendered on the web via <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">react-native-web</code>. Each section discloses the real source path.
+                    </p>
+                    <ComponentLibrary />
+                  </div>
+                </div>
+              </details>
             </Reveal>
           </section>
 
@@ -577,6 +1070,31 @@ const TaxPilotCaseStudyPage: React.FC = () => {
 
       <ContactSection />
       <Footer />
+
+      {lightbox && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged image preview"
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex items-center justify-center p-6 md:p-12 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            aria-label="Close preview"
+            onClick={() => setLightbox(null)}
+            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-xl leading-none flex items-center justify-center transition-colors"
+          >
+            ×
+          </button>
+          <img
+            src={lightbox}
+            alt=""
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-full max-h-full object-contain cursor-default"
+          />
+        </div>
+      )}
     </div>
   );
 };
