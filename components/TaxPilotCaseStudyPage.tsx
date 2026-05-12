@@ -40,21 +40,20 @@ const scrollTo = (id: string) => {
 };
 
 const LayerLabel: React.FC<{ text: string }> = ({ text }) => (
-  <p className="mb-2 font-sans text-[12px] uppercase tracking-[0.2em] text-[#767676]">{text}</p>
+  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-[#999999]">{text}</p>
 );
 
 const SectionHeading: React.FC<{ label: string; title: string }> = ({ label, title }) => (
   <div className="group w-fit">
-    <LayerLabel text={label} />
-    <h2 className="font-sans text-[32px] md:text-[42px] font-semibold tracking-[-0.015em] leading-[1.05] text-[#111111]">{title}</h2>
-    <div className="mt-4 relative h-1 flex items-center">
-      <span className="h-px w-12 bg-[#111111] transition-all duration-200 ease-out group-hover:w-[72px]" />
-      <span className="ml-2 h-1 w-1 bg-[#C9A96E] opacity-0 transition-all duration-200 ease-out group-hover:opacity-100" />
+    <div className="flex items-center gap-2 mb-3">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#22C55F]" />
+      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#999999] m-0 leading-none">{label}</p>
     </div>
+    <h2 className="font-sans text-[30px] md:text-[40px] font-semibold tracking-[-0.025em] leading-[1.05] text-[#222222]">{title}</h2>
   </div>
 );
 
-const Rule = () => <hr className="my-24 md:my-28 border-0 border-t border-[#E8E8E8]" />;
+const Rule = () => <hr className="my-24 md:my-28 border-0 h-px" style={{ background: 'rgba(0,0,0,0.06)' }} />;
 
 const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({ children, delay = 0, className = '' }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -101,16 +100,16 @@ type Line = Token[];
 // no candy-bright accents. Ink is the body color; tokens lift only the
 // semantically meaningful identifiers.
 const TOKEN_COLOR: Record<TokenKind, string> = {
-  kw:    '#7C3AED', // violet — keyword (const, type, function, return, if, import, export, from)
-  type:  '#0369A1', // ocean — types (Status, Transaction, React.FC)
-  str:   '#15803D', // forest — strings
-  fn:    '#B45309', // amber — function names / JSX components
-  com:   '#94A3B8', // slate — comments
-  num:   '#9333EA', // muted violet — numbers
-  punct: '#64748B', // ink-slate — punctuation, operators
-  attr:  '#B45309', // amber — JSX attribute names
-  tag:   '#0369A1', // ocean — JSX tag bodies
-  plain: '#1E293B', // deep ink — identifiers / plain text
+  kw:    '#6B7280', // soft slate — keywords
+  type:  '#7B9BB5', // faint blue — types
+  str:   '#9DB89A', // pale green — strings
+  fn:    '#B8A07A', // muted sand — fn / JSX components
+  com:   '#C4C4C4', // whisper grey — comments
+  num:   '#A89BB5', // faded violet — numbers
+  punct: '#A0A0A0', // soft grey — punctuation
+  attr:  '#B8A07A', // muted sand — attrs
+  tag:   '#7B9BB5', // faint blue — tags
+  plain: '#444444', // ink — identifiers
 };
 
 const CodeBlock: React.FC<{
@@ -120,32 +119,24 @@ const CodeBlock: React.FC<{
   caption?: string;
 }> = ({ filename, language = 'tsx', lines, caption }) => (
   <div
-    className="font-mono rounded-[8px] overflow-hidden bg-white"
+    className="rounded-[10px] overflow-hidden bg-white"
     style={{
-      border: '1px solid #E8E8E8',
-      boxShadow: '0 1px 0 rgba(15, 23, 42, 0.02), 0 0 0 1px rgba(255, 255, 255, 0.6) inset',
+      fontFamily: '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace',
+      boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)',
     }}
   >
-    {/* header strip — hairline, whisper-light */}
     <div
-      className="flex items-center justify-between px-4 py-2.5 bg-[#FAFAF8]"
-      style={{ borderBottom: '1px solid #EFECE5' }}
+      className="flex items-center justify-between px-4 py-2.5 bg-white"
+      style={{ boxShadow: 'inset 0 -1px 0 rgba(0,0,0,0.03)' }}
     >
-      <div className="flex items-center gap-2.5">
-        <span className="flex items-center gap-1.5">
-          <span className="inline-block w-[7px] h-[7px] rounded-full bg-[#FFBD2E] opacity-50" />
-          <span className="inline-block w-[7px] h-[7px] rounded-full bg-[#28C940] opacity-50" />
-        </span>
-        <span className="text-[11px] text-[#767676] tracking-[0.02em]">{filename}</span>
-      </div>
-      <span className="text-[10px] uppercase tracking-[0.22em] text-[#AAAAAA]">{language}</span>
+      <span className="text-[11px] text-[#888888] tracking-[0.01em]">{filename}</span>
+      <span className="text-[10px] uppercase tracking-[0.22em] text-[#BBBBBB]">{language}</span>
     </div>
-    {/* body */}
-    <pre className="px-4 py-4 m-0 text-[12.5px] leading-[1.7] overflow-x-auto bg-white">
-      <code>
+    <pre className="px-4 py-5 m-0 text-[12.5px] leading-[1.75] overflow-x-auto bg-white">
+      <code style={{ fontFamily: 'inherit' }}>
         {lines.map((line, i) => (
           <div key={i} className="whitespace-pre">
-            <span className="inline-block w-7 select-none text-right pr-3 text-[#CFCFCF]">{i + 1}</span>
+            <span className="inline-block w-7 select-none text-right pr-3 text-[#DDDDDD]">{i + 1}</span>
             {line.map((tok, j) => (
               <span key={j} style={{ color: TOKEN_COLOR[tok.k] }}>{tok.t}</span>
             ))}
@@ -155,8 +146,8 @@ const CodeBlock: React.FC<{
     </pre>
     {caption && (
       <div
-        className="px-4 py-3 bg-[#FAFAF8] text-[12px] text-[#666666] leading-[1.55]"
-        style={{ borderTop: '1px solid #EFECE5' }}
+        className="px-4 py-3 bg-white text-[12px] text-[#888888] leading-[1.6]"
+        style={{ boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.03)' }}
       >
         {caption}
       </div>
@@ -198,35 +189,33 @@ const Workbench: React.FC<{
     <div className={`grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-5 ${reverse ? 'lg:[&>div:first-child]:order-2' : ''}`}>
       {/* LIVE pane */}
       <div
-        className="rounded-[8px] overflow-hidden bg-white flex flex-col"
+        className="rounded-[10px] overflow-hidden flex flex-col transition-all duration-500 hover:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05),0_8px_30px_rgba(0,0,0,0.04)] hover:scale-[1.005]"
         style={{
-          border: '1px solid #E8E8E8',
-          transition: `box-shadow 500ms ${EASE_OUT_EXPO}`,
+          background: '#FAFAFA',
+          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+          transitionTimingFunction: EASE_OUT_EXPO,
         }}
       >
         <div
-          className="px-4 py-2.5 flex items-center justify-between bg-[#FAFAF8]"
-          style={{ borderBottom: '1px solid #EFECE5' }}
+          className="px-4 py-2.5 flex items-center justify-between"
+          style={{ boxShadow: 'inset 0 -1px 0 rgba(0,0,0,0.03)' }}
         >
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center">
-            <span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />
-            {liveKicker}
-          </span>
-          <span className="font-mono text-[10px] text-[#AAAAAA]">react-native-web</span>
+          <div className="flex items-center gap-2">
+            <span className="w-1 h-1 rounded-full bg-[#22C55F] opacity-70" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F]">{liveKicker}</span>
+          </div>
+          <span className="font-mono text-[10px] text-[#BBBBBB]">react-native-web</span>
         </div>
-        <div className="flex-1 p-7 flex items-center justify-center bg-white">
+        <div className="flex-1 p-7 flex items-center justify-center">
           {live}
         </div>
       </div>
 
-      {/* CODE pane — the CodeBlock supplies its own chrome */}
+      {/* CODE pane */}
       <div className="flex flex-col">
         <div className="px-1 mb-2 flex items-center justify-between">
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center">
-            <span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />
-            {codeKicker}
-          </span>
-          <span className="font-mono text-[10px] text-[#AAAAAA]">production</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#888888]">{codeKicker}</span>
+          <span className="font-mono text-[10px] text-[#BBBBBB]">production</span>
         </div>
         <div className="flex-1">{code}</div>
       </div>
@@ -355,18 +344,18 @@ const CompilerDiagram: React.FC<{ onZoom: (src: string) => void }> = ({ onZoom }
           type="button"
           onClick={() => onZoom(img)}
           aria-label={`Enlarge ${label}`}
-          className="block w-[200px] shrink-0 border border-[#E8E8E8] bg-white overflow-hidden cursor-zoom-in group"
+          className="block w-[200px] shrink-0 border border-black/[0.04] bg-white overflow-hidden cursor-zoom-in group"
         >
           <img src={img} alt="" aria-hidden="true" className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.02]" />
         </button>
       ) : (
-        <div className="w-[200px] shrink-0 border border-[#E8E8E8] bg-white py-6 flex items-center justify-center gap-3">
+        <div className="w-[200px] shrink-0 border border-black/[0.04] bg-white py-6 flex items-center justify-center gap-3">
           {custom}
         </div>
       )}
       <div className="pt-1 min-w-0">
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999999] mb-1">{n} · Input</p>
-        <h4 className="font-sans text-[15px] font-semibold text-[#111111] leading-tight mb-1">{label}</h4>
+        <h4 className="font-sans text-[15px] font-semibold text-[#222222] leading-tight mb-1">{label}</h4>
         <p className="font-sans text-[13px] text-[#666666] leading-[1.55]">{hint}</p>
       </div>
     </div>
@@ -453,7 +442,7 @@ const CompilerDiagram: React.FC<{ onZoom: (src: string) => void }> = ({ onZoom }
               transition: 'opacity 280ms ease-out 850ms, transform 280ms cubic-bezier(0.2,0.7,0.2,1) 850ms',
             }}
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#111111] leading-none whitespace-nowrap">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#222222] leading-none whitespace-nowrap">
               claude
               <span aria-hidden="true" className="tp-caret inline-block align-[-1px] ml-[2px] w-[1.5px] h-[10px] bg-[#22C55F]"
                 style={{ animation: 'tpCaretBlink 1.05s steps(1) infinite', animationDelay: '1200ms', opacity: started ? undefined : 0 }}
@@ -473,10 +462,10 @@ const CompilerDiagram: React.FC<{ onZoom: (src: string) => void }> = ({ onZoom }
             transition: 'opacity 400ms ease-out 1100ms, transform 400ms ease-out 1100ms',
           }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-2">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#888888] mb-2">
             Output · Home screen
           </p>
-          <div className="relative w-full overflow-hidden border border-[#E8E8E8] bg-white" style={{ aspectRatio: '9 / 18' }}>
+          <div className="relative w-full overflow-hidden border border-black/[0.04] bg-white" style={{ aspectRatio: '9 / 18' }}>
             <img
               src="/taxpilot/03-app.png"
               alt="First TaxPilot home screen, composed by Claude from variant JSX, wireframe, and brand palette."
@@ -510,15 +499,15 @@ const MicroCell: React.FC<{
   children: React.ReactNode;
 }> = ({ label, source, minH = 240, spanCols = 1, children }) => (
   <div
-    className={`relative border border-[#E8E8E8] bg-white rounded-[8px] flex flex-col overflow-hidden ${spanCols === 2 ? 'md:col-span-2' : ''}`}
-    style={{ minHeight: minH }}
+    className={`relative bg-white rounded-[10px] flex flex-col overflow-hidden transition-all duration-500 hover:scale-[1.005] hover:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05),0_8px_30px_rgba(0,0,0,0.04)] ${spanCols === 2 ? 'md:col-span-2' : ''}`}
+    style={{ minHeight: minH, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
   >
-    <div className="flex-1 flex items-center justify-center px-8 py-10" style={{ background: '#E3DFD5' }}>
+    <div className="flex-1 flex items-center justify-center px-8 py-10" style={{ background: '#FAFAFA' }}>
       {children}
     </div>
-    <div className="px-7 flex items-center justify-between bg-white border-t border-[#EEEEEE]" style={{ height: 48 }}>
-      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#767676] whitespace-nowrap">{label}</p>
-      {source && <p className="font-mono text-[10px] text-[#999999] truncate ml-4">{source}</p>}
+    <div className="px-7 flex items-center justify-between bg-white" style={{ height: 48, boxShadow: 'inset 0 1px 0 rgba(0,0,0,0.03)' }}>
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#888888] whitespace-nowrap">{label}</p>
+      {source && <p className="font-mono text-[10px] text-[#BBBBBB] truncate ml-4">{source}</p>}
     </div>
   </div>
 );
@@ -715,7 +704,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="taxpilot-case min-h-screen pb-24 selection:bg-[#E8E8E8] selection:text-black overflow-x-hidden bg-[#FAFAF8] text-[#111111]">
+    <div className="taxpilot-case min-h-screen pb-24 selection:bg-[#E8E8E8] selection:text-black overflow-x-hidden bg-[#FFFFFF] text-[#222222] font-sans" style={{ fontFamily: '"Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif' }}>
       {/* Scroll progress */}
       <div className="fixed inset-x-0 top-0 z-[70] h-[2px] pointer-events-none">
         <div className="h-full bg-[#111111] transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} aria-hidden="true" />
@@ -724,7 +713,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
 
       {/* Sticky left nav */}
       <aside className="hidden xl:flex flex-col fixed left-6 2xl:left-10 top-1/2 -translate-y-1/2 z-50 w-[180px]">
-        <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#767676] mb-4">Contents</p>
+        <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#888888] mb-4">Contents</p>
         <nav>
           <ul className="space-y-0">
             {navItems.map((item) => {
@@ -758,15 +747,15 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             <Reveal>
               <div className="mb-10 flex items-center gap-6">
                 <div className="h-px flex-1 bg-[#111111]" />
-                <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#767676]">Case Study 02 — AI-Native · Mobile · 2026</p>
+                <p className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#888888]">Case Study 02 — AI-Native · Mobile · 2026</p>
                 <div className="h-px w-8 bg-[#E8E8E8]" />
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] gap-10 lg:gap-16 items-start">
                 <div>
-                  <div className="mb-6 h-10 w-1 bg-[#22C55F]" />
-                  <h1 className="font-serif text-[72px] md:text-[96px] leading-[0.90] text-[#111111]">TaxPilot</h1>
-                  <p className="mt-6 font-sans text-[22px] md:text-[24px] leading-[1.4] text-[#111111] max-w-[28ch] font-medium">
+                  <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#999999]">TaxPilot</p>
+                  <h1 className="font-sans text-[72px] md:text-[96px] font-semibold tracking-[-0.045em] leading-[0.92] text-[#222222]">TaxPilot</h1>
+                  <p className="mt-6 font-sans text-[22px] md:text-[24px] leading-[1.4] text-[#333333] max-w-[28ch] font-medium tracking-[-0.01em]">
                     A tax app I designed, built, and shipped — solo.
                   </p>
                   <p className="mt-5 font-sans text-[16px] leading-[1.65] text-[#444444] max-w-[56ch]">
@@ -784,7 +773,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                     ].map(([label, value]) => (
                       <div key={label} className="grid grid-cols-[64px_1fr] items-baseline gap-3">
                         <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#999999]">{label}</dt>
-                        <dd className="font-sans text-[13px] text-[#111111] leading-[1.55]">{value}</dd>
+                        <dd className="font-sans text-[13px] text-[#222222] leading-[1.55]">{value}</dd>
                       </div>
                     ))}
                   </dl>
@@ -820,10 +809,10 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                   { n: '04', t: 'Export',     d: 'Year-end → numbers ready for filing.' },
                 ].map((f) => (
                   <li key={f.n}
-                    className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_minmax(0,200px)_1fr] gap-4 md:gap-8 items-baseline py-6 border-b border-[#E8E8E8]"
+                    className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_minmax(0,200px)_1fr] gap-4 md:gap-8 items-baseline py-6 border-b border-black/[0.05]"
                   >
                     <span className="font-mono text-[11px] text-[#CCCCCC] tracking-[0.06em]">{f.n}</span>
-                    <h3 className="font-sans text-[18px] font-semibold text-[#111111]">{f.t}</h3>
+                    <h3 className="font-sans text-[18px] font-semibold text-[#222222]">{f.t}</h3>
                     <p className="font-sans text-[14px] text-[#666666] leading-[1.65] col-span-2 md:col-span-1">{f.d}</p>
                   </li>
                 ))}
@@ -831,8 +820,8 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={120} className="mt-12">
-              <div className="border-t border-[#111111] pt-4 mb-8 flex items-baseline justify-between">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+              <div className="border-t border-black/[0.08] pt-4 mb-8 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#222222]">
                   Live mount
                 </p>
                 <p className="font-mono text-[10px] text-[#999999]">
@@ -840,7 +829,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 </p>
               </div>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
-                The actual production app, mounted via <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">react-native-web</code>.
+                The actual production app, mounted via <code className="font-mono text-[13px] bg-black/[0.04] px-1 rounded-sm">react-native-web</code>.
                 Tap the tab bar to move between Home, Calendar, Report, and Profile — every screen
                 is the same RN code shipping to the App Store.
               </p>
@@ -876,9 +865,9 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                   { n: '03', t: 'A system that emerged from code',
                     d: 'Most teams design tokens in Figma, then implement. I inverted this. The first generated components told me what tokens I actually needed. Branding, colors, and typography were hallucinated by AI, refined by my taste, locked into theme.ts.' },
                 ].map((step) => (
-                  <li key={step.n} className="border-t border-[#111111] pt-4">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#22C55F] mb-3">{step.n} · Step</p>
-                    <h3 className="font-sans text-[17px] font-semibold text-[#111] leading-snug mb-2">{step.t}</h3>
+                  <li key={step.n} className="border-t border-black/[0.08] pt-4">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#888888] mb-3">{step.n} · Step</p>
+                    <h3 className="font-sans text-[17px] font-semibold text-[#222222] leading-snug mb-2">{step.t}</h3>
                     <p className="font-sans text-[14px] text-[#666] leading-[1.65]">{step.d}</p>
                   </li>
                 ))}
@@ -886,8 +875,8 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={120} className="mt-16">
-              <div className="border-t border-[#111111] pt-4 mb-8 flex items-baseline justify-between">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">The compiler</p>
+              <div className="border-t border-black/[0.08] pt-4 mb-8 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#222222]">The compiler</p>
                 <p className="font-mono text-[10px] text-[#999999]">three inputs · one turn · production code</p>
               </div>
               <p className="font-sans text-[16px] leading-[1.75] text-[#444444] max-w-[60ch] mb-12">
@@ -912,7 +901,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={80} className="mt-14">
-              <h3 className="font-sans text-[20px] font-semibold text-[#111111] mb-2">A.1 — Tabular figures</h3>
+              <h3 className="font-sans text-[20px] font-semibold text-[#222222] mb-2">A.1 — Tabular figures</h3>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
                 Numbers get their own font. Tabular figures in JetBrains Mono mean amounts align
                 vertically — this is an accuracy guarantee, not an aesthetic preference. Misalignment
@@ -920,7 +909,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#22C55F] mb-2">Tabular · JetBrains Mono</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#888888] mb-2">Tabular · JetBrains Mono</p>
                   <TabularFiguresDemo tabular={true} />
                 </div>
                 <div>
@@ -929,28 +918,28 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 </div>
               </div>
               <p className="font-sans text-[13px] text-[#666666] leading-[1.6] mt-4 max-w-[64ch]">
-                One CSS hint — <code className="font-mono text-[12px] bg-[#F0EDE8] px-1 rounded-sm">fontVariant: ['tabular-nums']</code> — is the entire substance of the decision.
+                One CSS hint — <code className="font-mono text-[12px] bg-black/[0.04] px-1 rounded-sm">fontVariant: ['tabular-nums']</code> — is the entire substance of the decision.
               </p>
             </Reveal>
 
             <Reveal delay={80} className="mt-20">
-              <h3 className="font-sans text-[20px] font-semibold text-[#111111] mb-2">A.2 — The Calendar</h3>
+              <h3 className="font-sans text-[20px] font-semibold text-[#222222] mb-2">A.2 — The Calendar</h3>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
                 A month of transactions on one screen, plotted against time. The point isn't to summarize —
                 it's to surface the rows that still need a human decision, and let the user resolve them
                 without leaving the calendar.
               </p>
               <ul className="font-sans text-[15px] text-[#666] leading-[1.8] list-disc pl-5 space-y-2 mb-10 max-w-[62ch]">
-                <li><strong className="text-[#111]">Always visible:</strong> every transaction in the month, color-coded by status — green for auto-categorized deductibles, amber for ones the model couldn't confidently classify.</li>
-                <li><strong className="text-[#111]">On tap:</strong> amber rows open a Review sheet — pick personal vs. business and set the deductible percentage. One tap, one decision, back to the calendar.</li>
-                <li><strong className="text-[#111]">Cut:</strong> category pie charts, weekly trend lines, year-over-year comparisons. The calendar resolves ambiguity; reports live elsewhere.</li>
+                <li><strong className="text-[#222222]">Always visible:</strong> every transaction in the month, color-coded by status — green for auto-categorized deductibles, amber for ones the model couldn't confidently classify.</li>
+                <li><strong className="text-[#222222]">On tap:</strong> amber rows open a Review sheet — pick personal vs. business and set the deductible percentage. One tap, one decision, back to the calendar.</li>
+                <li><strong className="text-[#222222]">Cut:</strong> category pie charts, weekly trend lines, year-over-year comparisons. The calendar resolves ambiguity; reports live elsewhere.</li>
               </ul>
-              <div className="border border-[#E8E8E8] rounded-[8px] overflow-hidden bg-white">
-                <div className="px-4 py-2.5 border-b border-[#EEEEEE] flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
+              <div className="border border-black/[0.04] rounded-[8px] overflow-hidden bg-white">
+                <div className="px-4 py-2.5 border-b border-black/[0.04] flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#222222] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
                   <span className="font-mono text-[10px] text-[#999999]">components/taxpilot/screens/calendar.tsx</span>
                 </div>
-                <div className="p-8 flex items-center justify-center bg-[#FAFAF8]">
+                <div className="p-8 flex items-center justify-center bg-[#FAFAFA]">
                   <PhoneFrame scale={0.6}>
                     <CalendarScreen />
                   </PhoneFrame>
@@ -967,28 +956,28 @@ const TaxPilotCaseStudyPage: React.FC = () => {
               <SectionHeading label="Motion & Performance" title="Perceived speed through state granularity." />
               <p className="mt-8 font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[64ch]">
                 Motion here is not decoration. It's a state-management tool used to absorb latency.
-                I restricted myself entirely to React Native's built-in <code className="font-mono text-[14px] bg-[#F0EDE8] px-1 rounded-sm">Animated</code> API
+                I restricted myself entirely to React Native's built-in <code className="font-mono text-[14px] bg-black/[0.04] px-1 rounded-sm">Animated</code> API
                 for production reliability and bundle size.
               </p>
             </Reveal>
 
             <Reveal delay={80} className="mt-14">
-              <h3 className="font-sans text-[20px] font-semibold text-[#111111] mb-2">B.1 — Loading vs Analyzing</h3>
+              <h3 className="font-sans text-[20px] font-semibold text-[#222222] mb-2">B.1 — Loading vs Analyzing</h3>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
                 Most apps treat fetch + compute as a single "loading" state. I split it:
-                <strong className="text-[#111]"> loading</strong> (we're fetching) vs
-                <strong className="text-[#111]"> analyzing</strong> (we have data, we're computing).
+                <strong className="text-[#222222]"> loading</strong> (we're fetching) vs
+                <strong className="text-[#222222]"> analyzing</strong> (we have data, we're computing).
                 Different motion, different copy. In any read-heavy product, perceived speed is shaped
                 more by loading-state design than by actual query time.
               </p>
               {/* Stacked Workbench — live demos on top, code beneath */}
               <div className="space-y-4">
-                <div className="border border-[#E8E8E8] rounded-[8px] overflow-hidden bg-white">
-                  <div className="px-4 py-2.5 border-b border-[#EEEEEE] flex items-center justify-between">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
+                <div className="border border-black/[0.04] rounded-[8px] overflow-hidden bg-white">
+                  <div className="px-4 py-2.5 border-b border-black/[0.04] flex items-center justify-between">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#222222] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
                     <span className="font-mono text-[10px] text-[#999999]">react-native-web</span>
                   </div>
-                  <div className="p-8 flex flex-row flex-wrap gap-10 justify-center items-start bg-[#FAFAF8]">
+                  <div className="p-8 flex flex-row flex-wrap gap-10 justify-center items-start bg-[#FAFAFA]">
                     <DemoStage kicker="Loading" source="screens/loading.tsx" autoLoopMs={4000} scale={0.55}>
                       <LoadingScreen />
                     </DemoStage>
@@ -999,7 +988,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="px-1 mb-2 flex items-center justify-between">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Code</span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#222222] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Code</span>
                     <span className="font-mono text-[10px] text-[#999999]">production</span>
                   </div>
                   <CodeBlock
@@ -1012,16 +1001,16 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={80} className="mt-20">
-              <h3 className="font-sans text-[20px] font-semibold text-[#111111] mb-2">B.2 — Card stack, Wallet-style</h3>
+              <h3 className="font-sans text-[20px] font-semibold text-[#222222] mb-2">B.2 — Card stack, Wallet-style</h3>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
                 Connected accounts live in an Apple-Wallet-style stack. Tap a card and the others
                 slide out of the way to make room for actions on the selected one — pure
-                <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm"> Animated.spring </code>
+                <code className="font-mono text-[13px] bg-black/[0.04] px-1 rounded-sm"> Animated.spring </code>
                 physics, no third-party libraries.
               </p>
-              <div className="border border-[#E8E8E8] rounded-[8px] overflow-hidden bg-white">
-                <div className="px-4 py-2.5 border-b border-[#EEEEEE] flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#111111] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
+              <div className="border border-black/[0.04] rounded-[8px] overflow-hidden bg-white">
+                <div className="px-4 py-2.5 border-b border-black/[0.04] flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#222222] flex items-center"><span className="inline-block w-[6px] h-[6px] rounded-full bg-[#C9A96E] mr-2" />Live</span>
                   <span className="font-mono text-[10px] text-[#999999]">components/taxpilot/CardStack.tsx</span>
                 </div>
                 <div className="px-8 pt-10 pb-12 flex justify-center" style={{ background: '#E3DFD5' }}>
@@ -1033,9 +1022,9 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={80} className="mt-20">
-              <h3 className="font-sans text-[20px] font-semibold text-[#111111] mb-2">B.3 — Micro-interactions, live</h3>
+              <h3 className="font-sans text-[20px] font-semibold text-[#222222] mb-2">B.3 — Micro-interactions, live</h3>
               <p className="font-sans text-[15px] text-[#666] leading-[1.7] max-w-[62ch] mb-8">
-                Every primitive below is the production RN component, imported from <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">components/taxpilot/</code> and
+                Every primitive below is the production RN component, imported from <code className="font-mono text-[13px] bg-black/[0.04] px-1 rounded-sm">components/taxpilot/</code> and
                 rendered live. Press anything — the timing curves and state changes are the ones shipping in the app.
               </p>
               <MotionMicroStrip />
@@ -1053,7 +1042,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 Every token was load-bearing. No bloated color palettes — just what the product strictly demanded.
               </p>
               <p className="mt-4 font-sans text-[17px] leading-[1.75] text-[#444444] max-w-[64ch]">
-                The headline rule: <strong className="text-[#111]">one green only</strong> — <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">#22C55F</code>. Financial UI cannot be ambiguous about polarity.
+                The headline rule: <strong className="text-[#222222]">one green only</strong> — <code className="font-mono text-[13px] bg-black/[0.04] px-1 rounded-sm">#22C55F</code>. Financial UI cannot be ambiguous about polarity.
                 I traded visual richness for absolute semantic clarity.
               </p>
             </Reveal>
@@ -1079,7 +1068,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                               boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)',
                             }}
                           />
-                          <p className="font-sans text-[13px] font-semibold text-[#111] mt-3 leading-none">{c.name}</p>
+                          <p className="font-sans text-[13px] font-semibold text-[#222222] mt-3 leading-none">{c.name}</p>
                           <p className="font-mono text-[11px] text-[#999] mt-1.5 leading-none">{c.hex}</p>
                           <p className="font-sans text-[11px] text-[#999] mt-2 leading-snug">{c.role}</p>
                         </div>
@@ -1102,8 +1091,8 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
 
             <Reveal delay={80} className="mt-16">
-              <div className="border-t border-[#111111] pt-4 mb-8 flex items-baseline justify-between">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
+              <div className="border-t border-black/[0.08] pt-4 mb-8 flex items-baseline justify-between">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#222222]">
                   The full system
                 </p>
                 <p className="font-mono text-[10px] text-[#999999] tracking-[0.14em]">
@@ -1114,7 +1103,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
               {/* Preview: Color is always visible. Everything below sits in a
                   Medium-style fade-clipped container revealed by the toggle. */}
               <div>
-                <h4 className="font-sans text-[20px] font-semibold text-[#111111] mb-4">Color</h4>
+                <h4 className="font-sans text-[20px] font-semibold text-[#222222] mb-4">Color</h4>
                 <ColorBlock />
               </div>
 
@@ -1127,17 +1116,17 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                   }}
                 >
                   <div>
-                    <h4 className="font-sans text-[20px] font-semibold text-[#111111] mb-4">Typography</h4>
+                    <h4 className="font-sans text-[20px] font-semibold text-[#222222] mb-4">Typography</h4>
                     <TypographyBlock />
                   </div>
                   <div className="mt-16">
-                    <h4 className="font-sans text-[20px] font-semibold text-[#111111] mb-4">Spacing + radius</h4>
+                    <h4 className="font-sans text-[20px] font-semibold text-[#222222] mb-4">Spacing + radius</h4>
                     <SpacingBlock />
                   </div>
                   <div className="mt-16">
-                    <h4 className="font-sans text-[20px] font-semibold text-[#111111] mb-4">Component library</h4>
+                    <h4 className="font-sans text-[20px] font-semibold text-[#222222] mb-4">Component library</h4>
                     <p className="font-sans text-[14px] text-[#666] leading-[1.7] max-w-[62ch] mb-6">
-                      Live mounts of the production React Native components, rendered on the web via <code className="font-mono text-[13px] bg-[#F0EDE8] px-1 rounded-sm">react-native-web</code>.
+                      Live mounts of the production React Native components, rendered on the web via <code className="font-mono text-[13px] bg-black/[0.04] px-1 rounded-sm">react-native-web</code>.
                     </p>
                     <ComponentLibrary />
                   </div>
@@ -1150,7 +1139,7 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                     className="pointer-events-none absolute inset-x-0 bottom-0 h-[180px]"
                     style={{
                       background:
-                        'linear-gradient(to bottom, rgba(250,250,248,0) 0%, rgba(250,250,248,0.85) 55%, #FAFAF8 100%)',
+                        'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 55%, #FFFFFF 100%)',
                     }}
                   />
                 )}
@@ -1207,12 +1196,12 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                   chip="2 stores"
                   visual={
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="border border-[#E8E8E8] rounded-[6px] px-3 py-3 bg-[#FAFAF8]">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#22C55F]">Zustand</p>
+                      <div className="border border-black/[0.04] rounded-[6px] px-3 py-3 bg-[#FAFAFA]">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#888888]">Zustand</p>
                         <p className="font-sans text-[12px] text-[#666] leading-snug mt-1">Client UI · toggles, filters, transient view state.</p>
                       </div>
-                      <div className="border border-[#E8E8E8] rounded-[6px] px-3 py-3 bg-[#FAFAF8]">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#22C55F]">React Query</p>
+                      <div className="border border-black/[0.04] rounded-[6px] px-3 py-3 bg-[#FAFAFA]">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#888888]">React Query</p>
                         <p className="font-sans text-[12px] text-[#666] leading-snug mt-1">Server truth · cache, invalidation, retry.</p>
                       </div>
                     </div>
@@ -1226,15 +1215,15 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                   chip="pure UI"
                   visual={
                     <div className="flex items-center gap-3">
-                      <div className="flex-1 border border-[#E8E8E8] rounded-[6px] px-3 py-3 bg-[#FAFAF8]">
+                      <div className="flex-1 border border-black/[0.04] rounded-[6px] px-3 py-3 bg-[#FAFAFA]">
                         <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#999]">Hook</p>
-                        <p className="font-sans text-[12px] text-[#111] leading-snug mt-1">useTransactionReview()</p>
+                        <p className="font-sans text-[12px] text-[#222222] leading-snug mt-1">useTransactionReview()</p>
                         <p className="font-sans text-[11px] text-[#999] leading-snug mt-0.5">all the policy</p>
                       </div>
                       <span className="font-mono text-[14px] text-[#CCC]">→</span>
-                      <div className="flex-1 border border-[#E8E8E8] rounded-[6px] px-3 py-3 bg-[#FAFAF8]">
+                      <div className="flex-1 border border-black/[0.04] rounded-[6px] px-3 py-3 bg-[#FAFAFA]">
                         <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#999]">Component</p>
-                        <p className="font-sans text-[12px] text-[#111] leading-snug mt-1">&lt;ReviewSheet count=&#123;n&#125; /&gt;</p>
+                        <p className="font-sans text-[12px] text-[#222222] leading-snug mt-1">&lt;ReviewSheet count=&#123;n&#125; /&gt;</p>
                         <p className="font-sans text-[11px] text-[#999] leading-snug mt-0.5">primitive props only</p>
                       </div>
                     </div>
@@ -1242,17 +1231,17 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 />
               </div>
 
-              <div className="mt-6 border border-[#E8E8E8] rounded-[8px] bg-white p-6 lg:p-8">
+              <div className="mt-6 border border-black/[0.04] rounded-[8px] bg-white p-6 lg:p-8">
                 <div className="flex items-baseline gap-3 mb-3">
                   <span className="font-mono text-[11px] text-[#CCC] tracking-[0.06em]">03</span>
-                  <h3 className="font-sans text-[19px] font-semibold text-[#111]">Correcting the founder's flow</h3>
+                  <h3 className="font-sans text-[19px] font-semibold text-[#222222]">Correcting the founder's flow</h3>
                   <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.14em] text-[#999]">defended</span>
                 </div>
                 <p className="font-sans text-[14px] text-[#666] leading-[1.7] max-w-[64ch] mb-3">
-                  <strong className="text-[#111]">Constraint:</strong> the original wireframe flow was conceptually pure but practically clunky — onboarding asked users to label their income type before connecting any bank, which left them guessing without context.
+                  <strong className="text-[#222222]">Constraint:</strong> the original wireframe flow was conceptually pure but practically clunky — onboarding asked users to label their income type before connecting any bank, which left them guessing without context.
                 </p>
                 <p className="font-sans text-[14px] text-[#666] leading-[1.7] max-w-[64ch]">
-                  <strong className="text-[#111]">Decision:</strong> connect the bank first, then run discovery (the four onboarding cases in the hero) against the actual transactions. The user labels what they see, not what they remember. Defending UX over initial specs is part of the design engineer's job.
+                  <strong className="text-[#222222]">Decision:</strong> connect the bank first, then run discovery (the four onboarding cases in the hero) against the actual transactions. The user labels what they see, not what they remember. Defending UX over initial specs is part of the design engineer's job.
                 </p>
               </div>
             </Reveal>
@@ -1267,17 +1256,17 @@ const TaxPilotCaseStudyPage: React.FC = () => {
             </Reveal>
             <Reveal delay={80} className="mt-10 space-y-8 max-w-[64ch]">
               <p className="font-sans text-[17px] leading-[1.75] text-[#444444]">
-                <strong className="text-[#111111]">AI relocates design judgment.</strong> I didn't push pixels; I curated outputs.
+                <strong className="text-[#222222]">AI relocates design judgment.</strong> I didn't push pixels; I curated outputs.
                 AI generated the components, but I decided which to keep, which tokens to lock, and what to throw away.
                 Human taste is still the bottleneck — AI just moves it earlier in the pipeline.
               </p>
               <p className="font-sans text-[17px] leading-[1.75] text-[#444444]">
-                <strong className="text-[#111111]">Constraints sharpen taste.</strong> Working alone without a visual design tool
+                <strong className="text-[#222222]">Constraints sharpen taste.</strong> Working alone without a visual design tool
                 meant every "nice to have" got cut. The system has 3 colors not because 3 was the goal, but because no
                 fourth color earned its place in the code.
               </p>
               <p className="font-sans text-[17px] leading-[1.75] text-[#444444]">
-                <strong className="text-[#111111]">Engineering is a design discipline.</strong> The biggest UX win in TaxPilot
+                <strong className="text-[#222222]">Engineering is a design discipline.</strong> The biggest UX win in TaxPilot
                 wasn't a layout — it was deciding to split a boolean loading state into a multi-step state machine.
               </p>
             </Reveal>
@@ -1338,17 +1327,20 @@ const DecisionCard: React.FC<{
   chip: string;
   visual?: React.ReactNode;
 }> = ({ n, title, constraint, decision, chip, visual }) => (
-  <div className="border border-[#E8E8E8] rounded-[8px] bg-white p-6 lg:p-7 flex flex-col">
+  <div
+    className="rounded-[10px] bg-white p-6 lg:p-7 flex flex-col transition-all duration-500 hover:scale-[1.01] hover:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05),0_8px_30px_rgba(0,0,0,0.04)]"
+    style={{ boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.04)', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+  >
     <div className="flex items-baseline gap-3 mb-3">
-      <span className="font-mono text-[11px] text-[#CCC] tracking-[0.06em]">{n}</span>
-      <h3 className="font-sans text-[18px] font-semibold text-[#111] leading-snug">{title}</h3>
-      <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.14em] text-[#22C55F] whitespace-nowrap">{chip}</span>
+      <span className="font-mono text-[10px] text-[#BBBBBB] tracking-[0.06em]">{n}</span>
+      <h3 className="font-sans text-[18px] font-semibold tracking-[-0.015em] text-[#222222] leading-snug">{title}</h3>
+      <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.18em] text-[#888888] whitespace-nowrap">{chip}</span>
     </div>
-    <p className="font-sans text-[14px] text-[#666] leading-[1.7] mb-2">
-      <strong className="text-[#111]">Constraint:</strong> {constraint}
+    <p className="font-sans text-[14px] text-[#666666] leading-[1.7] mb-2">
+      <strong className="text-[#333333] font-semibold">Constraint:</strong> {constraint}
     </p>
-    <p className="font-sans text-[14px] text-[#666] leading-[1.7] mb-4">
-      <strong className="text-[#111]">Decision:</strong> {decision}
+    <p className="font-sans text-[14px] text-[#666666] leading-[1.7] mb-4">
+      <strong className="text-[#333333] font-semibold">Decision:</strong> {decision}
     </p>
     {visual && <div className="mt-auto pt-2">{visual}</div>}
   </div>

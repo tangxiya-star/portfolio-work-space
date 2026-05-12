@@ -32,6 +32,9 @@ const PhoneFrame: React.FC<PhoneFrameProps> = ({
         height: displayedHeight,
         position: 'relative',
         flexShrink: 0,
+        // Extremely subtle diffusion shadow (Rauno style)
+        boxShadow: '0 24px 48px -12px rgba(0,0,0,0.06), 0 12px 24px -12px rgba(0,0,0,0.04)',
+        borderRadius: 32 * scale,
       }}
     >
       <div
@@ -43,8 +46,9 @@ const PhoneFrame: React.FC<PhoneFrameProps> = ({
           position: 'absolute',
           top: 0,
           left: 0,
-          borderRadius: 40,
-          border: '1px solid rgba(0,0,0,0.12)',
+          // Pure abstraction: just a hairline outline and a pristine shape
+          borderRadius: 32,
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.06)',
           background: theme.colors.newsprint,
           overflow: 'hidden',
         }}
