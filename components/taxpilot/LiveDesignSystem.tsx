@@ -190,20 +190,39 @@ const TILE = 32; // shared display size — keeps spacing + radius visually cons
 const ExampleCell: React.FC<{
   token: string;
   value: string;
-  note: string;
   children: React.ReactNode;
-}> = ({ token, value, note, children }) => (
-  <div className="border border-[#E8E8E8] bg-white p-5 flex flex-col">
-    <div className="flex items-baseline gap-2 mb-3">
-      <span className="font-mono text-[12px] text-[#111] font-semibold">{token}</span>
-      <span className="font-mono text-[11px] text-[#22C55F]">{value}</span>
-    </div>
-    <p className="font-sans text-[12px] text-[#666] mb-4 leading-snug">{note}</p>
-    <div className="flex-1 flex items-center justify-center min-h-[120px] bg-[#F5F5F0] rounded-md p-6">
+}> = ({ token, value, children }) => (
+  <div className="border border-[#E8E8E8] bg-white flex flex-col overflow-hidden rounded-[6px]">
+    <div className="flex-1 flex items-center justify-center min-h-[180px] bg-[#FAFAF8] p-8">
       {children}
+    </div>
+    <div className="flex items-baseline justify-between px-4 py-3 border-t border-[#EEEEEE] bg-white">
+      <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#111]">{token}</span>
+      <span className="font-mono text-[11px] text-[#999]">{value}</span>
     </div>
   </div>
 );
+
+// A pair of neutral blocks with the spacing token between them — pure schematic, no product chrome.
+const SpacingDemo: React.FC<{ size: number; axis: 'h' | 'v'; token: string }> = ({ size, axis, token }) => {
+  const blockBg = '#E5E2DA';
+  if (axis === 'h') {
+    return (
+      <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+        <div style={{ width: 64, height: 56, background: blockBg, borderRadius: 4 }} />
+        <SpacingZone size={size} axis="h" value={`${token} · ${size}`} />
+        <div style={{ width: 64, height: 56, background: blockBg, borderRadius: 4 }} />
+      </div>
+    );
+  }
+  return (
+    <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'stretch' }}>
+      <div style={{ width: 160, height: 36, background: blockBg, borderRadius: 4 }} />
+      <SpacingZone size={size} axis="v" value={`${token} · ${size}`} />
+      <div style={{ width: 160, height: 36, background: blockBg, borderRadius: 4 }} />
+    </div>
+  );
+};
 
 // ── Engineer dimension annotations ──────────────────────────────────────────
 const ANNOT = '#22C55F';
@@ -342,74 +361,151 @@ const RadiusAnnot: React.FC<{ r: number; value: string; corner?: 'tr' | 'br' }> 
 };
 
 // ── Spacing zones — Figma-inspect-style highlighted gap ─────────────────────
+// Schematic arrow annotation with a leader line out to the label —
+// like a real architectural callout. Label always sits clear of the blocks,
+// connected to the gap arrow by a thin leader. No backgrounds.
 const SpacingZone: React.FC<{
   size: number;
   axis: 'h' | 'v';
   value: string;
 }> = ({ size, axis, value }) => {
-  const showLabel = size >= 12;
+  if (axis === 'h') {
+    return (
+      <div
+        style={{
+          position: 'relative',
+          width: size,
+          flexShrink: 0,
+          alignSelf: 'stretch',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {/* gap arrow — between the two blocks */}
+        <svg
+          width={Math.max(size, 1)}
+          height={10}
+          viewBox={`0 0 ${Math.max(size, 1)} 10`}
+          aria-hidden="true"
+          style={{ overflow: 'visible' }}
+        >
+          <line x1={0} y1={5} x2={Math.max(size, 1)} y2={5} stroke="#111" strokeWidth={1} />
+          <polyline points={`3,2 0,5 3,8`} fill="none" stroke="#111" strokeWidth={1} />
+          <polyline points={`${Math.max(size, 1) - 3},2 ${Math.max(size, 1)},5 ${Math.max(size, 1) - 3},8`} fill="none" stroke="#111" strokeWidth={1} />
+        </svg>
+        {/* vertical leader line from arrow midpoint up to the label */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: -34,
+            width: 1,
+            height: 28,
+            background: '#111',
+            transform: 'translateX(-0.5px)',
+          }}
+        />
+        {/* label above, no background */}
+        <span
+          style={{
+            position: 'absolute',
+            top: -48,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontFamily: '"JetBrains Mono", monospace',
+            fontSize: 10,
+            fontWeight: 500,
+            color: '#111',
+            whiteSpace: 'nowrap',
+            letterSpacing: '0.02em',
+          }}
+        >
+          {value}
+        </span>
+      </div>
+    );
+  }
+  // Vertical: gap arrow between stacked blocks, leader extends right to label.
   return (
     <div
       style={{
         position: 'relative',
-        width: axis === 'h' ? size : '100%',
-        height: axis === 'v' ? size : 'auto',
-        alignSelf: axis === 'h' ? 'stretch' : 'stretch',
-        backgroundColor: 'rgba(34, 197, 95, 0.18)',
-        backgroundImage:
-          'repeating-linear-gradient(45deg, transparent 0 3px, rgba(34,197,95,0.4) 3px 4px)',
-        outline: '1px dashed rgba(34, 197, 95, 0.7)',
+        height: size,
+        width: '100%',
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      {showLabel && (
-        <span
-          style={{
-            fontFamily: '"JetBrains Mono", monospace',
-            fontSize: 9,
-            fontWeight: 700,
-            color: '#0E7E3F',
-            background: '#fff',
-            padding: '0 3px',
-            borderRadius: 2,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {value}
-        </span>
-      )}
+      <svg
+        width={10}
+        height={Math.max(size, 1)}
+        viewBox={`0 0 10 ${Math.max(size, 1)}`}
+        aria-hidden="true"
+        style={{ overflow: 'visible' }}
+      >
+        <line x1={5} y1={0} x2={5} y2={Math.max(size, 1)} stroke="#111" strokeWidth={1} />
+        <polyline points={`2,3 5,0 8,3`} fill="none" stroke="#111" strokeWidth={1} />
+        <polyline points={`2,${Math.max(size, 1) - 3} 5,${Math.max(size, 1)} 8,${Math.max(size, 1) - 3}`} fill="none" stroke="#111" strokeWidth={1} />
+      </svg>
+      {/* horizontal leader line from arrow midpoint right to label */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: 'calc(50% + 5px)',
+          width: 28,
+          height: 1,
+          background: '#111',
+          transform: 'translateY(-0.5px)',
+        }}
+      />
+      <span
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: 'calc(50% + 38px)',
+          transform: 'translateY(-50%)',
+          fontFamily: '"JetBrains Mono", monospace',
+          fontSize: 10,
+          fontWeight: 500,
+          color: '#111',
+          whiteSpace: 'nowrap',
+          letterSpacing: '0.02em',
+        }}
+      >
+        {value}
+      </span>
     </div>
   );
 };
 
 // ── Real-screen fragments (anchored to actual files in taxpilot-app) ────────
 
-// xs(4) — TransactionRow caption gap
-// from: components/common/TransactionRow.tsx:83
+// xs(4) — home status row: green dot ↔ "Real-time" label.
+// from: app/(tabs)/index.tsx:320 (statusRow gap: xs)
 const SpacingXsFragment: React.FC = () => (
-  <div style={{ display: 'flex', flexDirection: 'column' }}>
+  <div style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center' }}>
+    <View
+      style={{
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: theme.colors.green,
+      }}
+    />
+    <SpacingZone size={4} axis="h" value="xs · 4" />
     <Text
       style={{
         fontFamily: '"Plus Jakarta Sans", sans-serif',
-        fontSize: 16,
-        color: theme.colors.textPrimary,
-      } as any}
-    >
-      Adobe Creative Cloud
-    </Text>
-    <SpacingZone size={4} axis="v" value="xs · 4" />
-    <Text
-      style={{
-        fontFamily: '"Plus Jakarta Sans", sans-serif',
-        fontSize: 11,
-        color: theme.colors.textMuted,
+        fontSize: 13,
         fontWeight: '500',
+        color: theme.colors.green,
       } as any}
     >
-      $54.99 · Mar 13
+      Real-time
     </Text>
   </div>
 );
@@ -850,56 +946,14 @@ export const SpacingBlock: React.FC = () => {
       <Text style={[typography.caption2 as any, { color: '#666', marginBottom: 20, maxWidth: 560 }]}>
         Seven steps. Started with nine — <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>xxs(2)</Text> merged into <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>xs(4)</Text> (2px wasn't distinct at body-text scale) and <Text style={{ fontFamily: '"JetBrains Mono", monospace' } as any}>4xl(64)</Text> cut (never referenced in production). Examples below are verbatim screen fragments.
       </Text>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <ExampleCell
-          token="xs"
-          value="4px"
-          note="Caption gap inside TransactionRow."
-        >
-          <SpacingXsFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="sm"
-          value="8px"
-          note="Pending pill — gap between text + Review link."
-        >
-          <SpacingSmFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="md"
-          value="12px"
-          note="Stats grid — gap between adjacent metric cards."
-        >
-          <SpacingMdFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="lg"
-          value="16px"
-          note="Hero card → stats grid vertical."
-        >
-          <SpacingLgFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="xl"
-          value="24px"
-          note="Hero card padding — outer edge to content."
-        >
-          <SpacingXlFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="2xl"
-          value="32px"
-          note="Header → first content. Onboarding section gaps."
-        >
-          <Spacing2xlFragment />
-        </ExampleCell>
-        <ExampleCell
-          token="3xl"
-          value="48px"
-          note="Bottom-of-screen CTA padding · tab list padBottom."
-        >
-          <Spacing3xlFragment />
-        </ExampleCell>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <ExampleCell token="xs"  value="4px"><SpacingDemo size={4}  axis="h" token="xs" /></ExampleCell>
+        <ExampleCell token="sm"  value="8px"><SpacingDemo size={8}  axis="h" token="sm" /></ExampleCell>
+        <ExampleCell token="md"  value="12px"><SpacingDemo size={12} axis="h" token="md" /></ExampleCell>
+        <ExampleCell token="lg"  value="16px"><SpacingDemo size={16} axis="h" token="lg" /></ExampleCell>
+        <ExampleCell token="xl"  value="24px"><SpacingDemo size={24} axis="h" token="xl" /></ExampleCell>
+        <ExampleCell token="2xl" value="32px"><SpacingDemo size={32} axis="v" token="2xl" /></ExampleCell>
+        <ExampleCell token="3xl" value="48px"><SpacingDemo size={48} axis="v" token="3xl" /></ExampleCell>
       </div>
 
       <div className="mt-16 mb-10">
@@ -915,31 +969,12 @@ export const SpacingBlock: React.FC = () => {
               {/* White tile */}
               <div
                 className="relative w-full h-full bg-white flex items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
-                style={{ borderRadius: r.preview }}
+                style={{ borderRadius: r.preview, border: '1px solid #111111' }}
               >
                 <span className="font-sans text-[22px] font-medium text-[#111] tabular-nums">{r.label}</span>
               </div>
-              {/* Magnifier — glass lens on top of the corner. Mostly transparent
-                  so the rounded corner of the tile reads through it. */}
-              <div
-                aria-hidden="true"
-                className="absolute left-4 top-4 w-[96px] h-[96px] rounded-full pointer-events-none"
-                style={{
-                  background:
-                    'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0) 80%)',
-                  border: '1.5px solid rgba(255,255,255,0.85)',
-                  boxShadow:
-                    '0 8px 24px rgba(0,0,0,0.12), inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -10px 18px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.06)',
-                  backdropFilter: 'blur(1.5px) saturate(105%)',
-                  WebkitBackdropFilter: 'blur(1.5px) saturate(105%)',
-                  transform: 'translate(-30%, -30%)',
-                }}
-              />
             </div>
-            <p className="font-sans text-[14px] text-[#111] mt-5">
-              <span className="font-mono text-[12px] text-[#22C55F] mr-2">{r.token}</span>
-              {r.use}
-            </p>
+            <p className="font-sans text-[14px] text-[#111] mt-5">{r.use}</p>
           </div>
         ))}
       </div>
@@ -1141,68 +1176,6 @@ export const ComponentLibrary: React.FC = () => {
     <div className="space-y-4">
       <ButtonReference />
 
-      <Section title="SegmentedControl" source="components/taxpilot/SegmentedControl.tsx">
-        <SegmentedControl<Range>
-          options={[
-            { label: 'Daily',   value: 'daily' },
-            { label: 'Weekly',  value: 'weekly' },
-            { label: 'Monthly', value: 'monthly' },
-          ]}
-          value={seg}
-          onChange={setSeg}
-        />
-      </Section>
-
-      <Section title="Toggle" source="components/taxpilot/Toggle.tsx">
-        <InlineRow label="on">
-          <Toggle value={t1} onValueChange={setT1} />
-        </InlineRow>
-        <InlineRow label="off">
-          <Toggle value={t2} onValueChange={setT2} />
-        </InlineRow>
-      </Section>
-
-      <Section title="SelectionCard" source="components/taxpilot/SelectionCard.tsx">
-        <View style={{ gap: 8 }}>
-          {[
-            { label: 'Freelancer',     description: '1099 income, project-based work.' },
-            { label: 'Small business', description: 'You own an LLC or S-corp.' },
-            { label: 'Side income',    description: 'Day job + occasional gigs.' },
-          ].map((c, i) => (
-            <SelectionCard
-              key={c.label}
-              label={c.label}
-              description={c.description}
-              selected={card === i}
-              onPress={() => setCard(i)}
-            />
-          ))}
-        </View>
-      </Section>
-
-      <Section title="SpinningLoader" source="components/taxpilot/SpinningLoader.tsx">
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 24 }}>
-          <SpinningLoader />
-          <Text style={typography.body as any}>Loading transactions…</Text>
-        </View>
-      </Section>
-
-      <Section title="TransactionRow" source="components/taxpilot/TransactionRow.tsx">
-        <View style={{ gap: 0 }}>
-          <TransactionRow
-            item={tx({ id: '1', merchant_name: 'Stripe payout',         amount:  4280.00, date: 'Mar 14', status: 'confirmed', is_income: true  })}
-          />
-          <TransactionRow
-            item={tx({ id: '2', merchant_name: 'Adobe Creative Cloud',  amount:    54.99, date: 'Mar 13', status: 'confirmed', is_income: false, suggested_branches: [{ category: 'Software' }] })}
-          />
-          <TransactionRow
-            item={tx({ id: '3', merchant_name: 'Uber',                  amount:    18.42, date: 'Mar 12', status: 'pending',   is_income: false, suggested_branches: [{ category: 'Travel' }] })}
-          />
-          <TransactionRow
-            item={tx({ id: '4', merchant_name: 'Whole Foods',           amount:    72.31, date: 'Mar 11', status: 'confirmed', is_income: false, suggested_branches: [{ category: 'Personal' }] })}
-          />
-        </View>
-      </Section>
     </div>
   );
 };

@@ -15,12 +15,17 @@ interface AddExpenseScreenProps {
   initialMerchant?: string
   initialAmount?: string
   initialDate?: string
+  /** Case-study overrides — bypass expo-router (web stub is a noop). */
+  onDismiss?: () => void
+  onSubmitted?: (payload: { merchant: string; amount: string; date: string; declaration: string }) => void
 }
 
 export default function AddExpenseScreen({
   initialMerchant = '',
   initialAmount = '',
   initialDate = '',
+  onDismiss,
+  onSubmitted,
 }: AddExpenseScreenProps = {}) {
   const [merchantName, setMerchantName] = useState(initialMerchant)
   const [amount, setAmount] = useState(initialAmount)
@@ -63,8 +68,8 @@ export default function AddExpenseScreen({
         easing: easing.exit,
         useNativeDriver: true,
       }),
-    ]).start(() => router.back())
-  }, [])
+    ]).start(() => (onDismiss ? onDismiss() : router.back()))
+  }, [onDismiss])
 
   const amountNum = parseFloat(amount)
   const isAmountValid = amount.trim() !== '' && !isNaN(amountNum) && amountNum > 0
@@ -81,15 +86,9 @@ export default function AddExpenseScreen({
     // Navigate after brief delay to show loading
     setTimeout(() => {
       setSubmitting(false)
-      router.push({
-        pathname: '/expense-confirm',
-        params: {
-          merchant: merchantName,
-          amount,
-          date,
-          declaration,
-        },
-      })
+      const payload = { merchant: merchantName, amount, date, declaration }
+      if (onSubmitted) { onSubmitted(payload); return }
+      router.push({ pathname: '/expense-confirm', params: payload })
     }, 300)
   }
 

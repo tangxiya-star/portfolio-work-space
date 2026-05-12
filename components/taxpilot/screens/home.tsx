@@ -58,9 +58,15 @@ const pendingStyles = StyleSheet.create({
   },
 })
 
-export default function HomeScreen() {
+interface HomeScreenProps {
+  /** Case-study override: intercept navigation instead of using expo-router (web stub is a noop). */
+  onNavigate?: (path: string) => void
+}
+
+export default function HomeScreen({ onNavigate }: HomeScreenProps = {}) {
   const [selectedYear, setSelectedYear] = useState(2026)
   const [showAddMenu, setShowAddMenu] = useState(false)
+  const go = (path: string) => (onNavigate ? onNavigate(path) : router.push(path))
 
   const summary = mockTaxSummaryByYear[selectedYear] ?? mockTaxSummaryByYear[2026]
   const transactions = mockTransactions.transactions
@@ -183,7 +189,7 @@ export default function HomeScreen() {
               style={({ pressed }) => [styles.dropdownItem, pressed && styles.dropdownItemPressed]}
               onPress={() => {
                 setShowAddMenu(false)
-                router.push('/add-expense')
+                go('/add-expense')
               }}
               accessibilityRole="menuitem"
             >
@@ -195,7 +201,7 @@ export default function HomeScreen() {
               style={({ pressed }) => [styles.dropdownItem, pressed && styles.dropdownItemPressed]}
               onPress={() => {
                 setShowAddMenu(false)
-                router.push('/add-income')
+                go('/add-income')
               }}
               accessibilityRole="menuitem"
             >

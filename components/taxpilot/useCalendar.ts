@@ -32,10 +32,13 @@ interface TransactionLike {
   status: string
 }
 
-export function useCalendar<T extends TransactionLike>(allTransactions: T[]) {
+export function useCalendar<T extends TransactionLike>(
+  allTransactions: T[],
+  initial?: { year: number; month: number }
+) {
   const today = new Date()
-  const [currentYear, setCurrentYear] = useState(today.getFullYear())
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth())
+  const [currentYear, setCurrentYear] = useState(initial?.year ?? today.getFullYear())
+  const [currentMonth, setCurrentMonth] = useState(initial?.month ?? today.getMonth())
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [listKey, setListKey] = useState(0)
 

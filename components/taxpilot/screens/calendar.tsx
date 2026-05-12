@@ -84,7 +84,7 @@ function DayCell({
 }
 
 // ── Main Screen ────────────────────────────────────────
-export default function CalendarScreen() {
+export default function CalendarScreen({ initial }: { initial?: { year: number; month: number } } = {}) {
   const {
     currentYear,
     currentMonth,
@@ -101,7 +101,7 @@ export default function CalendarScreen() {
     handleNextMonth,
     handleDayPress,
     handleResetFilter,
-  } = useCalendar(allTransactions)
+  } = useCalendar(allTransactions, initial ?? { year: 2026, month: 2 })
 
   return (
     <SafeAreaView style={styles.container}>

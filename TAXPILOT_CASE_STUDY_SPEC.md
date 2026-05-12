@@ -1,19 +1,19 @@
 # TaxPilot Case Study — Build Spec
 
-Single-page case study. Portfolio piece for a **Founding Product Designer + Design Engineer** application to **Allium** (onchain finance data infra). Narrative framework follows `PatientlyCaseStudyPage.tsx` (Hero → Product → Problem → Process → … → Next), reweighted for Allium's signals: data density, information architecture, dashboards, power-user UX, design systems built from scratch, design-engineer proof-of-work.
+Single-page case study. Portfolio piece for a **Founding Product Designer + Design Engineer** application to **Allium** (onchain finance data infra). Narrative framework follows `PatientlyCaseStudyPage.tsx` but radically restructured for a **Design Engineer** positioning. It emphasizes code as the source of truth, an entirely AI-native workflow (zero Figma), and the seamless integration of design intent with engineering execution.
 
 ## Critical framing
 
-- I am NOT a designer who codes "a little". I am the founding designer who solo-shipped the entire mobile app — design system, components, motion, and React Native production code.
-- Reads as proof-of-work, not marketing. Density over polish.
-- Aesthetic reference: Linear changelog, Vercel case studies, Rauno's site. Tight typography, generous whitespace between sections but dense within sections.
-- Reuse Patiently's section rhythm: `SectionHeading(label, title)` + content block. Sticky left nav. Smooth scroll.
+- I am NOT a designer who codes "a little". I am a builder who uses code as my primary design tool.
+- **100% AI-Native Workflow**: There are zero Figma files for this project. The design system, branding, motion, and layouts were entirely generated and iterated within the code editor using AI.
+- Reads as proof-of-work, not marketing. Density over polish. Show the code next to the UI.
+- Aesthetic reference: Linear changelog, Vercel case studies, Rauno's site. Tight typography, "Workbench" feel (exposing code snippets next to live components).
 
 ## Tech
 
 - `react-native-web` so real production RN components mount inline.
 - All interactive demos = LIVE components. No videos, no GIFs.
-- Code blocks use a real syntax highlighter.
+- Code blocks use a real syntax highlighter (JetBrains Mono) placed side-by-side with live UI mounts.
 
 ## Design tokens (used by the site itself)
 
@@ -38,250 +38,121 @@ Layout: full viewport. Left = text. Right = phone frame mounting the live discov
 
 **Subhead**
 
-> Founding designer + sole engineer. From wireframe to production in 4 weeks. Every pixel, every animation, every line of React Native is mine.
-
-**Pull quote (place near hero, not at end)**
-
-> "I didn't design a system and then build the app. I built the app, and the system fell out of it."
+> Founding designer + sole engineer. From wireframe to production in 4 weeks. Zero Figma files. Every pixel, system, and animation was crafted directly in code using an AI-native workflow.
 
 **Meta row** (small caps, mono):
 
 - ROLE: Founding Designer + Design Engineer
 - TEAM: 1 (me) + 1 founder
 - STACK: React Native · Expo · TypeScript · Zustand · React Query
-- TIMELINE: Design system locked in week 1. App shipped in week 4.
+- WORKFLOW: 100% AI-Native (Cursor / Variant). No manual UI design tools.
 
 ---
 
-## 2 — Product · "What TaxPilot does"
+## 2 — The Product: Tax as an ambient surface
 
-`SectionHeading(label="Product", title="Tax as an ambient surface, not an annual panic.")`
+`SectionHeading(label="The Product", title="Tax software shouldn't just exist in April.")`
 
-Opening paragraph:
+> TaxPilot connects to bank accounts, automatically categorizes income and expenses, surfaces deductions in real time, and generates the numbers needed at filing time. By the time users usually open TurboTax, their data is cold. TaxPilot makes tax a daily, ambient surface.
 
-> TaxPilot is a mobile tax app for [PLACEHOLDER — target user, e.g. US 1099 workers]. It connects to bank accounts, automatically categorizes income and expenses, surfaces deductions in real time, and generates the numbers needed at filing time — without the user opening a spreadsheet.
-
-Four flow cards (mirror Patiently's `flows` pattern at [PatientlyCaseStudyPage.tsx:17](components/PatientlyCaseStudyPage.tsx#L17)):
-
-1. **Connect** — Bank connection via Plaid → auto-pulled transactions
-2. **Categorize** — On-device categorization → income vs expense vs deductible
-3. **See** — Calendar + report views → tax position any day of the year
-4. **Export** — Year-end → numbers ready for filing
-
-A live home-screen mount sits below the flows so the reader sees the product before reading about how it was built.
+**Live Mount**: A live home-screen mount sits below a tight, 4-step flow description (Connect → Categorize → See → Export). Let the user play with the product immediately.
 
 ---
 
-## 3 — Problem · "The visit ends. The complexity begins." analogue
+## 3 — The Process: Zero-Figma, AI-Native Loop
 
-`SectionHeading(label="Market Problem", title="Tax software is built around April. Users live the other 11 months blind.")`
+`SectionHeading(label="Workflow", title="Skipping Figma. Code as the source of truth.")`
 
-> Tax software today is built around April. The rest of the year, users have no idea where they stand. By the time they open TurboTax, the data is cold, the categorization is guesswork, and deductions are lost. TaxPilot makes tax a daily, ambient surface.
+> Most designers hand off Figma. Most engineers hand off Jira tickets. I did neither. The entire app—branding, design system, motion, and UI—was built without a single manual design tool. By using AI as a compiler between intent and production code, I collapsed the design-engineering loop from weeks to hours.
 
-(Short. One paragraph. Patiently's problem section is also tight — match that rhythm.)
+**Step 1 — Founder wireframes as raw input**
+Low-fidelity napkin sketches describing user flow. No pixel-perfect mocks, just pure intent.
 
----
+**Step 2 — Prompting the UI**
+Used Variant/Cursor to generate React Native component code directly from visual intent. I didn't design a button in Figma; I prompted a button in React Native and adjusted the props.
 
-## 4 — Process · "How it shipped, solo, in 4 weeks"
-
-`SectionHeading(label="Process", title="An AI-native loop from wireframe to production code.")`
-
-This section replaces Patiently's "Impact" slot. TaxPilot has no user-data impact yet; the proof is the *process* — solo design-engineer ownership, end to end. Use a `PhaseRow`-style numbered timeline (mirror [PatientlyCaseStudyPage.tsx:296](components/PatientlyCaseStudyPage.tsx#L296)).
-
-Opening:
-
-> Most designers hand off Figma. Most engineers hand off Jira tickets. I did neither. I used AI as a compiler between intent and production code, which collapsed the design–engineering loop from weeks to hours.
-
-**Step 1 — Founder wireframes as input**
-Low-fidelity wireframes describing user flow. Not pixel-perfect mocks — just intent: what screens exist, what each has to do.
-
-**Step 2 — Variant → code, immediately**
-Used Variant to generate React Native component code from visual intent, skipping the Figma → handoff → re-implement loop entirely.
-
-**Step 3 — Design system emerged from the code, not before it**
-Most teams design tokens in Figma, then implement. I inverted this. The first generated components told me what tokens I actually needed. By end of week 1, locked: 3 brand colors, 3 type families, 8pt spacing scale, 7-step radius scale, full Apple-HIG-aligned type ramp.
-
-**Step 4 — Iterate by editing production code**
-New colors and typography weights added during real screen design, not in a vacuum. Every token added was load-bearing.
-
-**Step 5 — Icon system + UI states locked last**
-Systematized icons (`@expo/vector-icons`, one family per use) and audited every component for full state coverage: default / pressed / disabled / loading / error / empty.
+**Step 3 — System emerging from code**
+Most teams design tokens in Figma, then implement. I inverted this. The first generated components told me what tokens I actually needed. The branding, colors, and typography were hallucinated by AI, refined by my taste, and locked directly in `theme.ts`.
 
 ---
 
-## 5 — Data density · "Dense, but readable" 【ALLIUM CORE HIT】
+## 4 — Crafting the Details (Design-Engineering Cases)
+
+*This is the core of the portfolio. We don't separate "Design" and "Engineering"—we show how they enable each other. Every demo here features a "Workbench" layout: Live UI on one side, critical code snippets on the other.*
+
+### Case A: Rendering Data Density
 
 `SectionHeading(label="Information Architecture", title="Data density without losing legibility.")`
 
-This section is new — Patiently doesn't have it. **It is the most important section for Allium.** Every example below maps directly to a JD signal: "dense-but-readable layouts", "turn intricate data into intuitive charts", "power-user UX".
+> A tax app is a dashboard in disguise. The challenge is plotting money against time on a 390pt-wide screen without thinning out the data.
 
-Subtitle:
+**Live Demo**: Tabular figures comparison & The Calendar Component.
+- **The UI**: Stack of TransactionRows and the Calendar showing dense per-day dots.
+- **The Code**: Reveal the `fontVariant: ['tabular-nums']` style definition, and the rendering logic for the Calendar.
+- **The Narrative**: Numbers get their own font. Tabular figures in JetBrains Mono mean amounts align vertically—this is an accuracy guarantee, not an aesthetic preference. The Calendar brings Bloomberg-level density to mobile by ranking what *must* be visible vs what reveals on tap.
 
-> A tax app is a dashboard in disguise. Every screen is a dense table of money plotted against time. Three decisions made the data legible without thinning it out.
+### Case B: Motion & Spatial Interfaces
 
-### 5a — Tabular figures (the smallest decision that mattered most)
+`SectionHeading(label="Motion & Interaction", title="Motion as state, not decoration.")`
 
-Live mount: a stack of TransactionRows showing real amounts. Beside it, the same rows in a proportional font for contrast.
+> Motion here is not decoration; it's a state-management tool. I restricted myself entirely to React Native's built-in `Animated` API for maximum production reliability, proving that fluid, interruptible spatial motion doesn't require heavy external libraries.
 
-Decision callout:
+**Live Demo 1: The Connected Accounts Stack**
+- **The UI**: A stacked card interface (wallet style) for bank accounts that expands on tap with fluid spring animations.
+- **The Code**: The `Animated.View` interpolation mapping `tapState` to `translateY` and `scale`. 
+- **The Narrative**: A static list of bank accounts is boring. By turning them into a spatial stack, the UI feels tactile and premium. The math behind the stack (calculating offsets and scales) demonstrates a deep understanding of layout geometry and gesture-driven animations.
 
-> **Numbers get their own font.** Tabular figures in JetBrains Mono mean amounts align vertically across rows — table scanning becomes effortless. This is not aesthetic preference; it's an accuracy guarantee. In any product where users compare numbers down a column, this is non-negotiable.
+**Live Demo 2: Loading → Analyzing (State Machine)**
+- **The UI**: Side-by-side state-machine demo with a toggle.
+- **The Code**: The state definition (`type Status = 'idle' | 'loading' | 'analyzing'`) and the transition logic.
+- **The Narrative**: Most apps treat fetch + compute as a single "loading" state. I split it into **loading** (fetching) and **analyzing** (computing). Different motion, different copy. Perceived speed is shaped more by granular state design than by actual query time.
 
-### 5b — Calendar (data × time, dense)
+### Case C: A Living Design System
 
-Live mount: the production Calendar component. Per-day transaction dots, amount preview on tap, animated month transitions.
+`SectionHeading(label="Design System", title="Systems built from the bottom up.")`
 
-> The page closest in spirit to a Bloomberg / Allium dashboard. Financial data plotted against time, at a density that is normally only seen in desktop trading tools — adapted to a 390pt-wide phone screen by ranking what *must* be visible vs what reveals on tap.
+> Because there was no Figma, the design system is strictly the component API. Every token was load-bearing. No bloated color palettes—just what the product strictly demanded.
 
-What was cut to keep it readable, what stayed (3–4 bullets — fill in from the actual component decisions).
-
-### 5c — Loading vs Analyzing (perceived performance in read-heavy products)
-
-Live mount: side-by-side state-machine demo with a toggle.
-
-Decision callout:
-
-> Most apps treat fetch + compute as a single "loading" state. I split it: **loading** (we're fetching) vs **analyzing** (we have data, we're computing). Different motion, different copy. Users feel progress instead of waiting.
->
-> **Why this matters for data products:** in any read-heavy product — TaxPilot, Bloomberg, Allium — perceived speed is shaped more by loading-state design than by actual query time. Granular states feel faster than coarse ones.
+**Live Demo**: Component API Workbench.
+- **The UI**: Rendered buttons, SegmentedControls, and TransactionRows.
+- **The Code**: `<Button variant="primary" loading={isAnalyzing} />` alongside `constants.ts` showing the extremely constrained 3-color palette.
+- **The Narrative**: Emphasize the single green rule (`#22C55F`). Financial UI must not be ambiguous about polarity. We traded visual richness for absolute semantic clarity. 
 
 ---
 
-## 6 — Decisions · "Decisions worth defending"
+## 5 — Architecture & Defended Decisions
 
 `SectionHeading(label="Architecture", title="Decisions worth defending.")`
 
-Mirror Patiently's Architecture cards (`decisions` array at [PatientlyCaseStudyPage.tsx:111](components/PatientlyCaseStudyPage.tsx#L111)). Each decision = card with three labels: **THE DECISION / THE CONSTRAINT / THE TRADEOFF**.
+Three decision cards that show seniority in engineering and UX:
 
-**Order them by Allium relevance, most relevant first.**
-
-### 6a — System decisions (UI / engineering)
-
-1. **One green only — `#22C55F`**
-   Constraint: Financial UI must not be ambiguous about polarity.
-   Tradeoff: Loses some visual richness. Gains semantic clarity.
-
-2. **Zustand for client state, React Query for server state**
-   Constraint: Don't put server data in a global store — it lies.
-   Tradeoff: Two state systems to learn. Worth it; the alternative is bugs.
-
-3. **Split loading into loading + analyzing**
-   Constraint: Perceived performance > actual performance.
-   Tradeoff: Two states to design instead of one.
-
-4. **Design system emerges from code, not from Figma**
-   Constraint: Single operator. No handoff loop possible.
-   Tradeoff: Less upfront polish. Faster convergence on what's real.
-
-5. **No business logic in components**
-   Constraint: Components must be composable and testable.
-   Tradeoff: More files. Faster iteration, clearer reviews.
-
-6. **No Reanimated, only Animated API**
-   Constraint: Production reliability + bundle size.
-   Tradeoff: Harder to author complex motion. Forces simpler motion that ships reliably.
-
-### 6b — Flow decisions (UX / divergence from spec)
-
-Lead-in:
-
-> My founder gave me a wireframe flow as the starting point. As I built the screens, I found places where the original flow didn't match how a user would actually move through the product. I changed them — and defended the changes.
-
-**[PLACEHOLDER — UX decision #1]**
-- Original flow:
-- What I changed:
-- Why:
-- Outcome:
-
-**[PLACEHOLDER — UX decision #2]**
-- Original flow:
-- What I changed:
-- Why:
-- Outcome:
-
-**[PLACEHOLDER — UX decision #3]**
-- Original flow:
-- What I changed:
-- Why:
-- Outcome:
-
-(4 lines max per field. The point is to show flow-level judgment.)
+1. **Client vs. Server State**
+   *Constraint*: Don't put server data in a global store—it lies.
+   *Decision*: Zustand for pure client UI state, React Query for server state. Two systems to learn, but it eliminates an entire class of synchronization bugs.
+2. **Logic-less Components**
+   *Constraint*: AI-generated components can get messy fast.
+   *Decision*: Strict separation. UI components take primitive props only. All business logic lives in custom hooks.
+3. **Correcting the Founder's Flow**
+   *Constraint*: The original wireframe flow was conceptually pure but practically clunky.
+   *Decision*: [PLACEHOLDER - What you changed]. Defending user experience over initial specs.
 
 ---
 
-## 7 — Motion · "Motion as state, not decoration"
+## 6 — Next · "What an AI-native workflow taught me"
 
-`SectionHeading(label="Motion", title="Motion as a state-management tool.")`
-
-Four live demos. Each in its own card: phone frame + scrub bar + annotated breakdown + source path disclosure. Frame the section around *state, attention, and perceived latency* — not motion polish — so it stays load-bearing for an Allium reader.
-
-Opening:
-
-> Every animation in TaxPilot earns its place by clarifying state, guiding attention, or absorbing latency. Built entirely on React Native's built-in Animated API — no Reanimated, no third-party motion libraries. Constraint forces craft.
-
-**Demo 1 — Discovery sequence (cases 1–4 + transition)**
-4 onboarding screens that explain abstract tax concepts through motion. Each case isolates one idea and animates it into legibility. Transitions between cases carry narrative weight — they are not page turns.
-
-**Demo 2 — Loading → Analyzing (state-machine motion)**
-The most underrated decision in the app. Split a single "loading" state into **loading** (fetching) and **analyzing** (computing). Different motion, different copy. Users feel progress instead of waiting.
-*Why this matters for data products:* in any read-heavy product — TaxPilot, Bloomberg, Allium — perceived speed is shaped more by loading-state design than by actual query time. Granular states feel faster than coarse ones.
-
-**Demo 3 — Calendar (data × time, dense)**
-Financial data plotted against a calendar. Per-day transaction dots, amount previews on tap, animated month transitions. The page closest in spirit to a Bloomberg / Allium dashboard — utility, not marketing.
-
-**Demo 4 — Add-expense flow (power-user input)**
-Numeric input, category selection, fast keyboard interaction. The motion here is invisible unless you remove it — every micro-interaction exists to make the form feel responsive at native-app speed. This is the "power-user UX" demo: dense input, no wasted taps.
-
-Note on overlap with section 5: Calendar and Loading→Analyzing also appear in *Information Architecture* as data-density examples. Here they get the motion-side treatment (curves, timing, copy transitions). The duplication is intentional — same component, two different lenses.
-
----
-
-## 8 — Design system, live
-
-`SectionHeading(label="Visual Design", title="The design system, live.")`
-
-Subtitle:
-
-> Every swatch and component below is the actual production code, imported and rendered. Hover, click, drag — these are not images.
-
-### 8a — Color
-Swatches: ink `#0D0D0D`, newsprint `#E3DFD5`, emerald `#22C55F`, plus iterated additions. Each: name, hex, one-line "why this color exists".
-
-### 8b — Typography
-Live ramp: Display 34 / Title1 28 / Title2 22 / Body 17 / Callout 16 / Footnote 13 / Caption 12 / Caption2 11. All three families in actual usage context.
-
-### 8c — Spacing + radius
-Visualize 8pt grid (4/8/12/16/24/32/48) and radius scale (4/8/16/24/40/9999) as rendered boxes.
-
-### 8d — Component library (live mounts)
-Mount production components with state matrix:
-- Button (primary/secondary/destructive × default/pressed/disabled/loading)
-- SmallButton
-- SegmentedControl
-- Toggle
-- SelectionCard
-- SpinningLoader
-- TransactionRow
-
-Each component has a "view source" disclosure with the real TypeScript file path.
-
----
-
-## 9 — Next · "What shipping solo taught me"
-
-`SectionHeading(label="Next", title="What shipping solo taught me.")`
+`SectionHeading(label="Takeaways", title="Taste is the new bottleneck.")`
 
 Three short paragraphs:
 
-> **Constraints sharpen taste.** Working alone with a fixed timeline, every "nice to have" gets cut. What survives is what mattered. The system has 3 colors not because 3 was the goal, but because no fourth color earned its place.
+> **AI relocates design judgment.** I didn't push pixels; I curated outputs. AI generated the components, but I decided which to keep, which tokens to lock, and what to throw away. The human taste is still the bottleneck—AI just moves it earlier in the pipeline.
 
-> **Motion is a state-management tool, not a finish.** The biggest motion win in TaxPilot wasn't an animation — it was deciding to split loading into two states. The second-biggest was deciding which transitions did NOT need motion.
+> **Constraints sharpen taste.** Working alone without a visual design tool meant every "nice to have" got cut. The system has 3 colors not because 3 was the goal, but because no fourth color earned its place in the code.
 
-> **AI doesn't replace design judgment, it relocates it.** Variant generated the components. I decided which to keep, which tokens to lock, what to throw away. The taste is still the bottleneck. AI just moves it earlier in the pipeline.
+> **Engineering is a design discipline.** The biggest UX win in TaxPilot wasn't a layout—it was deciding to split a boolean loading state into a multi-step state machine.
 
 ---
 
-## 10 — Footer
+## 7 — Footer
 
 > Built with React Native + Expo. Rendered on the web with react-native-web.
 > Every component on this page is the production code.
@@ -292,7 +163,6 @@ Three short paragraphs:
 # Build notes
 
 - Single-page site. Sticky left nav. Smooth scroll.
-- Section nav order: Product · Problem · Process · Information Architecture · Architecture · Motion · Visual Design · Next
-- Components must render live (react-native-web). Phone frames around mobile demos. Real source paths visible.
-- Don't add features not in this spec.
-- Reuse `SectionHeading`, `PhaseRow`, decision card, and flow card components from `PatientlyCaseStudyPage.tsx` where possible — visual consistency across the portfolio matters.
+- Section nav order: The Product · Workflow · Information Architecture · Motion & Performance · Design System · Architecture · Takeaways
+- **CRITICAL VISUAL PATTERN**: The "Workbench". Whenever a live component is shown, it should be paired with its critical code snippet. This visually reinforces the Design Engineer positioning.
+- Reuse `SectionHeading` and decision cards from `PatientlyCaseStudyPage.tsx` where possible.
