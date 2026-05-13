@@ -135,15 +135,17 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
             </span>
           </div>
         ) : isTaxPilotCard ? (
-          <video
-            src="/taxpilot/taxpilot-hero.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 bg-[#F4F1EA] flex items-center justify-center">
+            <video
+              src="/taxpilot/taxpilot-hero.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="h-full w-auto max-w-full object-contain"
+            />
+          </div>
         ) : isScanReasonCard ? (
           <video
             src="/scanreason-demo.mp4"
