@@ -235,7 +235,7 @@ const DISCOVERY_FRAMES: { label: string; render: () => React.ReactNode }[] = [
   { label: 'Case 1 · Freelancer',     render: () => <Case1Screen /> },
   { label: 'Case 2 · Side income',    render: () => <Case2Screen /> },
   { label: 'Case 3 · Small business', render: () => <Case3Screen /> },
-  { label: 'Case 4 · Investor',       render: () => <Case4Screen /> },
+  { label: 'Case 4 · Activation',     render: () => <Case4Screen /> },
   { label: 'Transition',              render: () => <TransitionScreen /> },
 ];
 
@@ -755,8 +755,8 @@ const TaxPilotCaseStudyPage: React.FC = () => {
                 <div>
                   <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#999999]">TaxPilot</p>
                   <h1 className="font-sans text-[72px] md:text-[96px] font-semibold tracking-[-0.045em] leading-[0.92] text-[#222222]">TaxPilot</h1>
-                  <p className="mt-6 font-sans text-[22px] md:text-[24px] leading-[1.4] text-[#333333] max-w-[28ch] font-medium tracking-[-0.01em]">
-                    A tax app I designed, built, and shipped — solo.
+                  <p className="mt-6 font-sans text-[22px] md:text-[24px] leading-[1.4] text-[#333333] max-w-[34ch] font-medium tracking-[-0.01em]">
+                    A mobile tax app for U.S. freelancers and small business owners — track expenses, estimate quarterly taxes, file with confidence.
                   </p>
                   <p className="mt-5 font-sans text-[16px] leading-[1.65] text-[#444444] max-w-[56ch]">
                     Founding designer + sole engineer. From wireframe to production in 4 weeks.
