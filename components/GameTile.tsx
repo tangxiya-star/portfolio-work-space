@@ -40,13 +40,13 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
   const isPatientlyCard = project.title === 'Patiently';
   const isTaxPilotCard = project.id === 'taxpilot';
   const isScanReasonCard = project.id === 'scanreason-ai';
-  const isPlaceholderCard = isTaxPilotCard;
-  const isNonInteractive = isTaxPilotCard;
+  const isPlaceholderCard = false;
+  const isNonInteractive = false;
   const cardKeywords = KEYWORD_MAP[project.title] ?? project.skills ?? [];
   const leadTag = cardKeywords.length > 0 ? cardKeywords[0] : project.category;
   const yearLabel = isPatientlyCard ? '2026' : isTaxPilotCard ? '2026' : isScanReasonCard ? '2026' : project.title === '2D Moon' ? '2023' : '2024';
   const statusLabel = isTaxPilotCard
-    ? 'Coming Soon'
+    ? 'Case Study'
     : isScanReasonCard
     ? 'Hackathon Winner'
     : (project.title === 'Uniwell' || project.title === '2D Moon') ? 'Case Study' : 'Shipped';
@@ -134,6 +134,16 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
               {isScanReasonCard ? 'Placeholder · Case Study Coming' : 'Placeholder · In Progress'}
             </span>
           </div>
+        ) : isTaxPilotCard ? (
+          <video
+            src="/taxpilot/taxpilot-hero.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         ) : isScanReasonCard ? (
           <video
             src="/scanreason-demo.mp4"
