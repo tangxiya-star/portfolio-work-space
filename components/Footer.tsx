@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
                 holly tang
               </span>
             </a>
-            <div className="inline-flex items-center gap-2 text-[13px] text-[#999999]">
+            <div className="inline-flex items-center gap-2 text-[13px] text-[#111111]">
               <Moon size={13} strokeWidth={1.8} aria-hidden="true" />
               <span>{time}, {LOCATION}</span>
             </div>
@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
 
           {/* RIGHT — contact + socials */}
           <div className="flex flex-col md:items-end gap-3">
-            <span className="text-[13px] text-[#999999]">Let's work together!</span>
+            <span className="text-[13px] text-[#111111]">Let's work together!</span>
             <a
               href={`mailto:${EMAIL}`}
               className="text-[15px] font-medium text-[#111111] hover:text-black transition-colors duration-150"
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="text-[#999999] hover:text-[#111111] transition-colors duration-150"
+                className="text-[#111111] hover:text-[#111111] transition-colors duration-150"
               >
                 <Linkedin size={18} strokeWidth={1.6} />
               </a>
@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X (Twitter)"
-                className="text-[#999999] hover:text-[#111111] transition-colors duration-150"
+                className="text-[#111111] hover:text-[#111111] transition-colors duration-150"
               >
                 <XLogo size={16} />
               </a>
@@ -122,7 +122,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="text-[#999999] hover:text-[#111111] transition-colors duration-150"
+                className="text-[#111111] hover:text-[#111111] transition-colors duration-150"
               >
                 <Github size={18} strokeWidth={1.6} />
               </a>
@@ -132,10 +132,10 @@ const Footer: React.FC = () => {
 
         {/* BOTTOM — centered tagline + changelog */}
         <div className="mt-20 flex flex-col items-center gap-2">
-          <p className="text-[13px] text-[#999999]">
+          <p className="text-[13px] text-[#111111]">
             Built with React + TypeScript + Vite &amp; <span className="text-[#111111] font-medium">a lot of flat whites</span>. ☕
           </p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#CCCCCC]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#111111]">
             Changelog · {formatChangelog()}
           </p>
         </div>
