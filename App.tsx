@@ -10,6 +10,7 @@ import PatientlyCaseStudyPage from './components/PatientlyCaseStudyPage';
 import TaxPilotCaseStudyPage from './components/TaxPilotCaseStudyPage';
 import AboutStandalonePage from './components/AboutStandalonePage';
 import FunStandalonePage from './components/FunStandalonePage';
+import MeshBackground from './components/MeshBackground';
 import ResumeStandalonePage from './components/ResumeStandalonePage';
 
 import { PROJECTS } from './constants';
@@ -364,6 +365,7 @@ const App: React.FC = () => {
 
   return (
     <div className="page-geist relative min-h-screen pb-24 selection:bg-[#F7DA21] selection:text-black overflow-x-hidden">
+      <MeshBackground />
       <Header />
 
       {/* ── Main content — same container + padding as Selected Work header ── */}
