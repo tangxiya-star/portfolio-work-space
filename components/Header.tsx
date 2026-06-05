@@ -1,21 +1,19 @@
-
 import React from 'react';
 
-const Header: React.FC<{ onAboutClick?: () => void; onWorkClick?: () => void; onLogoClick?: () => void }> = ({ onAboutClick, onWorkClick, onLogoClick }) => {
+const Header: React.FC<{
+  onAboutClick?: () => void;
+  onWorkClick?: () => void;
+  onLogoClick?: () => void;
+}> = ({ onAboutClick, onWorkClick, onLogoClick }) => {
   const isCaseStudyRoute = window.location.pathname.startsWith('/case-studies/');
   const isAboutRoute = window.location.pathname === '/about';
   const isResumeRoute = window.location.pathname === '/resume';
-
-  const today = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).toUpperCase();
+  const isFunRoute = window.location.pathname === '/fun';
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 56;
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -24,122 +22,90 @@ const Header: React.FC<{ onAboutClick?: () => void; onWorkClick?: () => void; on
     }
   };
 
-  const navItems = [
-    { label: 'Work', id: 'work' },
-    { label: 'About', action: 'about' },
-    { label: 'Resume', action: 'resume' },
-    { label: 'Contact', id: 'contact' },
-  ];
+  const linkClass =
+    'px-4 py-2 text-[14px] font-medium text-[#222222] hover:text-black rounded-full hover:bg-black/[0.04] transition-colors duration-150 focus:outline-none';
 
-  const baseClass =
-    'font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] px-4 py-2 hover:bg-black/5 transition-colors duration-150 focus:outline-none';
+  const handleWork = () => {
+    if (onWorkClick) {
+      onWorkClick();
+      setTimeout(() => {
+        const el = document.getElementById('work');
+        if (el) {
+          const offset = 80;
+          const top = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 320);
+    } else if (isCaseStudyRoute || isAboutRoute || isResumeRoute || isFunRoute) {
+      window.location.href = '/#work';
+    } else {
+      scrollToSection('work');
+    }
+  };
+
+  const handleAbout = () => {
+    if (onAboutClick) onAboutClick();
+    else window.location.href = '/about';
+  };
+
+  const handleContact = () => {
+    const el = document.getElementById('contact');
+    if (el) scrollToSection('contact');
+    else window.location.href = '/#contact';
+  };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[60] bg-[#FAF9F6] border-b border-black/12 h-14">
-      <div className="max-w-6xl mx-auto h-full px-4 flex items-center justify-between">
+    <header
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-1 pl-3 pr-1.5 py-1.5 rounded-full"
+      style={{
+        background: 'rgba(255,255,255,0.72)',
+        backdropFilter: 'blur(18px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(18px) saturate(160%)',
+        boxShadow:
+          '0 8px 24px rgba(20,20,30,0.10), 0 1px 3px rgba(20,20,30,0.06), inset 0 0 0 1px rgba(255,255,255,0.6)',
+      }}
+    >
+      {/* Logo */}
+      <a
+        href="/"
+        aria-label="Holly Tang — Home"
+        className="flex items-center justify-center shrink-0 select-none group rounded-full hover:bg-black/[0.04] transition-colors duration-150"
+        style={{ width: 40, height: 40 }}
+        onClick={onLogoClick ? (e) => { e.preventDefault(); onLogoClick(); } : undefined}
+      >
+        <img
+          src="/logo-ht.png"
+          alt="Holly Tang"
+          className="transition-transform duration-300 group-hover:scale-105"
+          style={{ width: 30, height: 30, objectFit: 'contain', mixBlendMode: 'multiply' }}
+        />
+      </a>
 
-        {/* LEFT: Ink-wash Logo */}
-        <a
-          href="/"
-          aria-label="Holly Tang — Home"
-          className="flex items-center justify-center shrink-0 select-none group"
-          onClick={onLogoClick ? (e) => { e.preventDefault(); onLogoClick(); } : undefined}
+      {/* Nav links */}
+      <nav className="flex items-center gap-0.5 px-1">
+        <button onClick={handleWork} className={linkClass}>Work</button>
+        <button
+          onClick={() => { window.location.href = '/fun'; }}
+          className={linkClass}
         >
-          <img
-            src="/logo-ht.png"
-            alt="Holly Tang"
-            className="transition-all duration-300 group-hover:scale-105 group-hover:opacity-75"
-            style={{ width: 48, height: 48, objectFit: 'contain', mixBlendMode: 'multiply' }}
-          />
-        </a>
-
-        {/* CENTER: Nav links */}
-        <nav className="flex items-center gap-0.5">
-          {navItems.map((item) => {
-
-            if (item.action === 'resume') {
-              return (
-                <button
-                  key={item.label}
-                  onClick={() => { window.location.href = '/resume'; }}
-                  className={baseClass}
-                >
-                  {item.label}
-                </button>
-              );
-            }
-
-            if (item.action === 'about') {
-              return (
-                <button key={item.label} onClick={() => {
-                  if (onAboutClick) {
-                    onAboutClick();
-                  } else {
-                    window.location.href = '/about';
-                  }
-                }} className={baseClass}>
-                  {item.label}
-                </button>
-              );
-            }
-
-            if (item.id === 'work') {
-              return (
-                <button
-                  key={item.label}
-                  onClick={() => {
-                    if (onWorkClick) {
-                      onWorkClick();
-                      setTimeout(() => {
-                        const el = document.getElementById('work');
-                        if (el) {
-                          const offset = 56;
-                          const top = el.getBoundingClientRect().top + window.scrollY - offset;
-                          window.scrollTo({ top, behavior: 'smooth' });
-                        }
-                      }, 320);
-                    } else if (isCaseStudyRoute || isAboutRoute || isResumeRoute) {
-                      window.location.href = '/#work';
-                    } else {
-                      scrollToSection('work');
-                    }
-                  }}
-                  className={baseClass}
-                >
-                  {item.label}
-                </button>
-              );
-            }
-
-            return (
-              <button
-                key={item.label}
-                onClick={() => {
-                  // If the section exists on this page, scroll to it; otherwise go to homepage anchor
-                  const el = document.getElementById(item.id!);
-                  if (el) {
-                    scrollToSection(item.id!);
-                  } else {
-                    window.location.href = `/#${item.id}`;
-                  }
-                }}
-                className={baseClass}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* RIGHT: Date */}
-        <div
-          className="hidden md:block text-[9px] text-[#AAAAAA] tracking-[0.14em] uppercase select-none"
-          style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace' }}
+          Fun
+        </button>
+        <button onClick={handleAbout} className={linkClass}>About</button>
+        <button
+          onClick={() => { window.location.href = '/resume'; }}
+          className={linkClass}
         >
-          {today}
-        </div>
+          Resume
+        </button>
+      </nav>
 
-      </div>
+      {/* Primary CTA — Contact pill */}
+      <button
+        onClick={handleContact}
+        className="rounded-full bg-[#111111] text-white text-[13.5px] font-medium px-5 py-2.5 hover:bg-[#000000] transition-colors duration-150 shrink-0"
+      >
+        Contact
+      </button>
     </header>
   );
 };

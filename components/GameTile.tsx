@@ -1,6 +1,32 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import UnicornScene from 'unicornstudio-react';
 import { Project } from '../types';
+
+// Wrapper that measures its parent and passes pixel dims into UnicornScene.
+// unicornstudio-react needs explicit width/height, so we track the container size
+// via ResizeObserver and re-render whenever it changes.
+const UnicornBackdrop: React.FC<{ projectId: string }> = ({ projectId }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize({ w: Math.round(width), h: Math.round(height) });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="absolute inset-0 overflow-hidden">
+      {size.w > 0 && size.h > 0 && (
+        <UnicornScene production={true} projectId={projectId} width={size.w} height={size.h} />
+      )}
+    </div>
+  );
+};
 
 interface GameTileProps {
   project: Project;
@@ -21,6 +47,26 @@ const KEYWORD_MAP: Record<string, string[]> = {
   'Superworld':  ['Cross-platform Design', 'Agile / Scrum', 'MVP Launch'],
   'Uniwell':     ['PMF Validation', 'UX Strategy', 'Mobile Design'],
   '2D Moon':     ['Innovative Design', 'Data-driven Design', 'End-to-end Ownership'],
+};
+
+// Editorial one-liner per project — caption-style, must stay under ~6 words.
+const SHORT_TAGLINE: Record<string, string> = {
+  'taxpilot':              'AI tax tracker for freelancers.',
+  'scanreason-ai':         'AI radiology reasoning copilot.',
+  'spelling-bee-redesign': 'AI scribe for medical visits.',
+  'superworld':            'AR real estate, mapped.',
+  'uniwell':               'Mental health for students.',
+  '2d-moon':               'NFT collectors, social.',
+};
+
+// Mono right-side meta — type · year, kept terse.
+const META_LABEL: Record<string, string> = {
+  'taxpilot':              'Shipped · 2026',
+  'scanreason-ai':         'Hackathon Winner · 2026',
+  'spelling-bee-redesign': 'Shipped · 2026',
+  'superworld':            'AR · Mobile · 2024',
+  'uniwell':               'Mobile · UX · 2024',
+  '2d-moon':               'Web · NFT · 2023',
 };
 
 // ── Patiently frame images — served from /public/ ──────────────────────────
@@ -108,10 +154,18 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
         onClick(project);
       }}
     >
-      {/* ── Image area ─────────────────────────────────────────────── */}
+      {/* ── Banner — rounded frosted-glass card containing the visual ── */}
       <div
-        className="relative w-full overflow-hidden"
-        style={{ aspectRatio: '16/10' }}
+        className="relative w-full overflow-hidden rounded-[22px] transition-transform duration-300 group-hover:-translate-y-1"
+        style={{
+          aspectRatio: '4/3',
+          background: 'rgba(255,255,255,0.42)',
+          backdropFilter: 'blur(22px) saturate(140%)',
+          WebkitBackdropFilter: 'blur(22px) saturate(140%)',
+          boxShadow:
+            '0 1px 0 rgba(255,255,255,0.6) inset, 0 10px 30px -12px rgba(20,20,30,0.18), 0 2px 8px -2px rgba(20,20,30,0.08)',
+          border: '1px solid rgba(255,255,255,0.55)',
+        }}
       >
         {isPlaceholderCard ? (
           <div
@@ -135,16 +189,36 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
             </span>
           </div>
         ) : isTaxPilotCard ? (
-          <div className="absolute inset-0 bg-[#F4F1EA] flex items-center justify-center">
-            <video
-              src="/taxpilot/taxpilot-hero.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              className="h-full w-auto max-w-full object-contain"
-            />
+          <div className="absolute inset-0 bg-[#0A0A0A]">
+            {/* UnicornStudio animated backdrop */}
+            <UnicornBackdrop projectId="erpu4mAlEe8kmhaGKYe9" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              {/* iPhone bezel — black body with rounded corners */}
+              <div
+                className="relative"
+                style={{
+                  height: '94%',
+                  aspectRatio: '630 / 1346',
+                  padding: '6px',
+                  background: '#0D0D0D',
+                  borderRadius: 26,
+                  boxShadow:
+                    '0 18px 40px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.05) inset',
+                }}
+              >
+                <div
+                  className="relative w-full h-full overflow-hidden"
+                  style={{ borderRadius: 20, background: '#000' }}
+                >
+                  <video
+                    src="/taxpilot/taxpilot-hero.mp4"
+                    autoPlay loop muted playsInline preload="metadata"
+                    onLoadedMetadata={(e) => { (e.currentTarget as HTMLVideoElement).playbackRate = 0.55; }}
+                    className="block w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         ) : isScanReasonCard ? (
           <video
@@ -222,163 +296,38 @@ const GameTile: React.FC<GameTileProps> = ({ project, onClick, index }) => {
           </>
         )}
 
-        {/* Category chip — top left */}
-        <div className="absolute top-4 left-4">
-          <span
-            className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-2.5 py-1"
-            style={{
-              ...monoStyle,
-              fontSize: '9px',
-              letterSpacing: '0.16em',
-              fontWeight: 700,
-              color: '#111111',
-            }}
-          >
-            <span
-              className="h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ backgroundColor: project.color }}
-            />
-            {leadTag}
-          </span>
-        </div>
-      </div>
-
-      {/* ── Text block: below the image ────────────────────────────── */}
-      <div className="pt-4 pb-6 px-1">
-
-        {/* Title + shipped badge inline */}
-        <div className="flex items-center gap-2 mb-1 flex-wrap">
+        {/* Name pill — floating top-left, project title only */}
+        <div
+          className="absolute top-5 left-5 inline-flex items-center rounded-full px-4 py-1.5"
+          style={{
+            background: 'rgba(255,255,255,0.95)',
+            backdropFilter: 'blur(8px) saturate(1.1)',
+            WebkitBackdropFilter: 'blur(8px) saturate(1.1)',
+            boxShadow: '0 4px 14px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)',
+          }}
+        >
           <h3
-            className="font-serif font-normal text-[#111111] leading-[1.1] group-hover:text-[#333333] transition-colors duration-200"
-            style={{ fontSize: 'clamp(20px, 2.4vw, 30px)', letterSpacing: '-0.01em' }}
+            className="text-[#111111] leading-none whitespace-nowrap"
+            style={{ fontSize: 'clamp(13px, 1.05vw, 15px)', fontWeight: 500, letterSpacing: '-0.005em' }}
           >
             {project.title}
           </h3>
-          {isScanReasonCard ? (
-            <span className="inline-flex items-center gap-1 shrink-0">
-              <span
-                className="px-2 py-1"
-                style={{
-                  ...monoStyle,
-                  fontSize: '9px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  border: '1.5px solid #111111',
-                  color: '#111111',
-                  backgroundColor: 'transparent',
-                }}
-              >
-                Hackathon
-              </span>
-              <span
-                className="inline-flex items-center gap-1 px-2 py-1"
-                style={{
-                  ...monoStyle,
-                  fontSize: '9px',
-                  letterSpacing: '0.18em',
-                  fontWeight: 700,
-                  background: 'linear-gradient(180deg, #F7DA21 0%, #E5B800 100%)',
-                  color: '#111111',
-                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)',
-                }}
-              >
-                <span aria-hidden style={{ fontSize: '11px', letterSpacing: 0 }}>🏆</span>
-                Winner
-              </span>
-            </span>
-          ) : (
-            <span
-              className="shrink-0 px-1.5 py-0.5"
-              style={{
-                ...monoStyle,
-                fontSize: '8px',
-                letterSpacing: '0.14em',
-                fontWeight: 700,
-                backgroundColor:
-                  statusLabel === 'Shipped' ? '#D1FAE5'
-                  : statusLabel === 'Coming Soon' ? '#FEF3C7'
-                  : '#EDE9FE',
-                color:
-                  statusLabel === 'Shipped' ? '#065F46'
-                  : statusLabel === 'Coming Soon' ? '#92400E'
-                  : '#5B21B6',
-              }}
-            >
-              {statusLabel}
-            </span>
-          )}
         </div>
-
-        {/* Year */}
-        <p className="text-[#CCCCCC] mb-2" style={{ ...monoStyle, fontSize: '9px', letterSpacing: '0.18em' }}>
-          {yearLabel}
-        </p>
-
-        {/* Description */}
-        <p className="font-sans text-[#777] leading-[1.6] text-[13px] mb-4">
-          {description}
-        </p>
-
-        {/* CTAs — same row */}
-        {(caseStudyUrl || appStoreUrl) && (
-          <div className="flex items-center gap-3 mb-4 flex-wrap">
-            {caseStudyUrl && (
-              <a
-                href={caseStudyUrl}
-                target={caseStudyUrl?.startsWith('/') ? '_self' : '_blank'}
-                rel={caseStudyUrl?.startsWith('/') ? undefined : 'noopener noreferrer'}
-                onClick={e => e.stopPropagation()}
-                className="inline-flex items-center gap-2 px-4 py-2 transition-all duration-150 hover:brightness-95 active:scale-95"
-                style={{
-                  backgroundColor: '#F7DA21',
-                  boxShadow: '0 2px 8px rgba(247,218,33,0.45), 0 1px 3px rgba(0,0,0,0.1)',
-                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  letterSpacing: '0.18em',
-                  textTransform: 'uppercase',
-                  color: '#111111',
-                }}
-              >
-                View Case Study →
-              </a>
-            )}
-            {appStoreUrl && (
-              <a
-                href={appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-                className="inline-flex items-center gap-2 px-4 py-2 transition-all duration-150 hover:bg-black/5 active:scale-95"
-                style={{
-                  border: '1px solid #DDDDDD',
-                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                  fontSize: '10px',
-                  fontWeight: 600,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: '#777777',
-                }}
-              >
-                {appStoreLabel}
-              </a>
-            )}
-          </div>
-        )}
-
-        {/* Tags — very quiet, clearly secondary */}
-        {cardKeywords.length > 0 && (
-          <p
-            className="text-[#C8C8C8]"
-            style={{ ...monoStyle, fontSize: '8px', letterSpacing: '0.1em' }}
-          >
-            {cardKeywords.join(' · ')}
-          </p>
-        )}
       </div>
 
-      {/* ── Thin separator line ─────────────────────────────────────── */}
-      <div className="h-px w-full bg-black/8" />
+      {/* ── Caption row: one short editorial line + mono meta ───────── */}
+      <div className="px-1 pt-4 pb-2 flex items-baseline justify-between gap-6">
+        <p className="font-sans text-[#111111] text-[15px] leading-[1.4] truncate">
+          {SHORT_TAGLINE[project.id] ?? description}
+        </p>
+        <p
+          className="text-[#555] shrink-0"
+          style={{ ...monoStyle, fontSize: '12px', letterSpacing: '0.22em', fontWeight: 600 }}
+        >
+          {META_LABEL[project.id] ?? yearLabel}
+        </p>
+      </div>
+
     </article>
   );
 };

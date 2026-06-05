@@ -74,7 +74,26 @@ Accent:   #FFC83D    Mustard — active indicators, accent bars, borders, dot ma
 
 ## Section 3 — Font Family Rules
 
-### font-serif (DM Serif Display) — 4 permitted locations only
+### Homepage (`/`) — Geist + DM Sans (scoped via `.page-geist`)
+
+> Overrides the case-study type system below. Applies only to the homepage route (`App.tsx` root wraps in `.page-geist`); case study pages keep DM Serif Display + Inter as defined further down.
+
+| Element                                  | Font                  | Why                                                                                 |
+|------------------------------------------|-----------------------|-------------------------------------------------------------------------------------|
+| **Headings** — `h1`, `h2`, `h3`, h4–h6   | **Geist** (display)   | Geometric, modern, high-presence display face. Hero, section titles, card titles.   |
+| **Body / descriptions / paragraphs**     | **DM Sans**           | Humanist sans, generous proportions, optimized for ≥14px reading. Close free analogue of Google Sans Text. |
+| **Buttons, nav links, UI labels**        | **DM Sans**           | Inherits body. Nav and CTAs read as UI text, not display copy.                      |
+| **Code / `.font-mono` / numeric markers**| **JetBrains Mono**    | Unchanged from case-study system.                                                   |
+
+Implementation lives in `index.html` inside the `.page-geist` scope (uses `!important` to win specificity against Tailwind utilities).
+
+Fonts loaded via Google Fonts (single `<link>` in `index.html`): Geist `100–900`, DM Sans `300–800`, JetBrains Mono.
+
+**Banned on homepage:** DM Serif Display (used elsewhere — never on `/`), Inter as a primary face (kept only as DM Sans fallback).
+
+---
+
+### Case Studies — font-serif (DM Serif Display) — 4 permitted locations only
 
 1. **Patiently h1** — `"Patiently"` (HERO scale)
 2. **Patiently pull-quote** — `"This is not a memory issue..."` (DISPLAY, italic)
@@ -230,3 +249,4 @@ That restraint reads as "senior designer, not student." This system reaches that
 |---|---|---|
 | v1.0 | 2025 | Initial system — 8 type levels, 4 text colors, `#C9A227` as secondary accent, font-serif at 10 locations |
 | v1.1 | 2025 | **Radical simplification pass.** Collapsed 8 type levels → 5. Abolished PUNCHLINE, SECTION-HEAD, BODY-SM. Merged SectionHeading h2 into DISPLAY level. Removed `#C9A227` — single `#FFC83D` accent only. Reduced font-serif from 10 → 4 permitted locations in Patiently. Reduced italic from 9 → 2 uses. Collapsed all label sizes (9px, 10px, 12px, 13px) to LABEL (11px). Applied globally to `PatientlyCaseStudyPage.tsx`. |
+| v1.2 | 2026 | **Homepage type system.** Introduced scoped `.page-geist` typography on `/` only: headings → **Geist**, body/UI/buttons → **DM Sans**, mono unchanged. Case study pages keep DM Serif Display + Inter. Implementation in `index.html` via `!important` overrides scoped to `.page-geist` (homepage root). |
