@@ -12,45 +12,55 @@ const ContactSection: React.FC = () => {
     <section id="contact">
       <div className="max-w-6xl mx-auto px-6 md:px-8 py-28">
 
-        {/* Top rule — same weight as Hero and Selected Work */}
-        <div className="border-t border-black/15 pt-3 mb-12">
-          <span className="font-mono text-[12px] uppercase tracking-[0.28em] text-[#767676]">
+        {/* Eyebrow */}
+        <div className="mb-12">
+          <span className="font-sans text-[12px] uppercase tracking-[0.22em] text-[#767676]">
             Get in touch
           </span>
         </div>
 
-        {/* Headline */}
-        <h2 className="font-serif text-5xl md:text-6xl font-bold text-[#111111] leading-[1.05] tracking-[-0.02em] mb-6 max-w-2xl">
+        {/* Headline — sans (inherits Geist on homepage via .page-geist) */}
+        <h2
+          className="font-sans text-[#111111] leading-tight tracking-[-0.02em] mb-6 whitespace-nowrap"
+          style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 500 }}
+        >
           Let's build something structured.
         </h2>
 
-        {/* Email address — plain text, selectable/copyable */}
+        {/* Email — selectable plain text */}
         <p
-          className="font-sans text-[20px] md:text-[24px] text-[#111111] mb-10 select-all cursor-text"
-          style={{ letterSpacing: '-0.01em' }}
+          className="font-sans text-[#111111] mb-10 select-all cursor-text"
+          style={{ fontSize: 'clamp(18px, 1.6vw, 22px)', letterSpacing: '-0.005em' }}
         >
           {CONTACT_LINKS.email}
         </p>
 
-        {/* CTA row */}
-        <div className="flex flex-wrap items-center gap-6">
-          {/* Primary — outlined */}
+        {/* CTA row — pill-style buttons matching the nav */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Primary — filled dark pill */}
           <a
             href={`mailto:${CONTACT_LINKS.email}`}
-            className="inline-flex items-center gap-2 border border-[#111111] px-8 py-3 font-mono text-[12px] uppercase tracking-[0.22em] text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-150 group"
+            className="inline-flex items-center gap-2 rounded-full bg-[#111111] text-white px-6 py-3 text-[14px] font-medium hover:bg-black transition-colors duration-150 group"
           >
             Send Email
-            <ArrowUpRight size={11} strokeWidth={2} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ArrowUpRight size={14} strokeWidth={2} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
 
-          {/* Secondary — text link */}
+          {/* Secondary — glass pill */}
           <a
             href={CONTACT_LINKS.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[12px] uppercase tracking-[0.22em] text-[#767676] hover:text-[#111111] transition-colors duration-150 underline underline-offset-4 decoration-[#DDDDDD] hover:decoration-[#111111]"
+            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-[14px] font-medium text-[#111111] transition-colors duration-150 group"
+            style={{
+              background: 'rgba(255,255,255,0.6)',
+              backdropFilter: 'blur(8px) saturate(140%)',
+              WebkitBackdropFilter: 'blur(8px) saturate(140%)',
+              boxShadow: 'inset 0 0 0 1px rgba(17,17,17,0.12)',
+            }}
           >
-            LinkedIn →
+            LinkedIn
+            <ArrowUpRight size={14} strokeWidth={2} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
 

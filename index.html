@@ -28,7 +28,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300..800&family=Space+Grotesk:wght@300..700&family=Plus+Jakarta+Sans:wght@200..800&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300..800&family=Space+Grotesk:wght@300..700&family=Plus+Jakarta+Sans:wght@200..800&family=JetBrains+Mono:wght@100..800&family=Geist:wght@100..900&family=DM+Sans:opsz,wght@9..40,300..800&display=swap" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Ionicons';
@@ -37,10 +37,69 @@
       font-style: normal;
       font-display: block;
     }
+    /* Homepage typography:
+       - Headings (h1–h6) → Geist (display)
+       - Everything else (body, paragraphs, buttons, links) → DM Sans
+       - Code / .font-mono → JetBrains Mono (unchanged) */
+    .page-geist,
+    .page-geist * {
+      font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif !important;
+    }
+    .page-geist h1,
+    .page-geist h2,
+    .page-geist h3,
+    .page-geist h4,
+    .page-geist h5,
+    .page-geist h6 {
+      font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif !important;
+    }
+    .page-geist code,
+    .page-geist pre,
+    .page-geist .font-mono {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+    }
+
     body {
-      background-color: #FAF9F6;
+      background-color: #F4F1EC;
+      background-image:
+        radial-gradient(at 12% 8%,  rgba(201,169,110,0.28) 0px, transparent 55%),
+        radial-gradient(at 88% 12%, rgba(34,197,95,0.18)   0px, transparent 50%),
+        radial-gradient(at 78% 88%, rgba(124,90,212,0.20)  0px, transparent 55%),
+        radial-gradient(at 18% 92%, rgba(247,218,33,0.22)  0px, transparent 50%);
+      background-attachment: fixed;
       font-family: 'Inter', sans-serif;
       color: #121212;
+    }
+
+    /* Frosted glass card — used across the portfolio */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.6) inset,
+        0 10px 30px -12px rgba(20, 20, 30, 0.18),
+        0 2px 8px -2px rgba(20, 20, 30, 0.08);
+      border-radius: 22px;
+    }
+    .glass-card-strong {
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.7) inset,
+        0 18px 48px -18px rgba(20, 20, 30, 0.25),
+        0 4px 14px -4px rgba(20, 20, 30, 0.10);
+      border-radius: 24px;
+    }
+    .glass-card-subtle {
+      background: rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 18px;
     }
     .font-sans {
       font-family: 'Inter', sans-serif;

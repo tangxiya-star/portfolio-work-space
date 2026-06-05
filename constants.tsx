@@ -109,18 +109,6 @@ export const PROJECTS: Project[] = [
     content: ``
   },
   {
-    id: 'uniwell',
-    title: 'Uniwell',
-    description: 'A mobile app improving the treatment process for college students in the USA.',
-    category: ProjectCategory.UX_DESIGN,
-    color: COLORS.green,
-    icon: 'Target',
-    coverImage: '/cover-uniwell.jpg',
-    difficulty: 'Medium',
-    skills: ['PMF Validation', 'UX Strategy', 'Mobile Design'],
-    content: ``
-  },
-  {
     id: '2d-moon',
     title: '2D Moon',
     description: 'A unique platform to display NFT owners\' collection and assets, and to socialize with other owners with similar interests.',
